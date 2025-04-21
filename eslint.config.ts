@@ -1,4 +1,4 @@
-import tsPlugin from "@typescript-eslint/eslint-plugin" // O plugin com as regras
+import tsPlugin from "@typescript-eslint/eslint-plugin"
 import tsParser from "@typescript-eslint/parser"
 import { default as globals } from "globals"
 import prettier from "eslint-config-prettier"
