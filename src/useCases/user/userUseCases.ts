@@ -1,7 +1,7 @@
-import bcrypt from "bcrypt"
 import { PostgresCreateUserRepository } from "@/repositories/user/userRepository"
-import { prisma } from "@/lib/prisma"
-import { v4 as uuidv4 } from "uuid"
+import { generateId } from "@/utils/generateId"
+import { PasswordHasherAdapter } from "@/adapters/passwordHasherAdapter"
+import { FindUserByEmailRepository } from "@/repositories/user/findUserByEmail"
 
 type BandRequest = {
   banda: string
@@ -17,17 +17,17 @@ export class PostUserUseCase {
   }
 
   async execute({ banda, email, senha }: BandRequest) {
-    const userExists = await prisma.user.findUnique({
-      where: { email },
-    })
+    const emailRepository = new FindUserByEmailRepository()
+    const userExists = await emailRepository.execute(email)
 
     if (userExists) {
       throw new Error("E-mail já cadastrado")
     }
 
-    const hashedPassword = await bcrypt.hash(senha, 10)
+    const hasher = new PasswordHasherAdapter()
+    const hashedPassword = await hasher.hash(senha)
 
-    const id = uuidv4()
+    const id = generateId()
 
     const user = await this.createUserRepository.execute({
       id,
