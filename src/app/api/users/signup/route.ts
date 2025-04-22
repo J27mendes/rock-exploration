@@ -1,24 +1,24 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest } from "next/server"
 import { PostUserController } from "@/controller/user/userController"
+import { badRequest, created, serverError } from "@/helpers/httpResponse"
+import { validateSignupFields } from "@/utils/validateSignupFields"
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
 
-    const controller = new PostUserController()
-    const user = await controller.execute(body)
+    validateSignupFields(body)
 
-    return NextResponse.json(user, { status: 201 })
+    const controller = new PostUserController()
+    const result = await controller.execute(body)
+
+    const response = created(result)
+    return response
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return NextResponse.json(
-        { error: error.message || "Erro ao criar usuário" },
-        { status: 400 }
-      )
+      return badRequest(error.message)
     }
-    return NextResponse.json(
-      { error: "Erro desconhecido ao criar usuário" },
-      { status: 500 }
-    )
+
+    return serverError(error)
   }
 }
