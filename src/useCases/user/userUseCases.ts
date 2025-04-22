@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt"
 import { PostgresCreateUserRepository } from "@/repositories/user/userRepository"
 import { prisma } from "@/lib/prisma"
+import { v4 as uuidv4 } from "uuid"
 
 type BandRequest = {
   banda: string
@@ -26,7 +27,10 @@ export class PostUserUseCase {
 
     const hashedPassword = await bcrypt.hash(senha, 10)
 
+    const id = uuidv4()
+
     const user = await this.createUserRepository.execute({
+      id,
       banda,
       email,
       senha: hashedPassword,

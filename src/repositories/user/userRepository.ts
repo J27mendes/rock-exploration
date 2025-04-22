@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma"
 
 type CreateBandParams = {
-  id?: string
+  id: string
   banda: string
   email: string
   senha: string
