@@ -1,4 +1,7 @@
 import { PostUserUseCase } from "@/useCases/user/userUseCases"
+import { createUserSchema } from "@/schemas/user/userSchema" // ajuste esse caminho se necessário
+import { ZodError } from "zod"
+
 export class PostUserController {
   private useCase: PostUserUseCase
 
@@ -7,14 +10,17 @@ export class PostUserController {
   }
 
   async execute(body: any) {
-    const { banda, email, senha } = body
+    try {
+      const validatedData = createUserSchema.parse(body)
 
-    if (!banda || !email || !senha) {
-      throw new Error("Dados obrigatórios faltando")
+      const user = await this.useCase.execute(validatedData)
+      return user
+    } catch (error) {
+      if (error instanceof ZodError) {
+        throw new Error(error.errors.map((e) => e.message).join("; "))
+      }
+
+      throw new Error("Erro ao processar requisição")
     }
-
-    const user = await this.useCase.execute({ banda, email, senha })
-
-    return user
   }
 }
