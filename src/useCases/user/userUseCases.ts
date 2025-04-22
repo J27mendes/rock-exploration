@@ -2,6 +2,7 @@ import { PostgresCreateUserRepository } from "@/repositories/user/userRepository
 import { generateId } from "@/utils/generateId"
 import { PasswordHasherAdapter } from "@/adapters/passwordHasherAdapter"
 import { FindUserByEmailRepository } from "@/repositories/user/findUserByEmail"
+import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
 
 type BandRequest = {
   banda: string
@@ -11,9 +12,11 @@ type BandRequest = {
 
 export class PostUserUseCase {
   private createUserRepository: PostgresCreateUserRepository
+  private tokensGenerator: TokensGenerator
 
   constructor() {
     this.createUserRepository = new PostgresCreateUserRepository()
+    this.tokensGenerator = new TokensGenerator()
   }
 
   async execute({ banda, email, senha }: BandRequest) {
@@ -36,6 +39,8 @@ export class PostUserUseCase {
       senha: hashedPassword,
     })
 
-    return user
+    const { accessToken, refreshToken } = this.tokensGenerator.execute(user.id)
+
+    return { user, accessToken, refreshToken }
   }
 }
