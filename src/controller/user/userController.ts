@@ -11,13 +11,17 @@ export class PostUserController {
 
   async execute(body: any) {
     try {
-      const validatedData = createUserSchema.parse(body)
-
-      const user = await this.useCase.execute(validatedData)
+      const validatedData = await createUserSchema.parseAsync(body)
+      const { banda, email, senha } = validatedData
+      const user = await this.useCase.execute({ banda, email, senha })
       return user
     } catch (error) {
       if (error instanceof ZodError) {
-        throw new Error(error.errors.map((e) => e.message).join("; "))
+        throw new Error(
+          error.errors
+            .map((e) => `${e.path.join(".")}: ${e.message}`)
+            .join("; ")
+        )
       }
 
       throw new Error("Erro ao processar requisição")
