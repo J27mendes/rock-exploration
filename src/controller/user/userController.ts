@@ -1,8 +1,9 @@
 import { PostUserUseCase } from "@/useCases/user/userUseCases"
 import { createUserSchema } from "@/schemas/user/userSchema"
 import { z, ZodError } from "zod"
+import { badRequest, serverError } from "@/helpers/httpResponse"
 
-type CreateUserInput = z.infer<typeof createUserSchema>
+export type CreateUserInput = z.infer<typeof createUserSchema>
 
 export class PostUserController {
   private useCase: PostUserUseCase
@@ -13,8 +14,7 @@ export class PostUserController {
 
   async execute(body: CreateUserInput) {
     try {
-      const validatedData = await createUserSchema.parseAsync(body)
-      const { banda, email, senha } = validatedData
+      const { banda, email, senha } = body
       const { user, accessToken, refreshToken } = await this.useCase.execute({
         banda,
         email,
@@ -34,14 +34,10 @@ export class PostUserController {
       }
     } catch (error) {
       if (error instanceof ZodError) {
-        throw new Error(
-          error.errors
-            .map((e) => `${e.path.join(".")}: ${e.message}`)
-            .join("; ")
-        )
+        return badRequest(error.errors)
       }
 
-      throw new Error("Erro ao processar requisição")
+      return serverError(error)
     }
   }
 }
