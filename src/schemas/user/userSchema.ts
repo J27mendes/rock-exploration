@@ -54,6 +54,7 @@ export const createUserSchema = z
       ),
     confirmeSenha: z.string().trim(),
   })
+  .strict()
   .refine((data) => data.senha === data.confirmeSenha, {
     message: "As senhas não conferem",
     path: ["confirmeSenha"],
