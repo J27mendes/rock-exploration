@@ -19,13 +19,13 @@ export async function PATCH(req: Request) {
     const validationResult = await updateUserSchema.parseAsync(body)
 
     const controller = new UpdateUserController()
-    const result = await controller.execute(validationResult, userId)
+    const response = await controller.execute(validationResult, userId)
 
-    if (result instanceof Response) {
-      return responses(result)
+    if (response instanceof Response) {
+      return responses(response)
     }
 
-    return ok(result)
+    return ok(response)
   } catch (error) {
     if (error instanceof ZodError) {
       return handleZodError(error)
