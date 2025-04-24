@@ -55,6 +55,11 @@ export class UpdateUserUseCase {
     const updated = await prisma.user.update({
       where: { id: userId },
       data,
+      select: {
+        id: true,
+        email: true,
+        banda: true,
+      },
     })
 
     return updated

@@ -12,8 +12,6 @@ type SuccessUpdate = {
   email: string
   senha: string
   banda: string
-  createdAt: Date
-  updatedAt: Date
 }
 
 export class UpdateUserController {
