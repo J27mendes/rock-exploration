@@ -1,5 +1,5 @@
 import { PasswordHasherAdapter } from "@/adapters/passwordHasherAdapter"
-import { conflict } from "@/helpers/httpResponse"
+import { conflict, notFound } from "@/helpers/httpResponse"
 import { prisma } from "@/lib/prisma"
 
 interface UpdateUserInput {
@@ -18,7 +18,7 @@ export class UpdateUserUseCase {
     })
 
     if (!user) {
-      return conflict("Usuário não encontrado.")
+      return notFound("Usuário não encontrado.")
     }
 
     const hasher = new PasswordHasherAdapter()
