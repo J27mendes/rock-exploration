@@ -13,8 +13,6 @@ type SuccessLogin = {
   email: string
   senha: string
   banda: string
-  createdAt: Date
-  updatedAt: Date
 }
 
 export class LoginUserController {
