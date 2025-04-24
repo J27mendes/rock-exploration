@@ -9,9 +9,13 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const validationResult = await loginUserSchema.parseAsync(body)
     const controller = new LoginUserController()
-    const result = await controller.execute(validationResult)
+    const response = await controller.execute(validationResult)
 
-    return ok(result)
+    if (response instanceof Response) {
+      return response
+    }
+
+    return ok(response)
   } catch (error) {
     if (error instanceof ZodError) {
       return handleZodError(error)
