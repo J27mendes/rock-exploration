@@ -1,4 +1,5 @@
 import { PasswordComparatorAdapter } from "@/adapters/passwordComparatorAdapter"
+import { unauthorized } from "@/helpers/httpResponse"
 import { FindUserByEmailRepository } from "@/repositories/user/findUserByEmail"
 
 type LoginRequest = {
@@ -14,7 +15,7 @@ export class LoginUserUseCase {
     const user = await this.findUserByEmail.execute(email)
 
     if (!user) {
-      throw new Error(
+      return unauthorized(
         "E-mail ou senha estão incorretos, verifique os dados e tente novamente"
       )
     }
@@ -22,7 +23,7 @@ export class LoginUserUseCase {
     const isPasswordCorrect = await this.comparator.execute(senha, user.senha)
 
     if (!isPasswordCorrect) {
-      throw new Error(
+      return unauthorized(
         "E-mail ou senha estão incorretos, verifique os dados e tente novamente"
       )
     }
