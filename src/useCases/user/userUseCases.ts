@@ -2,7 +2,7 @@ import { PostgresCreateUserRepository } from "@/repositories/user/userRepository
 import { generateId } from "@/utils/generateId"
 import { PasswordHasherAdapter } from "@/adapters/passwordHasherAdapter"
 import { FindUserByEmailRepository } from "@/repositories/user/findUserByEmail"
-import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
+import { conflict } from "@/helpers/httpResponse"
 
 type BandRequest = {
   banda: string
@@ -12,11 +12,9 @@ type BandRequest = {
 
 export class PostUserUseCase {
   private createUserRepository: PostgresCreateUserRepository
-  private tokensGenerator: TokensGenerator
 
   constructor() {
     this.createUserRepository = new PostgresCreateUserRepository()
-    this.tokensGenerator = new TokensGenerator()
   }
 
   async execute({ banda, email, senha }: BandRequest) {
@@ -24,7 +22,7 @@ export class PostUserUseCase {
     const userExists = await emailRepository.execute(email)
 
     if (userExists) {
-      throw new Error("E-mail já cadastrado")
+      return conflict("E-mail já cadastrado")
     }
 
     const hasher = new PasswordHasherAdapter()
@@ -39,8 +37,10 @@ export class PostUserUseCase {
       senha: hashedPassword,
     })
 
-    const { accessToken, refreshToken } = this.tokensGenerator.execute(user.id)
-
-    return { user, accessToken, refreshToken }
+    return {
+      id: user.id,
+      banda: user.banda,
+      email: user.email,
+    }
   }
 }
