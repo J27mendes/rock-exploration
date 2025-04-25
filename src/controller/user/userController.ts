@@ -1,4 +1,4 @@
-import { PostUserUseCase } from "@/useCases/user/userUseCases"
+import { PostUserUseCase } from "@/useCases/user/userUseCase"
 import { createUserSchema } from "@/schemas/user/userSchema"
 import { z, ZodError } from "zod"
 import { badRequest, serverError, created } from "@/helpers/httpResponse"
