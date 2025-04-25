@@ -1,3 +1,4 @@
+import { DeleteUserController } from "@/controller/user/deleteController"
 import { UpdateUserController } from "@/controller/user/updateController"
 import {
   handleZodError,
@@ -31,6 +32,26 @@ export async function PATCH(req: Request) {
       return handleZodError(error)
     }
 
+    return serverError(error)
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const userId = authorization(req)
+    if (userId instanceof Response) return userId
+
+    const { confirmMessage } = await req.json()
+
+    const controller = new DeleteUserController()
+    const response = await controller.execute(userId, confirmMessage)
+
+    if (response instanceof Response) {
+      return response
+    }
+
+    return ok(response)
+  } catch (error) {
     return serverError(error)
   }
 }
