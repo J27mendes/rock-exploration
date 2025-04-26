@@ -1,10 +1,10 @@
-import { LoginUserUseCase } from "@/useCases/user/loginUseCase"
-import { loginUserSchema } from "@/schemas/user/loginSchema"
-import { z, ZodError } from "zod"
-import { badRequest, serverError, unauthorized } from "@/helpers/httpResponse"
-import { UnauthorizedError } from "@/errors/unauthorizedError"
-import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
 import { NextResponse } from "next/server"
+import { z, ZodError } from "zod"
+import { LoginUserUseCase } from "@/useCases"
+import { loginUserSchema } from "@/schemas"
+import { badRequest, notFound, serverError, unauthorized } from "@/helpers"
+import { UnauthorizedError, UserNotFoundError } from "@/errors"
+import { TokensGenerator } from "@/adapters"
 
 export type LoginUserDTO = z.infer<typeof loginUserSchema>
 
@@ -43,6 +43,10 @@ export class LoginUserController {
 
       if (error instanceof UnauthorizedError) {
         return unauthorized(error.message)
+      }
+
+      if (error instanceof UserNotFoundError) {
+        return notFound(error.message)
       }
 
       return serverError(error)
