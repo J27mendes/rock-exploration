@@ -1,8 +1,10 @@
-import { PostgresCreateUserRepository } from "@/repositories/user/userRepository"
-import { generateId } from "@/utils/generateId"
-import { PasswordHasherAdapter } from "@/adapters/passwordHasherAdapter"
-import { FindUserByEmailRepository } from "@/repositories/user/findUserByEmail"
-import { conflict } from "@/helpers/httpResponse"
+import {
+  FindUserByEmailRepository,
+  PostgresCreateUserRepository,
+} from "@/repositories"
+import { generateId } from "@/utils"
+import { PasswordHasherAdapter } from "@/adapters"
+import { conflict } from "@/helpers"
 
 type BandRequest = {
   banda: string

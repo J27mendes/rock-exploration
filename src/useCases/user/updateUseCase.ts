@@ -1,5 +1,5 @@
-import { PasswordHasherAdapter } from "@/adapters/passwordHasherAdapter"
-import { conflict, notFound } from "@/helpers/httpResponse"
+import { PasswordHasherAdapter } from "@/adapters"
+import { conflict, notFound } from "@/helpers"
 import { prisma } from "@/lib/prisma"
 
 interface UpdateUserInput {

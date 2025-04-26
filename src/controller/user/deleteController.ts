@@ -1,5 +1,5 @@
-import { DeleteUserUseCase } from "@/useCases/user/deleteUseCase"
-import { unauthorized } from "@/helpers/httpResponse"
+import { DeleteUserUseCase } from "@/useCases"
+import { unauthorized } from "@/helpers"
 export class DeleteUserController {
   private useCase = new DeleteUserUseCase()
 

@@ -1,4 +1,4 @@
-import { DeleteUserRepository } from "@/repositories/user/deleteRepository"
+import { DeleteUserRepository } from "@/repositories"
 
 export class DeleteUserUseCase {
   private deleteUserRepository = new DeleteUserRepository()

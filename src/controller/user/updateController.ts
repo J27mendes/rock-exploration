@@ -1,9 +1,9 @@
-import { updateUserSchema } from "@/schemas/user/updateSchema"
-import { z, ZodError } from "zod"
-import { UpdateUserUseCase } from "@/useCases/user/updateUseCase"
-import { badRequest, serverError } from "@/helpers/httpResponse"
-import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
 import { NextResponse } from "next/server"
+import { z, ZodError } from "zod"
+import { updateUserSchema } from "@/schemas"
+import { UpdateUserUseCase } from "@/useCases"
+import { badRequest, serverError } from "@/helpers"
+import { TokensGenerator } from "@/adapters"
 
 export type UpdateUserDTO = z.infer<typeof updateUserSchema>
 
