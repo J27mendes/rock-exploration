@@ -129,6 +129,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.BandFormScalarFieldEnum = {
   id: 'id',
   idBanda: 'idBanda',
+  userId: 'userId',
   banda: 'banda',
   quantidadeIntegrantes: 'quantidadeIntegrantes',
   integrantes: 'integrantes',
@@ -139,7 +140,6 @@ exports.Prisma.BandFormScalarFieldEnum = {
   setList: 'setList',
   contato: 'contato',
   tempoApresentacao: 'tempoApresentacao',
-  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

@@ -2063,13 +2063,13 @@ export namespace Prisma {
   export type BandFormMinAggregateOutputType = {
     id: string | null
     idBanda: string | null
+    userId: string | null
     banda: string | null
     quantidadeIntegrantes: number | null
     estilo: string | null
     release: string | null
     quantidadeMusicas: number | null
     tempoApresentacao: number | null
-    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2077,13 +2077,13 @@ export namespace Prisma {
   export type BandFormMaxAggregateOutputType = {
     id: string | null
     idBanda: string | null
+    userId: string | null
     banda: string | null
     quantidadeIntegrantes: number | null
     estilo: string | null
     release: string | null
     quantidadeMusicas: number | null
     tempoApresentacao: number | null
-    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2091,6 +2091,7 @@ export namespace Prisma {
   export type BandFormCountAggregateOutputType = {
     id: number
     idBanda: number
+    userId: number
     banda: number
     quantidadeIntegrantes: number
     integrantes: number
@@ -2101,7 +2102,6 @@ export namespace Prisma {
     setList: number
     contato: number
     tempoApresentacao: number
-    userId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2123,13 +2123,13 @@ export namespace Prisma {
   export type BandFormMinAggregateInputType = {
     id?: true
     idBanda?: true
+    userId?: true
     banda?: true
     quantidadeIntegrantes?: true
     estilo?: true
     release?: true
     quantidadeMusicas?: true
     tempoApresentacao?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2137,13 +2137,13 @@ export namespace Prisma {
   export type BandFormMaxAggregateInputType = {
     id?: true
     idBanda?: true
+    userId?: true
     banda?: true
     quantidadeIntegrantes?: true
     estilo?: true
     release?: true
     quantidadeMusicas?: true
     tempoApresentacao?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2151,6 +2151,7 @@ export namespace Prisma {
   export type BandFormCountAggregateInputType = {
     id?: true
     idBanda?: true
+    userId?: true
     banda?: true
     quantidadeIntegrantes?: true
     integrantes?: true
@@ -2161,7 +2162,6 @@ export namespace Prisma {
     setList?: true
     contato?: true
     tempoApresentacao?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2256,6 +2256,7 @@ export namespace Prisma {
   export type BandFormGroupByOutputType = {
     id: string
     idBanda: string
+    userId: string
     banda: string
     quantidadeIntegrantes: number
     integrantes: JsonValue
@@ -2266,7 +2267,6 @@ export namespace Prisma {
     setList: JsonValue
     contato: JsonValue
     tempoApresentacao: number
-    userId: string
     createdAt: Date
     updatedAt: Date
     _count: BandFormCountAggregateOutputType | null
@@ -2293,6 +2293,7 @@ export namespace Prisma {
   export type BandFormSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idBanda?: boolean
+    userId?: boolean
     banda?: boolean
     quantidadeIntegrantes?: boolean
     integrantes?: boolean
@@ -2303,7 +2304,6 @@ export namespace Prisma {
     setList?: boolean
     contato?: boolean
     tempoApresentacao?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2312,6 +2312,7 @@ export namespace Prisma {
   export type BandFormSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idBanda?: boolean
+    userId?: boolean
     banda?: boolean
     quantidadeIntegrantes?: boolean
     integrantes?: boolean
@@ -2322,7 +2323,6 @@ export namespace Prisma {
     setList?: boolean
     contato?: boolean
     tempoApresentacao?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2331,6 +2331,7 @@ export namespace Prisma {
   export type BandFormSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idBanda?: boolean
+    userId?: boolean
     banda?: boolean
     quantidadeIntegrantes?: boolean
     integrantes?: boolean
@@ -2341,7 +2342,6 @@ export namespace Prisma {
     setList?: boolean
     contato?: boolean
     tempoApresentacao?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2350,6 +2350,7 @@ export namespace Prisma {
   export type BandFormSelectScalar = {
     id?: boolean
     idBanda?: boolean
+    userId?: boolean
     banda?: boolean
     quantidadeIntegrantes?: boolean
     integrantes?: boolean
@@ -2360,12 +2361,11 @@ export namespace Prisma {
     setList?: boolean
     contato?: boolean
     tempoApresentacao?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BandFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idBanda" | "banda" | "quantidadeIntegrantes" | "integrantes" | "estilo" | "release" | "imagem" | "quantidadeMusicas" | "setList" | "contato" | "tempoApresentacao" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["bandForm"]>
+  export type BandFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idBanda" | "userId" | "banda" | "quantidadeIntegrantes" | "integrantes" | "estilo" | "release" | "imagem" | "quantidadeMusicas" | "setList" | "contato" | "tempoApresentacao" | "createdAt" | "updatedAt", ExtArgs["result"]["bandForm"]>
   export type BandFormInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2384,6 +2384,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       idBanda: string
+      userId: string
       banda: string
       quantidadeIntegrantes: number
       integrantes: Prisma.JsonValue
@@ -2394,7 +2395,6 @@ export namespace Prisma {
       setList: Prisma.JsonValue
       contato: Prisma.JsonValue
       tempoApresentacao: number
-      userId: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["bandForm"]>
@@ -2823,6 +2823,7 @@ export namespace Prisma {
   interface BandFormFieldRefs {
     readonly id: FieldRef<"BandForm", 'String'>
     readonly idBanda: FieldRef<"BandForm", 'String'>
+    readonly userId: FieldRef<"BandForm", 'String'>
     readonly banda: FieldRef<"BandForm", 'String'>
     readonly quantidadeIntegrantes: FieldRef<"BandForm", 'Int'>
     readonly integrantes: FieldRef<"BandForm", 'Json'>
@@ -2833,7 +2834,6 @@ export namespace Prisma {
     readonly setList: FieldRef<"BandForm", 'Json'>
     readonly contato: FieldRef<"BandForm", 'Json'>
     readonly tempoApresentacao: FieldRef<"BandForm", 'Int'>
-    readonly userId: FieldRef<"BandForm", 'String'>
     readonly createdAt: FieldRef<"BandForm", 'DateTime'>
     readonly updatedAt: FieldRef<"BandForm", 'DateTime'>
   }
@@ -3279,6 +3279,7 @@ export namespace Prisma {
   export const BandFormScalarFieldEnum: {
     id: 'id',
     idBanda: 'idBanda',
+    userId: 'userId',
     banda: 'banda',
     quantidadeIntegrantes: 'quantidadeIntegrantes',
     integrantes: 'integrantes',
@@ -3289,7 +3290,6 @@ export namespace Prisma {
     setList: 'setList',
     contato: 'contato',
     tempoApresentacao: 'tempoApresentacao',
-    userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3473,6 +3473,7 @@ export namespace Prisma {
     NOT?: BandFormWhereInput | BandFormWhereInput[]
     id?: StringFilter<"BandForm"> | string
     idBanda?: StringFilter<"BandForm"> | string
+    userId?: StringFilter<"BandForm"> | string
     banda?: StringFilter<"BandForm"> | string
     quantidadeIntegrantes?: IntFilter<"BandForm"> | number
     integrantes?: JsonFilter<"BandForm">
@@ -3483,7 +3484,6 @@ export namespace Prisma {
     setList?: JsonFilter<"BandForm">
     contato?: JsonFilter<"BandForm">
     tempoApresentacao?: IntFilter<"BandForm"> | number
-    userId?: StringFilter<"BandForm"> | string
     createdAt?: DateTimeFilter<"BandForm"> | Date | string
     updatedAt?: DateTimeFilter<"BandForm"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -3492,6 +3492,7 @@ export namespace Prisma {
   export type BandFormOrderByWithRelationInput = {
     id?: SortOrder
     idBanda?: SortOrder
+    userId?: SortOrder
     banda?: SortOrder
     quantidadeIntegrantes?: SortOrder
     integrantes?: SortOrder
@@ -3502,7 +3503,6 @@ export namespace Prisma {
     setList?: SortOrder
     contato?: SortOrder
     tempoApresentacao?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -3510,12 +3510,12 @@ export namespace Prisma {
 
   export type BandFormWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    banda?: string
+    idBanda?: string
     userId?: string
     AND?: BandFormWhereInput | BandFormWhereInput[]
     OR?: BandFormWhereInput[]
     NOT?: BandFormWhereInput | BandFormWhereInput[]
-    idBanda?: StringFilter<"BandForm"> | string
+    banda?: StringFilter<"BandForm"> | string
     quantidadeIntegrantes?: IntFilter<"BandForm"> | number
     integrantes?: JsonFilter<"BandForm">
     estilo?: StringFilter<"BandForm"> | string
@@ -3528,11 +3528,12 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"BandForm"> | Date | string
     updatedAt?: DateTimeFilter<"BandForm"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "banda" | "userId">
+  }, "id" | "idBanda" | "userId">
 
   export type BandFormOrderByWithAggregationInput = {
     id?: SortOrder
     idBanda?: SortOrder
+    userId?: SortOrder
     banda?: SortOrder
     quantidadeIntegrantes?: SortOrder
     integrantes?: SortOrder
@@ -3543,7 +3544,6 @@ export namespace Prisma {
     setList?: SortOrder
     contato?: SortOrder
     tempoApresentacao?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BandFormCountOrderByAggregateInput
@@ -3559,6 +3559,7 @@ export namespace Prisma {
     NOT?: BandFormScalarWhereWithAggregatesInput | BandFormScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"BandForm"> | string
     idBanda?: StringWithAggregatesFilter<"BandForm"> | string
+    userId?: StringWithAggregatesFilter<"BandForm"> | string
     banda?: StringWithAggregatesFilter<"BandForm"> | string
     quantidadeIntegrantes?: IntWithAggregatesFilter<"BandForm"> | number
     integrantes?: JsonWithAggregatesFilter<"BandForm">
@@ -3569,7 +3570,6 @@ export namespace Prisma {
     setList?: JsonWithAggregatesFilter<"BandForm">
     contato?: JsonWithAggregatesFilter<"BandForm">
     tempoApresentacao?: IntWithAggregatesFilter<"BandForm"> | number
-    userId?: StringWithAggregatesFilter<"BandForm"> | string
     createdAt?: DateTimeWithAggregatesFilter<"BandForm"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BandForm"> | Date | string
   }
@@ -3643,7 +3643,7 @@ export namespace Prisma {
 
   export type BandFormCreateInput = {
     id?: string
-    idBanda?: string
+    idBanda: string
     banda: string
     quantidadeIntegrantes: number
     integrantes: JsonNullValueInput | InputJsonValue
@@ -3661,7 +3661,8 @@ export namespace Prisma {
 
   export type BandFormUncheckedCreateInput = {
     id?: string
-    idBanda?: string
+    idBanda: string
+    userId: string
     banda: string
     quantidadeIntegrantes: number
     integrantes: JsonNullValueInput | InputJsonValue
@@ -3672,7 +3673,6 @@ export namespace Prisma {
     setList: JsonNullValueInput | InputJsonValue
     contato: JsonNullValueInput | InputJsonValue
     tempoApresentacao: number
-    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3698,6 +3698,7 @@ export namespace Prisma {
   export type BandFormUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     idBanda?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     banda?: StringFieldUpdateOperationsInput | string
     quantidadeIntegrantes?: IntFieldUpdateOperationsInput | number
     integrantes?: JsonNullValueInput | InputJsonValue
@@ -3708,14 +3709,14 @@ export namespace Prisma {
     setList?: JsonNullValueInput | InputJsonValue
     contato?: JsonNullValueInput | InputJsonValue
     tempoApresentacao?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BandFormCreateManyInput = {
     id?: string
-    idBanda?: string
+    idBanda: string
+    userId: string
     banda: string
     quantidadeIntegrantes: number
     integrantes: JsonNullValueInput | InputJsonValue
@@ -3726,7 +3727,6 @@ export namespace Prisma {
     setList: JsonNullValueInput | InputJsonValue
     contato: JsonNullValueInput | InputJsonValue
     tempoApresentacao: number
-    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3751,6 +3751,7 @@ export namespace Prisma {
   export type BandFormUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     idBanda?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     banda?: StringFieldUpdateOperationsInput | string
     quantidadeIntegrantes?: IntFieldUpdateOperationsInput | number
     integrantes?: JsonNullValueInput | InputJsonValue
@@ -3761,7 +3762,6 @@ export namespace Prisma {
     setList?: JsonNullValueInput | InputJsonValue
     contato?: JsonNullValueInput | InputJsonValue
     tempoApresentacao?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3898,6 +3898,7 @@ export namespace Prisma {
   export type BandFormCountOrderByAggregateInput = {
     id?: SortOrder
     idBanda?: SortOrder
+    userId?: SortOrder
     banda?: SortOrder
     quantidadeIntegrantes?: SortOrder
     integrantes?: SortOrder
@@ -3908,7 +3909,6 @@ export namespace Prisma {
     setList?: SortOrder
     contato?: SortOrder
     tempoApresentacao?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3922,13 +3922,13 @@ export namespace Prisma {
   export type BandFormMaxOrderByAggregateInput = {
     id?: SortOrder
     idBanda?: SortOrder
+    userId?: SortOrder
     banda?: SortOrder
     quantidadeIntegrantes?: SortOrder
     estilo?: SortOrder
     release?: SortOrder
     quantidadeMusicas?: SortOrder
     tempoApresentacao?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3936,13 +3936,13 @@ export namespace Prisma {
   export type BandFormMinOrderByAggregateInput = {
     id?: SortOrder
     idBanda?: SortOrder
+    userId?: SortOrder
     banda?: SortOrder
     quantidadeIntegrantes?: SortOrder
     estilo?: SortOrder
     release?: SortOrder
     quantidadeMusicas?: SortOrder
     tempoApresentacao?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4176,7 +4176,7 @@ export namespace Prisma {
 
   export type BandFormCreateWithoutUserInput = {
     id?: string
-    idBanda?: string
+    idBanda: string
     banda: string
     quantidadeIntegrantes: number
     integrantes: JsonNullValueInput | InputJsonValue
@@ -4193,7 +4193,7 @@ export namespace Prisma {
 
   export type BandFormUncheckedCreateWithoutUserInput = {
     id?: string
-    idBanda?: string
+    idBanda: string
     banda: string
     quantidadeIntegrantes: number
     integrantes: JsonNullValueInput | InputJsonValue
