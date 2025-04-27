@@ -3,6 +3,7 @@ import {
   CreateBandFormWithPresentationTimeDTO,
 } from "@/repositories"
 import { BadRequestError } from "@/errors"
+import { formattedBandName } from "@/utils"
 
 export interface CreateBandFormDTO {
   banda: string
@@ -38,7 +39,7 @@ export class CreateBandFormUseCase {
 
   async execute(data: CreateBandFormDTO, idBanda: string) {
     try {
-      const formattedBandName = data.banda.trim().toUpperCase()
+      const bandName = formattedBandName(data.banda)
 
       const existingForm = await this.repository.findByUserId(idBanda)
 
@@ -88,7 +89,7 @@ export class CreateBandFormUseCase {
 
       const payload: CreateBandFormWithPresentationTimeDTO = {
         ...data,
-        banda: formattedBandName,
+        banda: bandName,
         estilo: style,
         tempoApresentacao: totalTempoMusicas,
       }
