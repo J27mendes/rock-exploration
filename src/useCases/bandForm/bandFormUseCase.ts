@@ -8,6 +8,7 @@ import {
   formattedBandName,
   calculateTotalMusicTime,
   validateBandForm,
+  membersName,
 } from "@/utils"
 export interface CreateBandFormDTO {
   banda: string
@@ -61,9 +62,9 @@ export class CreateBandFormUseCase {
         throw new BadRequestError("Usuário já possui um formulário cadastrado.")
       }
 
-      const existingFormByBandName = await this.repository.findByBandName(
-        data.banda
-      )
+      const existingFormByBandName =
+        await this.repository.findByBandName(bandName)
+
       if (existingFormByBandName) {
         throw new BadRequestError(
           "Já existe uma banda com esse nome cadastrada."
@@ -86,11 +87,9 @@ export class CreateBandFormUseCase {
 
       const createdForm = await this.repository.create(payload, idBanda)
 
-      const integrantes = Array.isArray(createdForm.integrantes)
-        ? (
-            createdForm.integrantes as { nome: string; instrumento: string }[]
-          ).map((integrante) => integrante.nome)
-        : []
+      const integrantes = membersName(
+        createdForm.integrantes as { nome: string; instrumento: string }[]
+      )
 
       return {
         banda: createdForm.banda,
