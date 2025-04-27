@@ -36,12 +36,19 @@ export class CreateBandFormUseCase {
 
   async execute(data: CreateBandFormDTO, idBanda: string) {
     try {
-      const bandName = data.banda.trim().toLowerCase()
-      const formattedBandName =
-        bandName.charAt(0).toUpperCase() + bandName.slice(1)
+      const bandName = data.banda.trim().toUpperCase()
+      data.banda = bandName
 
-      data.banda = formattedBandName
       const existingForm = await this.repository.findByUserId(idBanda)
+
+      const style = data.estilo
+        .split(" ")
+        .map((word) => word.trim())
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ")
+      data.estilo = style
 
       if (existingForm) {
         throw new BadRequestError("Usuário já possui um formulário cadastrado.")
