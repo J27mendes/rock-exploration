@@ -50,6 +50,17 @@ export class CreateBandFormUseCase {
         .join(" ")
       data.estilo = style
 
+      const totalTempoMusicas = data.setList.reduce(
+        (acc, curr) => acc + curr.tempoMusica,
+        0
+      )
+
+      if (totalTempoMusicas < 2400 || totalTempoMusicas > 3600) {
+        throw new BadRequestError(
+          `O total do tempo das músicas (${totalTempoMusicas} segundos) deve estar entre 2400 segundos (40 minutos) e 3600 segundos (1 hora).`
+        )
+      }
+
       if (existingForm) {
         throw new BadRequestError("Usuário já possui um formulário cadastrado.")
       }
