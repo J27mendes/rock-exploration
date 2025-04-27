@@ -8,7 +8,10 @@ export type CreateBandFormDTO = z.infer<typeof createBandFormSchema>
 export class CreateBandFormController {
   private useCase = new CreateBandFormUseCase()
 
-  async execute(body: unknown, idBanda: string): Promise<Response | object> {
+  async execute(
+    body: CreateBandFormDTO,
+    idBanda: string
+  ): Promise<Response | object> {
     try {
       const validatedData = createBandFormSchema.parse(body)
 
