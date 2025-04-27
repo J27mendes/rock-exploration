@@ -17,8 +17,10 @@ export const created = (data: any) => {
   return NextResponse.json(data, { status: 201 })
 }
 
-export const badRequest = (message: string | object = "Bad Request") => {
-  return NextResponse.json({ error: message }, { status: 400 })
+export function badRequest(message: string | object) {
+  const responseMessage =
+    typeof message === "string" ? message : "Algo está errado"
+  return NextResponse.json({ error: responseMessage }, { status: 400 })
 }
 
 export const unauthorized = (message: string = "Unauthorized") => {
@@ -33,12 +35,11 @@ export const notFound = (message: string = "Not Found") => {
   return NextResponse.json({ error: message }, { status: 404 })
 }
 
-export const conflict = (message: string | object = "Conflict") => {
+export const conflict = (message: string | object = "conflict") => {
   return NextResponse.json({ error: message }, { status: 409 })
 }
 
 export const serverError = (error: unknown) => {
-  console.error("Internal Server Error:", error)
   const message =
     error instanceof Error ? error.message : "Internal Server Error"
   return NextResponse.json({ error: message }, { status: 500 })
