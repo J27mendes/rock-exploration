@@ -15,7 +15,7 @@ export class LoginUserUseCase {
     const user = await this.findUserByEmail.execute(email)
 
     if (!user) {
-      throw new UserNotFoundError()
+      throw new UserNotFoundError("Usuário não encontrado")
     }
 
     const isPasswordCorrect = await this.comparator.execute(senha, user.senha)
