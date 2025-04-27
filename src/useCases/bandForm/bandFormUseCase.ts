@@ -49,6 +49,12 @@ export class CreateBandFormUseCase {
         return badRequest("Já existe uma banda com esse nome cadastrada.")
       }
 
+      if (data.quantidadeIntegrantes !== data.integrantes.length) {
+        return badRequest(
+          `A quantidade de integrantes (${data.quantidadeIntegrantes}) não corresponde ao número de integrantes enviados (${data.integrantes.length}).`
+        )
+      }
+
       const createdForm = await this.repository.create(data, idBanda)
 
       const integrantes = Array.isArray(createdForm.integrantes)
