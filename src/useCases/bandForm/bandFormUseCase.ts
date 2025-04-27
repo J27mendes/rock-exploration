@@ -55,6 +55,12 @@ export class CreateBandFormUseCase {
         )
       }
 
+      if (data.quantidadeMusicas !== data.setList.length) {
+        return badRequest(
+          `A quantidade de músicas (${data.quantidadeMusicas}) não corresponde ao número de músicas enviados no setlist (${data.setList.length}).`
+        )
+      }
+
       const createdForm = await this.repository.create(data, idBanda)
 
       const integrantes = Array.isArray(createdForm.integrantes)
