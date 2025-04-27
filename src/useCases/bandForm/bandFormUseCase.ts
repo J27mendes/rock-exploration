@@ -3,8 +3,11 @@ import {
   CreateBandFormWithPresentationTimeDTO,
 } from "@/repositories"
 import { BadRequestError } from "@/errors"
-import { formatStyle, formattedBandName } from "@/utils"
-
+import {
+  formatStyle,
+  formattedBandName,
+  calculateTotalMusicTime,
+} from "@/utils"
 export interface CreateBandFormDTO {
   banda: string
   quantidadeIntegrantes: number
@@ -45,10 +48,7 @@ export class CreateBandFormUseCase {
 
       const style = formatStyle(data.estilo)
 
-      const totalTempoMusicas = data.setList.reduce(
-        (acc, curr) => acc + curr.tempoMusica,
-        0
-      )
+      const totalTempoMusicas = calculateTotalMusicTime(data.setList)
 
       if (totalTempoMusicas < 2400 || totalTempoMusicas > 3600) {
         throw new BadRequestError(
