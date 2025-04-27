@@ -16,6 +16,14 @@ export class CreateBandFormRepository {
     }
   }
 
+  async findByBandName(banda: string) {
+    return prisma.bandForm.findUnique({
+      where: {
+        banda,
+      },
+    })
+  }
+
   async create(data: CreateBandFormDTO, userId: string): Promise<BandForm> {
     try {
       const newBandForm = await prisma.bandForm.create({
