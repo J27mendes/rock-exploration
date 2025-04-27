@@ -50,10 +50,5 @@ export const createBandFormSchema = z
         .min(1, "Nome do segundo número é obrigatório"),
       segundoNumero: z.string().min(1, "Segundo número é obrigatório"),
     }),
-
-    tempoApresentacao: z
-      .number()
-      .int()
-      .min(1, "Tempo de apresentação é obrigatório"),
   })
   .strict()
