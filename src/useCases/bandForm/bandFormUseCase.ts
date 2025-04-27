@@ -3,7 +3,7 @@ import {
   CreateBandFormWithPresentationTimeDTO,
 } from "@/repositories"
 import { BadRequestError } from "@/errors"
-import { formattedBandName } from "@/utils"
+import { formatStyle, formattedBandName } from "@/utils"
 
 export interface CreateBandFormDTO {
   banda: string
@@ -43,13 +43,7 @@ export class CreateBandFormUseCase {
 
       const existingForm = await this.repository.findByUserId(idBanda)
 
-      const style = data.estilo
-        .split(" ")
-        .map((word) => word.trim())
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        )
-        .join(" ")
+      const style = formatStyle(data.estilo)
 
       const totalTempoMusicas = data.setList.reduce(
         (acc, curr) => acc + curr.tempoMusica,
