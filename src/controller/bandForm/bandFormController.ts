@@ -3,6 +3,12 @@ import { CreateBandFormUseCase } from "@/useCases"
 import { createBandFormSchema } from "@/schemas"
 import { badRequest, serverError } from "@/helpers"
 import { NextResponse } from "next/server"
+import {
+  BadRequestError,
+  ConflictError,
+  UnauthorizedError,
+  UserNotFoundError,
+} from "@/errors"
 
 export type CreateBandFormDTO = z.infer<typeof createBandFormSchema>
 
@@ -29,6 +35,30 @@ export class CreateBandFormController {
     } catch (error) {
       if (error instanceof ZodError) {
         return badRequest(error.errors)
+      }
+
+      if (error instanceof BadRequestError) {
+        return new NextResponse(JSON.stringify({ message: error.message }), {
+          status: error.statusCode,
+        })
+      }
+
+      if (error instanceof ConflictError) {
+        return new NextResponse(JSON.stringify({ message: error.message }), {
+          status: error.statusCode,
+        })
+      }
+
+      if (error instanceof UserNotFoundError) {
+        return new NextResponse(JSON.stringify({ message: error.message }), {
+          status: error.statusCode,
+        })
+      }
+
+      if (error instanceof UnauthorizedError) {
+        return new NextResponse(JSON.stringify({ message: error.message }), {
+          status: error.statusCode,
+        })
       }
 
       console.error(error)
