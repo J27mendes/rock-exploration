@@ -42,6 +42,13 @@ export class CreateBandFormUseCase {
         return badRequest("Usuário já possui um formulário cadastrado.")
       }
 
+      const existingFormByBandName = await this.repository.findByBandName(
+        data.banda
+      )
+      if (existingFormByBandName) {
+        return badRequest("Já existe uma banda com esse nome cadastrada.")
+      }
+
       const createdForm = await this.repository.create(data, idBanda)
 
       const integrantes = Array.isArray(createdForm.integrantes)
