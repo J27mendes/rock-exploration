@@ -15,33 +15,31 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())                // ID único para o usuário
-  banda    String @unique @db.VarChar(100)            // Nome da banda, pode ser usado como identificador único
-  email    String @db.VarChar(100) @unique            // Email da banda para login
-  senha    String @db.VarChar(100)                    // Senha criptografada da banda
-  bandForm BandForm?                                  // Relacionamento com o formulário da banda
+  id       String    @id @default(uuid())               // ID único para o usuário
+  banda    String    @unique @db.VarChar(100)           // Nome da banda, pode ser usado como identificador único
+  email    String    @db.VarChar(100) @unique           // Email da banda para login
+  senha    String    @db.VarChar(100)                   // Senha criptografada da banda
+  bandForm BandForm?                                    // Relacionamento com o formulário da banda
 
-  createdAt DateTime @default(now())                  // Data de criação
-  updatedAt DateTime @updatedAt                       // Data de atualização
+  createdAt DateTime @default(now())                    // Data de criação
+  updatedAt DateTime @updatedAt                         // Data de atualização
 }
 
 model BandForm {
-  id                   String  @id @default(uuid())                // ID único do formulário
-  idBanda              String  @default(uuid())                    // ID da banda, pode ser o mesmo do modelo User
-  banda                String @unique @db.VarChar(100)             // Nome da banda
-  quantidadeIntegrantes Int                                        // Quantidade de integrantes
-  integrantes          Json                                        // Lista de integrantes (nome e instrumento)
-  estilo               String  @db.VarChar(50)                     // Estilo musical
-  release              String  @db.VarChar(1200)                   // Release da banda
-  imagem               Json                                        // URLs das imagens (banda, logo, mapa palco)
-  quantidadeMusicas    Int                                         // Quantidade de músicas
-  setList              Json                                        // Set list de músicas
-  contato              Json                                        // Contato da banda (email, números)
-  tempoApresentacao    Int                                         // Tempo de apresentação (em segundos)
-
-  userId               String @unique                              // Relacionamento com a tabela User
-  user                 User     @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())                               // Data de criação
-  updatedAt DateTime @updatedAt                                    // Data de atualização
+  id                   String  @id @default(uuid())     // ID único do formulário
+  idBanda              String  @unique                  // ID da banda = ID do usuário
+  userId               String  @unique                  // Adicionando @unique aqui  & // ID do usuário
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)  // Relacionamento com User
+  banda                String  @db.VarChar(100)         // Nome da banda
+  quantidadeIntegrantes Int                             // Quantidade de integrantes
+  integrantes          Json                             // Lista de integrantes (nome e instrumento)
+  estilo               String  @db.VarChar(50)          // Estilo musical
+  release              String  @db.VarChar(1200)        // Release da banda
+  imagem               Json                             // URLs das imagens (banda, logo, mapa palco)
+  quantidadeMusicas    Int                              // Quantidade de músicas
+  setList              Json                             // Set list de músicas
+  contato              Json                             // Contato da banda (email, números)
+  tempoApresentacao    Int                              // Tempo de apresentação (em segundos)
+  createdAt DateTime @default(now())                    // Data de criação
+  updatedAt DateTime @updatedAt                         // Data de atualização
 }
