@@ -7,6 +7,7 @@ import {
   formatStyle,
   formattedBandName,
   calculateTotalMusicTime,
+  validateBandForm,
 } from "@/utils"
 export interface CreateBandFormDTO {
   banda: string
@@ -69,17 +70,12 @@ export class CreateBandFormUseCase {
         )
       }
 
-      if (data.quantidadeIntegrantes !== data.integrantes.length) {
-        throw new BadRequestError(
-          `A quantidade de integrantes (${data.quantidadeIntegrantes}) não corresponde ao número de integrantes enviados (${data.integrantes.length}).`
-        )
-      }
-
-      if (data.quantidadeMusicas !== data.setList.length) {
-        throw new BadRequestError(
-          `A quantidade de músicas (${data.quantidadeMusicas}) não corresponde ao número de músicas enviados no setlist (${data.setList.length}).`
-        )
-      }
+      validateBandForm(
+        data.quantidadeIntegrantes,
+        data.integrantes.length,
+        data.quantidadeMusicas,
+        data.setList.length
+      )
 
       const payload: CreateBandFormWithPresentationTimeDTO = {
         ...data,
