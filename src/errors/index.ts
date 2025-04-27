@@ -1,2 +1,1 @@
-export * from "./unauthorizedError"
-export * from "./userNotFoundError"
+export * from "./appError"
