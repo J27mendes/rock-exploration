@@ -17,7 +17,7 @@ export class CreateBandFormRepository {
   }
 
   async findByBandName(banda: string) {
-    return prisma.bandForm.findUnique({
+    return prisma.bandForm.findFirst({
       where: {
         banda,
       },
