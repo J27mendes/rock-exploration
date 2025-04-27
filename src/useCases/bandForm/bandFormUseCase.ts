@@ -1,5 +1,5 @@
 import { CreateBandFormRepository } from "@/repositories"
-import { badRequest, serverError } from "@/helpers/httpResponse"
+import { BadRequestError } from "@/errors"
 
 export interface CreateBandFormDTO {
   banda: string
@@ -36,27 +36,34 @@ export class CreateBandFormUseCase {
 
   async execute(data: CreateBandFormDTO, idBanda: string) {
     try {
+      const bandName = data.banda.trim().toLowerCase()
+      const formattedBandName =
+        bandName.charAt(0).toUpperCase() + bandName.slice(1)
+
+      data.banda = formattedBandName
       const existingForm = await this.repository.findByUserId(idBanda)
 
       if (existingForm) {
-        return badRequest("Usuário já possui um formulário cadastrado.")
+        throw new BadRequestError("Usuário já possui um formulário cadastrado.")
       }
 
       const existingFormByBandName = await this.repository.findByBandName(
         data.banda
       )
       if (existingFormByBandName) {
-        return badRequest("Já existe uma banda com esse nome cadastrada.")
+        throw new BadRequestError(
+          "Já existe uma banda com esse nome cadastrada."
+        )
       }
 
       if (data.quantidadeIntegrantes !== data.integrantes.length) {
-        return badRequest(
+        throw new BadRequestError(
           `A quantidade de integrantes (${data.quantidadeIntegrantes}) não corresponde ao número de integrantes enviados (${data.integrantes.length}).`
         )
       }
 
       if (data.quantidadeMusicas !== data.setList.length) {
-        return badRequest(
+        throw new BadRequestError(
           `A quantidade de músicas (${data.quantidadeMusicas}) não corresponde ao número de músicas enviados no setlist (${data.setList.length}).`
         )
       }
@@ -75,7 +82,7 @@ export class CreateBandFormUseCase {
       }
     } catch (error) {
       console.error("Erro no CreateBandFormUseCase:", error)
-      return serverError(error)
+      throw error
     }
   }
 }
