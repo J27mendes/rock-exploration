@@ -1,4 +1,7 @@
-import { CreateBandFormRepository } from "@/repositories"
+import {
+  CreateBandFormRepository,
+  CreateBandFormWithPresentationTimeDTO,
+} from "@/repositories"
 import { BadRequestError } from "@/errors"
 
 export interface CreateBandFormDTO {
@@ -28,7 +31,6 @@ export interface CreateBandFormDTO {
     nomeSegundoNumero: string
     segundoNumero: string
   }
-  tempoApresentacao: number
 }
 
 export class CreateBandFormUseCase {
@@ -36,8 +38,7 @@ export class CreateBandFormUseCase {
 
   async execute(data: CreateBandFormDTO, idBanda: string) {
     try {
-      const bandName = data.banda.trim().toUpperCase()
-      data.banda = bandName
+      const formattedBandName = data.banda.trim().toUpperCase()
 
       const existingForm = await this.repository.findByUserId(idBanda)
 
@@ -48,7 +49,6 @@ export class CreateBandFormUseCase {
           (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         )
         .join(" ")
-      data.estilo = style
 
       const totalTempoMusicas = data.setList.reduce(
         (acc, curr) => acc + curr.tempoMusica,
@@ -86,7 +86,14 @@ export class CreateBandFormUseCase {
         )
       }
 
-      const createdForm = await this.repository.create(data, idBanda)
+      const payload: CreateBandFormWithPresentationTimeDTO = {
+        ...data,
+        banda: formattedBandName,
+        estilo: style,
+        tempoApresentacao: totalTempoMusicas,
+      }
+
+      const createdForm = await this.repository.create(payload, idBanda)
 
       const integrantes = Array.isArray(createdForm.integrantes)
         ? (
@@ -97,6 +104,9 @@ export class CreateBandFormUseCase {
       return {
         banda: createdForm.banda,
         integrantes,
+        tempoApresentacaoMinutos: Math.round(
+          createdForm.tempoApresentacao / 60
+        ),
       }
     } catch (error) {
       console.error("Erro no CreateBandFormUseCase:", error)
