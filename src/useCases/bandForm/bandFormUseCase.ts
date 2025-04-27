@@ -9,6 +9,7 @@ import {
   calculateTotalMusicTime,
   validateBandForm,
   membersName,
+  convertToMinutes,
 } from "@/utils"
 export interface CreateBandFormDTO {
   banda: string
@@ -91,12 +92,12 @@ export class CreateBandFormUseCase {
         createdForm.integrantes as { nome: string; instrumento: string }[]
       )
 
+      const minutes = convertToMinutes(createdForm.tempoApresentacao)
+
       return {
         banda: createdForm.banda,
         integrantes,
-        tempoApresentacaoMinutos: Math.round(
-          createdForm.tempoApresentacao / 60
-        ),
+        tempoApresentacao: minutes,
       }
     } catch (error) {
       console.error("Erro no CreateBandFormUseCase:", error)
