@@ -3512,10 +3512,10 @@ export namespace Prisma {
     id?: string
     idBanda?: string
     userId?: string
+    banda?: string
     AND?: BandFormWhereInput | BandFormWhereInput[]
     OR?: BandFormWhereInput[]
     NOT?: BandFormWhereInput | BandFormWhereInput[]
-    banda?: StringFilter<"BandForm"> | string
     quantidadeIntegrantes?: IntFilter<"BandForm"> | number
     integrantes?: JsonFilter<"BandForm">
     estilo?: StringFilter<"BandForm"> | string
@@ -3528,7 +3528,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"BandForm"> | Date | string
     updatedAt?: DateTimeFilter<"BandForm"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "idBanda" | "userId">
+  }, "id" | "idBanda" | "userId" | "banda">
 
   export type BandFormOrderByWithAggregationInput = {
     id?: SortOrder

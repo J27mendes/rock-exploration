@@ -30,7 +30,7 @@ model BandForm {
   idBanda              String  @unique                  // ID da banda = ID do usuário
   userId               String  @unique                  // Adicionando @unique aqui  & // ID do usuário
   user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)  // Relacionamento com User
-  banda                String  @db.VarChar(100)         // Nome da banda
+  banda                String  @unique @db.VarChar(100) // Nome da banda
   quantidadeIntegrantes Int                             // Quantidade de integrantes
   integrantes          Json                             // Lista de integrantes (nome e instrumento)
   estilo               String  @db.VarChar(50)          // Estilo musical

@@ -26,21 +26,20 @@ model User {
 }
 
 model BandForm {
-  id                    String @id @default(uuid()) // ID único do formulário
-  idBanda               String @unique // ID da banda = ID do usuário
-  userId                String @unique // Adicionando @unique aqui                         // ID do usuário
-  user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade) // Relacionamento com User
-  banda                 String @db.VarChar(100) // Nome da banda
+  id                    String   @id @default(uuid()) // ID único do formulário
+  idBanda               String   @unique // ID da banda = ID do usuário
+  userId                String   @unique // Adicionando @unique aqui  & // ID do usuário
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade) // Relacionamento com User
+  banda                 String   @unique @db.VarChar(100) // Nome da banda
   quantidadeIntegrantes Int // Quantidade de integrantes
   integrantes           Json // Lista de integrantes (nome e instrumento)
-  estilo                String @db.VarChar(50) // Estilo musical
-  release               String @db.VarChar(1200) // Release da banda
+  estilo                String   @db.VarChar(50) // Estilo musical
+  release               String   @db.VarChar(1200) // Release da banda
   imagem                Json // URLs das imagens (banda, logo, mapa palco)
   quantidadeMusicas     Int // Quantidade de músicas
   setList               Json // Set list de músicas
   contato               Json // Contato da banda (email, números)
   tempoApresentacao     Int // Tempo de apresentação (em segundos)
-
-  createdAt DateTime @default(now()) // Data de criação
-  updatedAt DateTime @updatedAt // Data de atualização
+  createdAt             DateTime @default(now()) // Data de criação
+  updatedAt             DateTime @updatedAt // Data de atualização
 }
