@@ -5,11 +5,7 @@ import { authorization } from "@/middleware"
 import { ok, serverError, handleZodError } from "@/helpers"
 import { NextRequest } from "next/server"
 import { uploadImages } from "@/utils"
-interface UploadFile {
-  buffer: Buffer
-  originalname: string
-  mimetype: string
-}
+import { UploadFile } from "@/interfaces/bandForm"
 
 export async function POST(req: NextRequest) {
   try {

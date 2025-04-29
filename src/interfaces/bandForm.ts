@@ -31,3 +31,9 @@ export interface CreateBandFormWithPresentationTimeDTO
   extends CreateBandFormDTO {
   tempoApresentacao: number
 }
+
+export interface UploadFile {
+  buffer: Buffer
+  originalname: string
+  mimetype: string
+}
