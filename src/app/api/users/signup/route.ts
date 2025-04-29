@@ -1,8 +1,8 @@
-import { NextRequest } from "next/server"
-import { PostUserController } from "@/controller/user/userController"
-import { created, handleZodError, serverError } from "@/helpers/httpResponse"
 import { ZodError } from "zod"
-import { createUserSchema } from "@/schemas/user/userSchema"
+import { NextRequest } from "next/server"
+import { PostUserController } from "@/controller"
+import { created, handleZodError, serverError } from "@/helpers"
+import { createUserSchema } from "@/schemas"
 
 export async function POST(req: NextRequest) {
   try {

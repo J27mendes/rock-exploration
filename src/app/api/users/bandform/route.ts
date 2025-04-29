@@ -1,9 +1,9 @@
-import { createBandFormSchema } from "@/schemas/bandForm/createBandFormSchema"
-import { CreateBandFormController } from "@/controller/bandForm/bandFormController"
-import { authorization } from "@/middleware/authMiddleware"
-import { ok, serverError, handleZodError } from "@/helpers/httpResponse"
-import { NextRequest } from "next/server"
 import { ZodError } from "zod"
+import { createBandFormSchema } from "@/schemas"
+import { CreateBandFormController } from "@/controller"
+import { authorization } from "@/middleware"
+import { ok, serverError, handleZodError } from "@/helpers"
+import { NextRequest } from "next/server"
 import { uploadImages } from "@/utils"
 interface UploadFile {
   buffer: Buffer
