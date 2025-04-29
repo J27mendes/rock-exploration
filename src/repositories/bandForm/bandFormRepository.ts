@@ -1,12 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import { BandForm } from "@prisma/client"
-import { CreateBandFormDTO } from "@/useCases"
 import { generateId } from "@/utils"
-
-export interface CreateBandFormWithPresentationTimeDTO
-  extends CreateBandFormDTO {
-  tempoApresentacao: number
-}
+import { CreateBandFormWithPresentationTimeDTO } from "@/interfaces/bandForm"
 export class CreateBandFormRepository {
   async findByUserId(userId: string): Promise<BandForm | null> {
     try {

@@ -1,12 +1,7 @@
 import { PasswordComparatorAdapter } from "@/adapters"
 import { UnauthorizedError, UserNotFoundError } from "@/errors"
 import { FindUserByEmailRepository } from "@/repositories"
-
-type LoginRequest = {
-  email: string
-  senha: string
-}
-
+import { LoginRequest } from "@/types/user"
 export class LoginUserUseCase {
   private findUserByEmail = new FindUserByEmailRepository()
   private comparator = new PasswordComparatorAdapter()

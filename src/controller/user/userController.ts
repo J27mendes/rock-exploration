@@ -1,12 +1,9 @@
 import { PostUserUseCase } from "@/useCases/user/userUseCase"
-import { createUserSchema } from "@/schemas/user/userSchema"
-import { z, ZodError } from "zod"
+import { ZodError } from "zod"
 import { badRequest, serverError, created } from "@/helpers/httpResponse"
 import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
 import { NextResponse } from "next/server"
-
-export type CreateUserInput = z.infer<typeof createUserSchema>
-
+import { CreateUserInput } from "@/types/user"
 export class PostUserController {
   private useCase: PostUserUseCase
   private tokensGenerator: TokensGenerator

@@ -1,7 +1,4 @@
-import {
-  CreateBandFormRepository,
-  CreateBandFormWithPresentationTimeDTO,
-} from "@/repositories"
+import { CreateBandFormRepository } from "@/repositories"
 import { BadRequestError } from "@/errors"
 import {
   formatStyle,
@@ -11,35 +8,10 @@ import {
   membersName,
   convertToMinutes,
 } from "@/utils"
-export interface CreateBandFormDTO {
-  banda: string
-  quantidadeIntegrantes: number
-  integrantes: {
-    nome: string
-    instrumento: string
-  }[]
-  estilo: string
-  release: string
-  imagem: {
-    urlImagemBanda: string
-    urlImagemLogo: string
-    urlMapaPalco: string
-  }
-  quantidadeMusicas: number
-  setList: {
-    nomeMusica: string
-    tempoMusica: number
-    letraMusica: string
-  }[]
-  contato: {
-    email: string
-    nomePrimeiroNumero: string
-    primeiroNumero: string
-    nomeSegundoNumero: string
-    segundoNumero: string
-  }
-}
-
+import {
+  CreateBandFormDTO,
+  CreateBandFormWithPresentationTimeDTO,
+} from "@/interfaces/bandForm"
 export class CreateBandFormUseCase {
   private repository = new CreateBandFormRepository()
 

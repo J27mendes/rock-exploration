@@ -1,15 +1,7 @@
 import { PasswordHasherAdapter } from "@/adapters"
 import { conflict, notFound } from "@/helpers"
+import { UpdateUserInput } from "@/interfaces/user"
 import { prisma } from "@/lib/prisma"
-
-interface UpdateUserInput {
-  userId: string
-  data: {
-    email?: string
-    senha?: string
-  }
-}
-
 export class UpdateUserUseCase {
   async execute({ userId, data }: UpdateUserInput) {
     const user = await prisma.user.findUnique({

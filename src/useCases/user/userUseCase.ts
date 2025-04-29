@@ -5,13 +5,7 @@ import {
 import { generateId } from "@/utils"
 import { PasswordHasherAdapter } from "@/adapters"
 import { conflict } from "@/helpers"
-
-type BandRequest = {
-  banda: string
-  email: string
-  senha: string
-}
-
+import { BandRequest } from "@/types/user"
 export class PostUserUseCase {
   private createUserRepository: PostgresCreateUserRepository
 
