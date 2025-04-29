@@ -1,4 +1,5 @@
 export * from "./bandForm/bandFormController"
+export * from "./bandForm/deleteBandFormController"
 export * from "./user/loginUserController"
 export * from "./user/userController"
 export * from "./user/deleteController"
