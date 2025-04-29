@@ -31,8 +31,11 @@ export const forbidden = (message: string = "Forbidden") => {
   return NextResponse.json({ error: message }, { status: 403 })
 }
 
-export const notFound = (message: string = "Not Found") => {
-  return NextResponse.json({ error: message }, { status: 404 })
+export function notFound(message: string = "Not Found") {
+  return new Response(JSON.stringify({ error: message }), {
+    status: 404,
+    headers: { "Content-Type": "application/json" },
+  })
 }
 
 export const conflict = (message: string | object = "conflict") => {
