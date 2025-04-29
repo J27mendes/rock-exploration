@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const validatedBody = await createBandFormSchema.parseAsync(body)
     const controller = new CreateBandFormController()
-    const response = await controller.execute(validatedBody, idBandForm)
+    const response = await controller.execute(req, validatedBody, idBandForm)
     if (response instanceof Response) {
       return response
     }
