@@ -1,52 +1,62 @@
-import { storage } from "../../firebaseConfig"
+import { storage } from "@/googleCloudStorage"
 import * as path from "path"
+import { v4 as uuidv4 } from "uuid"
 
-// Função para fazer o upload de múltiplas imagens para o Firebase Storage e retornar as URLs
-async function uploadImages(files: Express.Multer.File[]): Promise<{
+export async function uploadImages(
+  files: { buffer: Buffer; originalname: string; mimetype: string }[],
+  nomeBanda: string
+): Promise<{
   urlImagemBanda: string
   urlImagemLogo: string
   urlMapaPalco: string
 }> {
   try {
+    if (files.length !== 3) {
+      throw new Error("Você precisa enviar exatamente 3 imagens.")
+    }
+
     const imageUrls = {
       urlImagemBanda: "",
       urlImagemLogo: "",
       urlMapaPalco: "",
     }
 
-    // Para cada arquivo de imagem, vamos fazer o upload
+    const allowedExtensions = [".jpg", ".jpeg", ".png"]
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
-      const timestamp = Date.now()
-      const extension = path.extname(file.originalname)
-      const fileName = `images/${timestamp}-${file.originalname}`
-      const fileUpload = storage.file(fileName)
+      const extension = path.extname(file.originalname).toLowerCase()
 
-      const allowedExtensions = [".jpg", ".jpeg", ".png"]
       if (!allowedExtensions.includes(extension)) {
         throw new Error("A extensão da imagem não é permitida")
       }
 
-      // Fazendo o upload do arquivo
+      const tipoImagem = i === 0 ? "banda" : i === 1 ? "logo" : "mapa-palco"
+
+      const sanitizedBandaName = nomeBanda
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\-]/g, "")
+
+      const fileName = `images/${sanitizedBandaName}/${tipoImagem}-${uuidv4()}${extension}`
+      const fileUpload = storage.file(fileName)
+
       await fileUpload.save(file.buffer, {
         contentType: file.mimetype,
         public: true,
       })
 
-      // Gerando a URL pública para cada imagem
       const publicUrl = `https://storage.googleapis.com/${storage.name}/${fileName}`
 
-      // Atribuindo as URLs de forma correspondente ao tipo de imagem
       if (i === 0) imageUrls.urlImagemBanda = publicUrl
       if (i === 1) imageUrls.urlImagemLogo = publicUrl
       if (i === 2) imageUrls.urlMapaPalco = publicUrl
     }
 
-    return imageUrls // Retorna um objeto com as URLs
+    return imageUrls
   } catch (error) {
     console.error("Erro ao fazer upload das imagens:", error)
     throw new Error("Erro ao fazer upload das imagens")
   }
 }
-
-export { uploadImages }
