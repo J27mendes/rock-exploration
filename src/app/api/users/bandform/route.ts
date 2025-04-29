@@ -6,6 +6,7 @@ import { ok, serverError, handleZodError } from "@/helpers"
 import { NextRequest } from "next/server"
 import { uploadImages } from "@/utils"
 import { UploadFile } from "@/interfaces/bandForm"
+import { DeleteBandFormController } from "@/controller"
 
 export async function POST(req: NextRequest) {
   try {
@@ -74,6 +75,28 @@ export async function POST(req: NextRequest) {
       return handleZodError(error)
     }
     console.error("Erro:", error)
+    return serverError(error)
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const tokenValidate = authorization(req)
+    if (tokenValidate instanceof Response) {
+      return tokenValidate
+    }
+
+    const idBandForm = tokenValidate
+    const controller = new DeleteBandFormController()
+    const response = await controller.execute(idBandForm)
+
+    if (response instanceof Response) {
+      return response
+    }
+
+    return ok(response)
+  } catch (error) {
+    console.error("Erro ao deletar formulário:", error)
     return serverError(error)
   }
 }
