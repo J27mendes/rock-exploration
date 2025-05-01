@@ -60,9 +60,12 @@ export class CreateBandFormUseCase {
 
       const createdForm = await this.repository.create(payload, idBanda)
 
-      const integrantes = membersName(
-        createdForm.integrantes as { nome: string; instrumento: string }[]
-      )
+      const integrantes = membersName({
+        integrantes: createdForm.integrantes as {
+          nome: string
+          instrumento: string
+        }[],
+      })
 
       const minutes = convertToMinutes(createdForm.tempoApresentacao)
 
