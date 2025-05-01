@@ -11,7 +11,7 @@ import {
 import {
   CreateBandFormDTO,
   CreateBandFormWithPresentationTimeDTO,
-} from "@/interfaces/bandForm"
+} from "@/interfaces"
 export class CreateBandFormUseCase {
   private repository = new CreateBandFormRepository()
 

@@ -1,6 +1,6 @@
 import { PasswordHasherAdapter } from "@/adapters"
 import { conflict, notFound } from "@/helpers"
-import { UpdateUserInput } from "@/interfaces/user"
+import { UpdateUserInput } from "@/interfaces"
 import { prisma } from "@/lib/prisma"
 export class UpdateUserUseCase {
   async execute({ userId, data }: UpdateUserInput) {
