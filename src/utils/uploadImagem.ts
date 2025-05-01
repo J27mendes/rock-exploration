@@ -1,6 +1,5 @@
 import { storage } from "@/googleCloudStorage"
 import * as path from "path"
-import { v4 as uuidv4 } from "uuid"
 
 export async function uploadImages(
   files: { buffer: Buffer; originalname: string; mimetype: string }[],
@@ -39,7 +38,14 @@ export async function uploadImages(
         .replace(/\s+/g, "-")
         .replace(/[^a-z0-9\-]/g, "")
 
-      const fileName = `images/${sanitizedBandaName}/${tipoImagem}-${uuidv4()}${extension}`
+      const nameWithoutExt = path.basename(file.originalname, extension)
+      const sanitizedOriginalName = nameWithoutExt
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\-]/g, "")
+
+      const fileName = `images/${sanitizedBandaName}/${tipoImagem}-${sanitizedOriginalName}${extension}`
       const fileUpload = storage.file(fileName)
 
       await fileUpload.save(file.buffer, {
