@@ -3,6 +3,7 @@ import { createBandFormSchema, updateBandFormSchema } from "@/schemas"
 import {
   CreateBandFormController,
   DeleteBandFormController,
+  GetBandFormController,
   UpdateBandFormController,
 } from "@/controller"
 import { authorization } from "@/middleware"
@@ -25,31 +26,6 @@ export async function POST(req: NextRequest) {
     const validatedBody = await createBandFormSchema.parseAsync(fullBbody)
     const controller = new CreateBandFormController()
     const response = await controller.execute(validatedBody, idBandForm)
-
-    if (response instanceof Response) {
-      return response
-    }
-
-    return ok(response)
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return handleZodError(error)
-    }
-    console.error("Erro:", error)
-    return serverError(error)
-  }
-}
-
-export async function DELETE(req: NextRequest) {
-  try {
-    const tokenValidate = authorization(req)
-    if (tokenValidate instanceof Response) {
-      return tokenValidate
-    }
-
-    const idBandForm = tokenValidate
-    const controller = new DeleteBandFormController()
-    const response = await controller.execute(idBandForm)
 
     if (response instanceof Response) {
       return response
@@ -103,6 +79,52 @@ export async function PATCH(request: NextRequest) {
       return handleZodError(error)
     }
 
+    console.error("Erro:", error)
+    return serverError(error)
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const userId = authorization(req)
+    if (userId instanceof Response) {
+      return userId
+    }
+
+    const controller = new GetBandFormController()
+    const response = await controller.execute(userId)
+
+    if (response instanceof Response) {
+      return response
+    }
+
+    return ok(response)
+  } catch (error) {
+    console.error("Erro:", error)
+    return serverError(error)
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const tokenValidate = authorization(req)
+    if (tokenValidate instanceof Response) {
+      return tokenValidate
+    }
+
+    const idBandForm = tokenValidate
+    const controller = new DeleteBandFormController()
+    const response = await controller.execute(idBandForm)
+
+    if (response instanceof Response) {
+      return response
+    }
+
+    return ok(response)
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return handleZodError(error)
+    }
     console.error("Erro:", error)
     return serverError(error)
   }
