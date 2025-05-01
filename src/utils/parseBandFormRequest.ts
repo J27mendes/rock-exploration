@@ -1,4 +1,4 @@
-import { UploadFile } from "@/interfaces/bandForm"
+import { UploadFile } from "@/interfaces"
 import { NextRequest } from "next/server"
 import { uploadImages } from "./uploadImagem"
 

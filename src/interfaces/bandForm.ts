@@ -26,12 +26,10 @@ export interface CreateBandFormDTO {
     segundoNumero: string
   }
 }
-
 export interface CreateBandFormWithPresentationTimeDTO
   extends CreateBandFormDTO {
   tempoApresentacao: number
 }
-
 export interface UploadFile {
   buffer: Buffer
   originalname: string
