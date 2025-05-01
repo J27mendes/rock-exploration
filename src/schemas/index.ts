@@ -1,4 +1,5 @@
 export * from "./bandForm/createBandFormSchema"
+export * from "./bandForm/updateBandFormSchema"
 export * from "./user/loginSchema"
 export * from "./user/updateSchema"
 export * from "./user/userSchema"

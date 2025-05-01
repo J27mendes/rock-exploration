@@ -1,5 +1,6 @@
 export * from "./bandForm/bandFormUseCase"
 export * from "./bandForm/deleteBandFormUseCase"
+export * from "./bandForm/updateBandFormUseCase"
 export * from "./user/loginUseCase"
 export * from "./user/userUseCase"
 export * from "./user/updateUseCase"
