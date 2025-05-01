@@ -1,12 +1,15 @@
 import { ZodError } from "zod"
-import { createBandFormSchema } from "@/schemas"
-import { CreateBandFormController } from "@/controller"
+import { createBandFormSchema, updateBandFormSchema } from "@/schemas"
+import {
+  CreateBandFormController,
+  DeleteBandFormController,
+  UpdateBandFormController,
+} from "@/controller"
 import { authorization } from "@/middleware"
 import { ok, serverError, handleZodError } from "@/helpers"
 import { NextRequest } from "next/server"
-import { uploadImages } from "@/utils"
-import { UploadFile } from "@/interfaces/bandForm"
-import { DeleteBandFormController } from "@/controller"
+import { parseBandFormRequest } from "@/utils"
+import { prisma } from "@/lib/prisma"
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,49 +20,7 @@ export async function POST(req: NextRequest) {
 
     const idBandForm = tokenValidate
 
-    const formData = await req.formData()
-
-    const textFields: Record<string, string> = {}
-    const files: UploadFile[] = []
-
-    for (const [key, value] of formData.entries()) {
-      if (value instanceof File) {
-        files.push({
-          buffer: Buffer.from(await value.arrayBuffer()),
-          originalname: value.name,
-          mimetype: value.type,
-        })
-      } else {
-        textFields[key] = value
-      }
-    }
-
-    const bodyParcial = {
-      ...textFields,
-      quantidadeIntegrantes: Number(textFields.quantidadeIntegrantes),
-      quantidadeMusicas: Number(textFields.quantidadeMusicas),
-      integrantes: JSON.parse(textFields.integrantes),
-      setList: JSON.parse(textFields.setList),
-      contato: JSON.parse(textFields.contato),
-    }
-
-    if (files.length !== 3) {
-      return new Response(
-        JSON.stringify({ error: "Você precisa enviar exatamente 3 imagens." }),
-        { status: 400 }
-      )
-    }
-
-    const urls = await uploadImages(files, textFields.banda)
-
-    const fullBbody = {
-      ...bodyParcial,
-      imagem: {
-        urlImagemBanda: urls.urlImagemBanda,
-        urlImagemLogo: urls.urlImagemLogo,
-        urlMapaPalco: urls.urlMapaPalco,
-      },
-    }
+    const fullBbody = await parseBandFormRequest(req)
 
     const validatedBody = await createBandFormSchema.parseAsync(fullBbody)
     const controller = new CreateBandFormController()
@@ -96,7 +57,53 @@ export async function DELETE(req: NextRequest) {
 
     return ok(response)
   } catch (error) {
-    console.error("Erro ao deletar formulário:", error)
+    if (error instanceof ZodError) {
+      return handleZodError(error)
+    }
+    console.error("Erro:", error)
+    return serverError(error)
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const userId = authorization(request)
+
+    if (userId instanceof Response) {
+      return userId
+    }
+
+    const bandForm = await prisma.bandForm.findUnique({
+      where: { userId },
+    })
+
+    if (!bandForm) {
+      return new Response(
+        JSON.stringify({ message: "Formulário da banda não encontrado." }),
+        { status: 404 }
+      )
+    }
+
+    const fullBody = await parseBandFormRequest(request)
+    const validatedBody = await updateBandFormSchema.parseAsync(fullBody)
+
+    const controller = new UpdateBandFormController()
+    const response = await controller.execute(validatedBody, bandForm.id)
+
+    if (response instanceof Response) {
+      return response
+    }
+
+    return new Response(JSON.stringify(response), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return handleZodError(error)
+    }
+
+    console.error("Erro:", error)
     return serverError(error)
   }
 }
