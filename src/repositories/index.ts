@@ -1,6 +1,7 @@
 export * from "./bandForm/bandFormRepository"
 export * from "./bandForm/deleteBandFormRepository"
 export * from "./bandForm/updateBandFormRepository"
+export * from "./bandForm/getBandFormRepository"
 export * from "./user/userRepository"
 export * from "./user/findUserByEmail"
 export * from "./user/deleteRepository"
