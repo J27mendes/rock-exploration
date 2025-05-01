@@ -1,7 +1,8 @@
+import { Music } from "@/types"
 import { calculateTotalMusicTime } from "./calculateTotalMusicTime"
 import { BadRequestError } from "@/errors"
 
-export function validateAndCalculateSetList(setList: any[]) {
+export function validateAndCalculateSetList(setList: Music[]): number {
   const totalTime = calculateTotalMusicTime(setList)
   if (totalTime < 2400 || totalTime > 3600) {
     throw new BadRequestError(
