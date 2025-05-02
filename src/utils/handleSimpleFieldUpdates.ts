@@ -1,9 +1,6 @@
+import { UpdateBandFormDTO } from "@/types"
 import { formattedBandName } from "./formatBandName"
 import { formatStyle } from "./formatStyle"
-import { updateBandFormSchema } from "@/schemas"
-import { z } from "zod"
-
-type UpdateBandFormDTO = z.infer<typeof updateBandFormSchema>
 
 export function handleSimpleFieldUpdates<T extends keyof UpdateBandFormDTO>(
   updates: Partial<UpdateBandFormDTO>,
