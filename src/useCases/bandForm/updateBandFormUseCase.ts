@@ -1,17 +1,19 @@
 import deepEqual from "fast-deep-equal"
 import { updateBandFormSchema } from "@/schemas"
-import { addIfChanged, mergeJsonObject } from "@/utils/objectUtils"
 import { BadRequestError, UserNotFoundError } from "@/errors"
 import {
-  formatStyle,
+  mergeJsonObject,
   formattedBandName,
   validateBandForm,
   membersName,
   convertToMinutes,
+  deleteFileGCS,
+  validateAndCalculateSetList,
+  cleanUndefined,
 } from "@/utils"
 import { UpdateBandFormRepository } from "@/repositories"
-import { UpdateBandFormDTO } from "@/types"
-import { validateAndCalculateSetList } from "@/utils/validateSetList"
+import { Imagem, UpdateBandFormDTO } from "@/types"
+import { handleSimpleFieldUpdates } from "@/utils/handleSimpleFieldUpdates"
 
 export class UpdateBandFormUseCase {
   private repository = new UpdateBandFormRepository()
@@ -39,49 +41,36 @@ export class UpdateBandFormUseCase {
       }
     }
 
-    if (validatedData.estilo)
-      addIfChanged(
-        updates,
-        "estilo",
-        formatStyle(validatedData.estilo),
-        existingForm.estilo
-      )
-
-    if (validatedData.release)
-      addIfChanged(
-        updates,
-        "release",
-        validatedData.release,
-        existingForm.release
-      )
-
-    if (validatedData.quantidadeIntegrantes !== undefined)
-      addIfChanged(
-        updates,
-        "quantidadeIntegrantes",
-        validatedData.quantidadeIntegrantes,
-        existingForm.quantidadeIntegrantes
-      )
-
-    if (validatedData.quantidadeMusicas !== undefined)
-      addIfChanged(
-        updates,
-        "quantidadeMusicas",
-        validatedData.quantidadeMusicas,
-        existingForm.quantidadeMusicas
-      )
-
-    if (validatedData.integrantes) {
-      const integrantes = Array.isArray(validatedData.integrantes)
-        ? validatedData.integrantes
-        : []
-      addIfChanged(
-        updates,
-        "integrantes",
-        integrantes,
-        existingForm.integrantes as { nome: string; instrumento: string }[]
-      )
-    }
+    handleSimpleFieldUpdates(
+      updates,
+      "banda",
+      validatedData.banda,
+      existingForm.banda
+    )
+    handleSimpleFieldUpdates(
+      updates,
+      "estilo",
+      validatedData.estilo,
+      existingForm.estilo
+    )
+    handleSimpleFieldUpdates(
+      updates,
+      "release",
+      validatedData.release,
+      existingForm.release
+    )
+    handleSimpleFieldUpdates(
+      updates,
+      "quantidadeIntegrantes",
+      validatedData.quantidadeIntegrantes,
+      existingForm.quantidadeIntegrantes
+    )
+    handleSimpleFieldUpdates(
+      updates,
+      "quantidadeMusicas",
+      validatedData.quantidadeMusicas,
+      existingForm.quantidadeMusicas
+    )
 
     // SetList com validação
     if (validatedData.setList) {
@@ -114,18 +103,38 @@ export class UpdateBandFormUseCase {
       setListLength
     )
 
-    // Campos compostos (JSON)
-    const imagemMerge = mergeJsonObject(
-      existingForm.imagem,
-      validatedData.imagem
-    )
+    const oldImage: Imagem = (existingForm.imagem ?? {}) as Imagem
+    const newImage: Imagem = (validatedData.imagem ?? {}) as Imagem
+
+    if (validatedData.imagem) {
+      const endImage: Imagem = { ...oldImage }
+
+      const imageFields: (keyof Imagem)[] = [
+        "urlImagemBanda",
+        "urlImagemLogo",
+        "urlMapaPalco",
+      ]
+
+      for (const field of imageFields) {
+        const newUrl = newImage?.[field]
+        const oldUrl = oldImage?.[field]
+
+        if (newUrl && newUrl !== oldUrl) {
+          if (oldUrl) {
+            await deleteFileGCS(oldUrl)
+          }
+          endImage[field] = newUrl
+        }
+      }
+      if (!deepEqual(cleanUndefined(endImage), cleanUndefined(oldImage))) {
+        updates.imagem = endImage
+      }
+    }
     const contatoMerge = mergeJsonObject(
       existingForm.contato,
       validatedData.contato
     )
 
-    if (!deepEqual(imagemMerge, existingForm.imagem))
-      updates.imagem = imagemMerge
     if (!deepEqual(contatoMerge, existingForm.contato))
       updates.contato = contatoMerge
 
