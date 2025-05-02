@@ -4,17 +4,15 @@ import { BadRequestError, UserNotFoundError } from "@/errors"
 import {
   mergeJsonObject,
   formattedBandName,
-  validateBandForm,
   membersName,
   convertToMinutes,
   deleteFileGCS,
-  validateAndCalculateSetList,
   cleanUndefined,
+  handleSimpleFieldUpdates,
+  handleSetListAndValidateBandForm,
 } from "@/utils"
 import { UpdateBandFormRepository } from "@/repositories"
 import { Imagem, UpdateBandFormDTO } from "@/types"
-import { handleSimpleFieldUpdates } from "@/utils/handleSimpleFieldUpdates"
-
 export class UpdateBandFormUseCase {
   private repository = new UpdateBandFormRepository()
 
@@ -72,36 +70,15 @@ export class UpdateBandFormUseCase {
       existingForm.quantidadeMusicas
     )
 
-    // SetList com validação
-    if (validatedData.setList) {
-      const totalTime = validateAndCalculateSetList(validatedData.setList)
-      if (!deepEqual(validatedData.setList, existingForm.setList)) {
-        updates.setList = validatedData.setList
-        updates.tempoApresentacao = totalTime
-      }
+    const existingFormParsed: UpdateBandFormDTO = {
+      ...existingForm,
+      imagem: existingForm.imagem as UpdateBandFormDTO["imagem"],
+      integrantes: existingForm.integrantes as UpdateBandFormDTO["integrantes"],
+      setList: existingForm.setList as UpdateBandFormDTO["setList"],
+      contato: existingForm.contato as UpdateBandFormDTO["contato"],
     }
 
-    // Validação lógica entre campos
-    const integrantesLength =
-      validatedData.integrantes?.length ??
-      (Array.isArray(existingForm.integrantes)
-        ? existingForm.integrantes.length
-        : 0)
-
-    const setListLength =
-      validatedData.setList?.length ??
-      (Array.isArray(existingForm.setList) ? existingForm.setList.length : 0)
-    const quantidadeIntegrantes =
-      validatedData.quantidadeIntegrantes ?? existingForm.quantidadeIntegrantes
-    const quantidadeMusicas =
-      validatedData.quantidadeMusicas ?? existingForm.quantidadeMusicas
-
-    validateBandForm(
-      quantidadeIntegrantes,
-      integrantesLength,
-      quantidadeMusicas,
-      setListLength
-    )
+    handleSetListAndValidateBandForm(updates, validatedData, existingFormParsed)
 
     const oldImage: Imagem = (existingForm.imagem ?? {}) as Imagem
     const newImage: Imagem = (validatedData.imagem ?? {}) as Imagem
