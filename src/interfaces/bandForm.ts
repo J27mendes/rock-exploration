@@ -35,3 +35,6 @@ export interface UploadFile {
   originalname: string
   mimetype: string
 }
+export interface FormWithId {
+  id: string
+}
