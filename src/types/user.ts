@@ -38,3 +38,11 @@ export type CreateBandParams = {
   email: string
   senha: string
 }
+
+export type JsonResponse<T> = {
+  data: T
+}
+
+export type ErrorResponse = {
+  error: string
+}

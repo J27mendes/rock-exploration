@@ -1,5 +1,5 @@
 import { Music } from "@/types"
-import { calculateTotalMusicTime } from "./calculateTotalMusicTime"
+import { calculateTotalMusicTime } from "./backend/calculateTotalMusicTime"
 import { BadRequestError } from "@/errors"
 
 export function validateAndCalculateSetList(setList: Music[]): number {

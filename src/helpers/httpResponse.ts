@@ -1,13 +1,6 @@
+import { ErrorResponse, JsonResponse } from "@/types"
 import { NextResponse } from "next/server"
 import { ZodError, ZodIssue } from "zod"
-
-type JsonResponse<T> = {
-  data: T
-}
-
-type ErrorResponse = {
-  error: string
-}
 
 export function ok<T>(data: T): Response {
   const body: JsonResponse<T> = { data }
