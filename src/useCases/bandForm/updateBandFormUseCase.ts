@@ -5,14 +5,12 @@ import {
   mergeJsonObject,
   membersName,
   convertToMinutes,
-  deleteFileGCS,
-  cleanUndefined,
   handleSimpleFieldUpdates,
   handleSetListAndValidateBandForm,
-  validateAndUpdateBandName,
+  processImageUpdate,
 } from "@/utils"
 import { UpdateBandFormRepository } from "@/repositories"
-import { Imagem, UpdateBandFormDTO } from "@/types"
+import { UpdateBandFormDTO } from "@/types"
 export class UpdateBandFormUseCase {
   private repository = new UpdateBandFormRepository()
 
@@ -34,13 +32,6 @@ export class UpdateBandFormUseCase {
       setList: existingForm.setList as UpdateBandFormDTO["setList"],
       contato: existingForm.contato as UpdateBandFormDTO["contato"],
     }
-
-    await validateAndUpdateBandName(
-      validatedData,
-      existingFormParsed,
-      this.repository,
-      updates
-    )
 
     handleSimpleFieldUpdates(
       updates,
@@ -75,33 +66,8 @@ export class UpdateBandFormUseCase {
 
     handleSetListAndValidateBandForm(updates, validatedData, existingFormParsed)
 
-    const oldImage: Imagem = (existingForm.imagem ?? {}) as Imagem
-    const newImage: Imagem = (validatedData.imagem ?? {}) as Imagem
+    await processImageUpdate(validatedData, existingFormParsed, updates)
 
-    if (validatedData.imagem) {
-      const endImage: Imagem = { ...oldImage }
-
-      const imageFields: (keyof Imagem)[] = [
-        "urlImagemBanda",
-        "urlImagemLogo",
-        "urlMapaPalco",
-      ]
-
-      for (const field of imageFields) {
-        const newUrl = newImage?.[field]
-        const oldUrl = oldImage?.[field]
-
-        if (newUrl && newUrl !== oldUrl) {
-          if (oldUrl) {
-            await deleteFileGCS(oldUrl)
-          }
-          endImage[field] = newUrl
-        }
-      }
-      if (!deepEqual(cleanUndefined(endImage), cleanUndefined(oldImage))) {
-        updates.imagem = endImage
-      }
-    }
     const contatoMerge = mergeJsonObject(
       existingForm.contato,
       validatedData.contato
