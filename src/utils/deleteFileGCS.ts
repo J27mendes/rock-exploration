@@ -8,7 +8,6 @@ export async function deleteFileGCS(url: string) {
       ""
     )
     await storage.file(filePath).delete()
-    console.log(`Arquivo deletado: ${filePath}`)
   } catch (err) {
     console.error("Erro ao deletar arquivo do GCS:", err)
   }
