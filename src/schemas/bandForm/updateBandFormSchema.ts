@@ -48,5 +48,16 @@ export const updateBandFormSchema = z.object({
         .min(1, "Segundo número é obrigatório")
         .optional(),
     })
+    .refine(
+      (data) =>
+        data.email &&
+        data.nomePrimeiroNumero &&
+        data.primeiroNumero &&
+        data.nomeSegundoNumero &&
+        data.segundoNumero,
+      {
+        message: "Todos os campos de contato são obrigatórios",
+      }
+    )
     .optional(),
 })
