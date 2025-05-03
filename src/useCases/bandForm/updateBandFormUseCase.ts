@@ -1,13 +1,12 @@
-import deepEqual from "fast-deep-equal"
 import { updateBandFormSchema } from "@/schemas"
 import { BadRequestError, UserNotFoundError } from "@/errors"
 import {
-  mergeJsonObject,
   membersName,
   convertToMinutes,
-  handleSimpleFieldUpdates,
   handleSetListAndValidateBandForm,
   processImageUpdate,
+  updateContactField,
+  updateBandForm,
 } from "@/utils"
 import { UpdateBandFormRepository } from "@/repositories"
 import { UpdateBandFormDTO } from "@/types"
@@ -33,50 +32,15 @@ export class UpdateBandFormUseCase {
       contato: existingForm.contato as UpdateBandFormDTO["contato"],
     }
 
-    handleSimpleFieldUpdates(
-      updates,
-      "banda",
-      validatedData.banda,
-      existingForm.banda
-    )
-    handleSimpleFieldUpdates(
-      updates,
-      "estilo",
-      validatedData.estilo,
-      existingForm.estilo
-    )
-    handleSimpleFieldUpdates(
-      updates,
-      "release",
-      validatedData.release,
-      existingForm.release
-    )
-    handleSimpleFieldUpdates(
-      updates,
-      "quantidadeIntegrantes",
-      validatedData.quantidadeIntegrantes,
-      existingForm.quantidadeIntegrantes
-    )
-    handleSimpleFieldUpdates(
-      updates,
-      "quantidadeMusicas",
-      validatedData.quantidadeMusicas,
-      existingForm.quantidadeMusicas
-    )
+    const simpleFieldUpdates = updateBandForm(validatedData, existingFormParsed)
+    Object.assign(updates, simpleFieldUpdates)
 
     handleSetListAndValidateBandForm(updates, validatedData, existingFormParsed)
 
     await processImageUpdate(validatedData, existingFormParsed, updates)
 
-    const contatoMerge = mergeJsonObject(
-      existingForm.contato,
-      validatedData.contato
-    )
+    await updateContactField(validatedData, existingFormParsed, updates)
 
-    if (!deepEqual(contatoMerge, existingForm.contato))
-      updates.contato = contatoMerge
-
-    // Se nada mudou
     if (Object.keys(updates).length === 0) {
       throw new BadRequestError(
         "Os dados enviados são idênticos aos já salvos."
