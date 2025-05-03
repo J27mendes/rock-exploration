@@ -3,13 +3,13 @@ import { updateBandFormSchema } from "@/schemas"
 import { BadRequestError, UserNotFoundError } from "@/errors"
 import {
   mergeJsonObject,
-  formattedBandName,
   membersName,
   convertToMinutes,
   deleteFileGCS,
   cleanUndefined,
   handleSimpleFieldUpdates,
   handleSetListAndValidateBandForm,
+  validateAndUpdateBandName,
 } from "@/utils"
 import { UpdateBandFormRepository } from "@/repositories"
 import { Imagem, UpdateBandFormDTO } from "@/types"
@@ -27,17 +27,20 @@ export class UpdateBandFormUseCase {
     const updates: Partial<UpdateBandFormDTO> & { tempoApresentacao?: number } =
       {}
 
-    // validação nome da Banda
-    if (validatedData.banda) {
-      const bandName = formattedBandName(validatedData.banda)
-      if (bandName !== existingForm.banda) {
-        const bandForm = await this.repository.findByBandName(bandName)
-        if (bandForm && bandForm.id !== existingForm.id) {
-          throw new BadRequestError("Já existe uma banda com esse nome.")
-        }
-        updates.banda = bandName
-      }
+    const existingFormParsed: UpdateBandFormDTO = {
+      ...existingForm,
+      imagem: existingForm.imagem as UpdateBandFormDTO["imagem"],
+      integrantes: existingForm.integrantes as UpdateBandFormDTO["integrantes"],
+      setList: existingForm.setList as UpdateBandFormDTO["setList"],
+      contato: existingForm.contato as UpdateBandFormDTO["contato"],
     }
+
+    await validateAndUpdateBandName(
+      validatedData,
+      existingFormParsed,
+      this.repository,
+      updates
+    )
 
     handleSimpleFieldUpdates(
       updates,
@@ -69,14 +72,6 @@ export class UpdateBandFormUseCase {
       validatedData.quantidadeMusicas,
       existingForm.quantidadeMusicas
     )
-
-    const existingFormParsed: UpdateBandFormDTO = {
-      ...existingForm,
-      imagem: existingForm.imagem as UpdateBandFormDTO["imagem"],
-      integrantes: existingForm.integrantes as UpdateBandFormDTO["integrantes"],
-      setList: existingForm.setList as UpdateBandFormDTO["setList"],
-      contato: existingForm.contato as UpdateBandFormDTO["contato"],
-    }
 
     handleSetListAndValidateBandForm(updates, validatedData, existingFormParsed)
 
