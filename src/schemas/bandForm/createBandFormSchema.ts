@@ -6,6 +6,7 @@ export const createBandFormSchema = z
     quantidadeIntegrantes: z
       .number()
       .int()
+      .positive()
       .min(1, "Quantidade de integrantes é obrigatória"),
 
     integrantes: z.array(
@@ -29,6 +30,7 @@ export const createBandFormSchema = z
     quantidadeMusicas: z
       .number()
       .int()
+      .positive()
       .min(1, "Quantidade de músicas é obrigatória"),
 
     setList: z.array(
