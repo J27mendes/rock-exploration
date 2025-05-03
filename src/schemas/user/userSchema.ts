@@ -5,6 +5,7 @@ export const createUserSchema = z
   .object({
     banda: z
       .string()
+      .trim()
       .min(1, "O nome da banda é obrigatório")
       .refine((value) => !value.startsWith(" "), {
         message: "O nome da banda não pode começar com espaço",

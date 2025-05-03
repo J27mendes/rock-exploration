@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const createBandFormSchema = z
   .object({
-    banda: z.string().min(1, "Nome da banda é obrigatório"),
+    banda: z.string().trim().min(1, "Nome da banda é obrigatório"),
     quantidadeIntegrantes: z
       .number()
       .int()
@@ -11,15 +11,16 @@ export const createBandFormSchema = z
 
     integrantes: z.array(
       z.object({
-        nome: z.string().min(1, "Nome do integrante é obrigatório"),
+        nome: z.string().trim().min(1, "Nome do integrante é obrigatório"),
         instrumento: z
           .string()
+          .trim()
           .min(1, "Instrumento do integrante é obrigatório"),
       })
     ),
 
-    estilo: z.string().min(1, "Estilo musical é obrigatório"),
-    release: z.string().min(1, "Release é obrigatório"),
+    estilo: z.string().trim().min(1, "Estilo musical é obrigatório"),
+    release: z.string().trim().min(1, "Release é obrigatório"),
 
     imagem: z.object({
       urlImagemBanda: z.string().url("URL da imagem da banda inválida"),
@@ -35,9 +36,9 @@ export const createBandFormSchema = z
 
     setList: z.array(
       z.object({
-        nomeMusica: z.string().min(1, "Nome da música é obrigatório"),
+        nomeMusica: z.string().trim().min(1, "Nome da música é obrigatório"),
         tempoMusica: z.number().int().min(1, "Tempo da música é obrigatório"),
-        letraMusica: z.string().min(1, "Letra da música é obrigatória"),
+        letraMusica: z.string().trim().min(1, "Letra da música é obrigatória"),
       })
     ),
 
@@ -45,10 +46,12 @@ export const createBandFormSchema = z
       email: z.string().email("Email inválido"),
       nomePrimeiroNumero: z
         .string()
+        .trim()
         .min(1, "Nome do primeiro número é obrigatório"),
       primeiroNumero: z.string().min(1, "Primeiro número é obrigatório"),
       nomeSegundoNumero: z
         .string()
+        .trim()
         .min(1, "Nome do segundo número é obrigatório"),
       segundoNumero: z.string().min(1, "Segundo número é obrigatório"),
     }),
