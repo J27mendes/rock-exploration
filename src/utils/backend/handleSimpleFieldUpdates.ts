@@ -1,7 +1,7 @@
 import { UpdateBandFormDTO } from "@/types"
 
-import { formattedBandName } from "./backend/formatBandName"
-import { formatStyle } from "./backend/formatStyle"
+import { formattedBandName } from "./formatBandName"
+import { formatStyle } from "./formatStyle"
 
 export function handleSimpleFieldUpdates<T extends keyof UpdateBandFormDTO>(
   updates: Partial<UpdateBandFormDTO>,

@@ -1,7 +1,7 @@
 import { BadRequestError } from "@/errors"
 import { Music } from "@/types"
 
-import { calculateTotalMusicTime } from "./backend/calculateTotalMusicTime"
+import { calculateTotalMusicTime } from "./calculateTotalMusicTime"
 
 export function validateAndCalculateSetList(setList: Music[]): number {
   const totalTime = calculateTotalMusicTime(setList)

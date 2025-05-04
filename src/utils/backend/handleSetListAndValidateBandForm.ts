@@ -4,7 +4,6 @@ import { UpdateBandFormDTO } from "@/types"
 
 import { validateBandForm } from "./validateBandForm"
 import { validateAndCalculateSetList } from "./validateSetList"
-
 export function handleSetListAndValidateBandForm(
   updates: Partial<UpdateBandFormDTO> & { tempoApresentacao?: number },
   validated: UpdateBandFormDTO,

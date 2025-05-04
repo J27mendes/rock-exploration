@@ -2,8 +2,8 @@ import deepEqual from "fast-deep-equal"
 
 import { Imagem, UpdateBandFormDTO } from "@/types"
 
-import { cleanUndefined } from "./backend/cleanUndefined"
-import { deleteFileGCS } from "./backend/deleteFileGCS"
+import { cleanUndefined } from "./cleanUndefined"
+import { deleteFileGCS } from "./deleteFileGCS"
 
 export async function processImageUpdate(
   validatedData: UpdateBandFormDTO,
