@@ -1,16 +1,17 @@
+import { NextRequest } from "next/server"
 import { ZodError } from "zod"
-import { createBandFormSchema, updateBandFormSchema } from "@/schemas"
+
 import {
   CreateBandFormController,
   DeleteBandFormController,
   GetBandFormController,
   UpdateBandFormController,
 } from "@/controller"
-import { authorization } from "@/middleware"
-import { ok, serverError, handleZodError } from "@/helpers"
-import { NextRequest } from "next/server"
-import { parseBandFormRequest } from "@/utils"
+import { handleZodError, ok, serverError } from "@/helpers"
 import { prisma } from "@/lib/prisma"
+import { authorization } from "@/middleware"
+import { createBandFormSchema, updateBandFormSchema } from "@/schemas"
+import { parseBandFormRequest } from "@/utils"
 
 export async function POST(req: NextRequest) {
   try {
@@ -56,7 +57,7 @@ export async function PATCH(request: NextRequest) {
     if (!bandForm) {
       return new Response(
         JSON.stringify({ message: "Formulário da banda não encontrado." }),
-        { status: 404 }
+        { status: 404 },
       )
     }
 

@@ -1,6 +1,7 @@
-import { prisma } from "@/lib/prisma"
-import { UserNotFoundError } from "@/errors"
 import { Prisma } from "@prisma/client"
+
+import { UserNotFoundError } from "@/errors"
+import { prisma } from "@/lib/prisma"
 
 export class DeleteBandFormRepository {
   async execute(userId: string) {
@@ -13,7 +14,7 @@ export class DeleteBandFormRepository {
 
       if (!bandForm) {
         throw new UserNotFoundError(
-          "Formulário da banda não encontrado ou já deletado"
+          "Formulário da banda não encontrado ou já deletado",
         )
       }
 
@@ -30,7 +31,7 @@ export class DeleteBandFormRepository {
         error.code === "P2025"
       ) {
         throw new UserNotFoundError(
-          "Formulário da banda não encontrado ou já deletado"
+          "Formulário da banda não encontrado ou já deletado",
         )
       }
       throw error

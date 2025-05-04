@@ -1,9 +1,10 @@
-import { storage } from "@/googleCloudStorage"
 import * as path from "path"
+
+import { storage } from "@/googleCloudStorage"
 
 export async function uploadImages(
   files: { buffer: Buffer; originalname: string; mimetype: string }[],
-  nomeBanda: string
+  nomeBanda: string,
 ): Promise<{
   urlImagemBanda: string
   urlImagemLogo: string

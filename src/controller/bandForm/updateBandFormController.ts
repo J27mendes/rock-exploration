@@ -1,22 +1,23 @@
-import { ZodError } from "zod"
-import { updateBandFormSchema } from "@/schemas"
-import { UpdateBandFormUseCase } from "@/useCases"
-import { badRequest, serverError } from "@/helpers"
 import { NextResponse } from "next/server"
+import { ZodError } from "zod"
+
 import {
   BadRequestError,
   ConflictError,
   UnauthorizedError,
   UserNotFoundError,
 } from "@/errors"
+import { badRequest, serverError } from "@/helpers"
+import { updateBandFormSchema } from "@/schemas"
 import { UpdateBandFormDTO } from "@/types"
+import { UpdateBandFormUseCase } from "@/useCases"
 
 export class UpdateBandFormController {
   private useCase = new UpdateBandFormUseCase()
 
   async execute(
     body: UpdateBandFormDTO,
-    id: string
+    id: string,
   ): Promise<Response | object> {
     try {
       const validatedData = updateBandFormSchema.parse(body)

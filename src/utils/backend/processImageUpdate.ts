@@ -1,12 +1,14 @@
 import deepEqual from "fast-deep-equal"
+
 import { Imagem, UpdateBandFormDTO } from "@/types"
-import { deleteFileGCS } from "./backend/deleteFileGCS"
+
 import { cleanUndefined } from "./backend/cleanUndefined"
+import { deleteFileGCS } from "./backend/deleteFileGCS"
 
 export async function processImageUpdate(
   validatedData: UpdateBandFormDTO,
   existingForm: UpdateBandFormDTO,
-  updates: Partial<UpdateBandFormDTO>
+  updates: Partial<UpdateBandFormDTO>,
 ) {
   const oldImage: Imagem = (existingForm.imagem ?? {}) as Imagem
   const newImage: Imagem = (validatedData.imagem ?? {}) as Imagem

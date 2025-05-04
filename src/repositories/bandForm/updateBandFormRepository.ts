@@ -1,6 +1,7 @@
+import { BandForm } from "@prisma/client"
+
 import { prisma } from "@/lib/prisma"
 import { UpdateBandFormDTO } from "@/types"
-import { BandForm } from "@prisma/client"
 
 export class UpdateBandFormRepository {
   async findById(id: string): Promise<BandForm | null> {
@@ -26,7 +27,7 @@ export class UpdateBandFormRepository {
 
   async update(
     formId: string,
-    data: Partial<UpdateBandFormDTO>
+    data: Partial<UpdateBandFormDTO>,
   ): Promise<BandForm> {
     try {
       const updated = await prisma.bandForm.update({

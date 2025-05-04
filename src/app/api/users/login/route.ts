@@ -1,5 +1,6 @@
-import { ZodError } from "zod"
 import { NextRequest } from "next/server"
+import { ZodError } from "zod"
+
 import { LoginUserController } from "@/controller"
 import { handleZodError, ok, serverError } from "@/helpers"
 import { loginUserSchema } from "@/schemas"

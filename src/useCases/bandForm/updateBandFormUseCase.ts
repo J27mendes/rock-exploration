@@ -1,15 +1,15 @@
-import { updateBandFormSchema } from "@/schemas"
 import { BadRequestError, UserNotFoundError } from "@/errors"
+import { UpdateBandFormRepository } from "@/repositories"
+import { updateBandFormSchema } from "@/schemas"
+import { UpdateBandFormDTO } from "@/types"
 import {
-  membersName,
   convertToMinutes,
   handleSetListAndValidateBandForm,
+  membersName,
   processImageUpdate,
-  updateContactField,
   updateBandForm,
+  updateContactField,
 } from "@/utils"
-import { UpdateBandFormRepository } from "@/repositories"
-import { UpdateBandFormDTO } from "@/types"
 export class UpdateBandFormUseCase {
   private repository = new UpdateBandFormRepository()
 
@@ -43,7 +43,7 @@ export class UpdateBandFormUseCase {
 
     if (Object.keys(updates).length === 0) {
       throw new BadRequestError(
-        "Os dados enviados são idênticos aos já salvos."
+        "Os dados enviados são idênticos aos já salvos.",
       )
     }
 

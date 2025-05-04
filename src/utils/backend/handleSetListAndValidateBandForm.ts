@@ -1,12 +1,14 @@
 import deepEqual from "fast-deep-equal"
+
 import { UpdateBandFormDTO } from "@/types"
-import { validateAndCalculateSetList } from "./validateSetList"
+
 import { validateBandForm } from "./validateBandForm"
+import { validateAndCalculateSetList } from "./validateSetList"
 
 export function handleSetListAndValidateBandForm(
   updates: Partial<UpdateBandFormDTO> & { tempoApresentacao?: number },
   validated: UpdateBandFormDTO,
-  existing: UpdateBandFormDTO
+  existing: UpdateBandFormDTO,
 ) {
   // Atualiza setList e tempoApresentacao
   const setListChanged =
@@ -36,6 +38,6 @@ export function handleSetListAndValidateBandForm(
     quantidadeIntegrantes,
     integrantesLength,
     quantidadeMusicas,
-    setListLength
+    setListLength,
   )
 }

@@ -1,12 +1,12 @@
-import { DeleteUserUseCase } from "@/useCases"
 import { unauthorized } from "@/helpers"
+import { DeleteUserUseCase } from "@/useCases"
 export class DeleteUserController {
   private useCase = new DeleteUserUseCase()
 
   async execute(userId: string, confirmMessage: string) {
     if (confirmMessage !== "CONFIRMO A EXCLUSÃO DA CONTA") {
       return unauthorized(
-        "Confirmação inválida. Digite exatamente: CONFIRMO A EXCLUSÃO DA CONTA"
+        "Confirmação inválida. Digite exatamente: CONFIRMO A EXCLUSÃO DA CONTA",
       )
     }
 

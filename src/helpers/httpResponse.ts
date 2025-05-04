@@ -1,6 +1,7 @@
-import { ErrorResponse, JsonResponse } from "@/types"
 import { NextResponse } from "next/server"
 import { ZodError, ZodIssue } from "zod"
+
+import { ErrorResponse, JsonResponse } from "@/types"
 
 export function ok<T>(data: T): Response {
   const body: JsonResponse<T> = { data }
@@ -64,7 +65,7 @@ export const serverError = (error: unknown) => {
 export function handleZodError(error: ZodError): Response {
   const unrecognized = error.errors.find(
     (e): e is ZodIssue & { keys: string[] } =>
-      e.code === "unrecognized_keys" && "keys" in e
+      e.code === "unrecognized_keys" && "keys" in e,
   )
 
   if (unrecognized) {

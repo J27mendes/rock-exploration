@@ -1,7 +1,8 @@
+import { NextResponse } from "next/server"
+
 import { UserNotFoundError } from "@/errors"
 import { serverError } from "@/helpers"
 import { GetBandFormUseCase } from "@/useCases"
-import { NextResponse } from "next/server"
 
 export class GetBandFormController {
   private useCase = new GetBandFormUseCase()

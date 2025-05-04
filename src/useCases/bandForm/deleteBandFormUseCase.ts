@@ -1,5 +1,5 @@
-import { DeleteBandFormRepository } from "@/repositories"
 import { UserNotFoundError } from "@/errors"
+import { DeleteBandFormRepository } from "@/repositories"
 
 export class DeleteBandFormUseCase {
   async execute(idBandForm: string) {
@@ -16,7 +16,7 @@ export class DeleteBandFormUseCase {
     } catch (error) {
       console.error(error)
       throw new UserNotFoundError(
-        "Formulário da banda não encontrado ou já deletado"
+        "Formulário da banda não encontrado ou já deletado",
       )
     }
   }

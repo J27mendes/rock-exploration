@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server"
 import { ZodError } from "zod"
-import { updateUserSchema } from "@/schemas"
-import { UpdateUserUseCase } from "@/useCases"
-import { badRequest, serverError } from "@/helpers"
+
 import { TokensGenerator } from "@/adapters"
+import { badRequest, serverError } from "@/helpers"
+import { updateUserSchema } from "@/schemas"
 import { SuccessUpdate, UpdateUserDTO } from "@/types/user"
+import { UpdateUserUseCase } from "@/useCases"
 export class UpdateUserController {
   private useCase = new UpdateUserUseCase()
   private tokensGenerator = new TokensGenerator()

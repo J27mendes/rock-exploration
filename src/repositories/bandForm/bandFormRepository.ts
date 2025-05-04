@@ -1,7 +1,8 @@
-import { prisma } from "@/lib/prisma"
 import { BandForm } from "@prisma/client"
-import { generateId } from "@/utils"
+
 import { CreateBandFormWithPresentationTimeDTO } from "@/interfaces"
+import { prisma } from "@/lib/prisma"
+import { generateId } from "@/utils"
 export class CreateBandFormRepository {
   async findByUserId(userId: string): Promise<BandForm | null> {
     try {
@@ -25,7 +26,7 @@ export class CreateBandFormRepository {
 
   async create(
     data: CreateBandFormWithPresentationTimeDTO,
-    userId: string
+    userId: string,
   ): Promise<BandForm> {
     try {
       const newBandForm = await prisma.bandForm.create({

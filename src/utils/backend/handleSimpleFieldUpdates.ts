@@ -1,4 +1,5 @@
 import { UpdateBandFormDTO } from "@/types"
+
 import { formattedBandName } from "./backend/formatBandName"
 import { formatStyle } from "./backend/formatStyle"
 
@@ -6,7 +7,7 @@ export function handleSimpleFieldUpdates<T extends keyof UpdateBandFormDTO>(
   updates: Partial<UpdateBandFormDTO>,
   field: T,
   newValue: UpdateBandFormDTO[T],
-  oldValue: UpdateBandFormDTO[T]
+  oldValue: UpdateBandFormDTO[T],
 ) {
   if (newValue !== undefined && newValue !== oldValue) {
     updates[field] = newValue
@@ -15,7 +16,7 @@ export function handleSimpleFieldUpdates<T extends keyof UpdateBandFormDTO>(
 
 export function updateBandForm(
   validatedData: UpdateBandFormDTO,
-  existingForm: UpdateBandFormDTO
+  existingForm: UpdateBandFormDTO,
 ) {
   const updates: Partial<UpdateBandFormDTO> = {}
 
@@ -31,7 +32,7 @@ export function updateBandForm(
       updates,
       "estilo",
       formatStyle(validatedData.estilo),
-      existingForm.estilo
+      existingForm.estilo,
     )
   }
 
@@ -39,21 +40,21 @@ export function updateBandForm(
     updates,
     "release",
     validatedData.release,
-    existingForm.release
+    existingForm.release,
   )
 
   handleSimpleFieldUpdates(
     updates,
     "quantidadeIntegrantes",
     validatedData.quantidadeIntegrantes,
-    existingForm.quantidadeIntegrantes
+    existingForm.quantidadeIntegrantes,
   )
 
   handleSimpleFieldUpdates(
     updates,
     "quantidadeMusicas",
     validatedData.quantidadeMusicas,
-    existingForm.quantidadeMusicas
+    existingForm.quantidadeMusicas,
   )
 
   return updates

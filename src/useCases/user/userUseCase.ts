@@ -1,11 +1,11 @@
+import { PasswordHasherAdapter } from "@/adapters"
+import { conflict } from "@/helpers"
 import {
   FindUserByEmailRepository,
   PostgresCreateUserRepository,
 } from "@/repositories"
-import { generateId } from "@/utils"
-import { PasswordHasherAdapter } from "@/adapters"
-import { conflict } from "@/helpers"
 import { BandRequest } from "@/types"
+import { generateId } from "@/utils"
 export class PostUserUseCase {
   private createUserRepository: PostgresCreateUserRepository
 

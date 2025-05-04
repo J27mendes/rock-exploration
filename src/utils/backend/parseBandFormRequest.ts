@@ -1,5 +1,7 @@
-import { UploadFile } from "@/interfaces"
 import { NextRequest } from "next/server"
+
+import { UploadFile } from "@/interfaces"
+
 import { uploadImages } from "./uploadImagem"
 
 export async function parseBandFormRequest(request: NextRequest) {

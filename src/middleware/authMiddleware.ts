@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
-import { env } from "@/lib/envs"
+
 import { unauthorized } from "@/helpers/httpResponse"
+import { env } from "@/lib/envs"
 
 export function authorization(req: Request): string | Response {
   const authHeader = req.headers.get("authorization")

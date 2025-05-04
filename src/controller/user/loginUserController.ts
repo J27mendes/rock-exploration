@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
 import { ZodError } from "zod"
-import { LoginUserUseCase } from "@/useCases"
-import { loginUserSchema } from "@/schemas"
-import { badRequest, notFound, serverError, unauthorized } from "@/helpers"
-import { UnauthorizedError, UserNotFoundError } from "@/errors"
+
 import { TokensGenerator } from "@/adapters"
+import { UnauthorizedError, UserNotFoundError } from "@/errors"
+import { badRequest, notFound, serverError, unauthorized } from "@/helpers"
+import { loginUserSchema } from "@/schemas"
 import { LoginUserDTO, SuccessLogin } from "@/types/user"
+import { LoginUserUseCase } from "@/useCases"
 export class LoginUserController {
   private useCase = new LoginUserUseCase()
   private tokensGenerator = new TokensGenerator()

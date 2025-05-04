@@ -1,5 +1,6 @@
-import { prisma } from "@/lib/prisma"
 import { z } from "zod"
+
+import { prisma } from "@/lib/prisma"
 
 export const createUserSchema = z
   .object({
@@ -19,7 +20,7 @@ export const createUserSchema = z
         },
         {
           message: "Nome da banda já cadastrado",
-        }
+        },
       ),
 
     email: z
@@ -33,14 +34,14 @@ export const createUserSchema = z
         },
         {
           message: "O e-mail deve ter pelo menos 5 caracteres antes do @",
-        }
+        },
       )
       .refine(
         async (email) => {
           const exists = await prisma.user.findUnique({ where: { email } })
           return !exists
         },
-        { message: "E-mail já cadastrado" }
+        { message: "E-mail já cadastrado" },
       ),
 
     senha: z
@@ -51,7 +52,7 @@ export const createUserSchema = z
       .regex(/[0-9]/, "A senha precisa conter pelo menos um número")
       .regex(
         /[^a-zA-Z0-9]/,
-        "A senha precisa conter pelo menos um caractere especial"
+        "A senha precisa conter pelo menos um caractere especial",
       ),
     confirmeSenha: z.string().trim(),
   })

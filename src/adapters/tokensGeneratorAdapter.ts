@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+
 import { env } from "@/lib/envs"
 
 export class TokensGenerator {

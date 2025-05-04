@@ -1,9 +1,10 @@
-import { PostUserUseCase } from "@/useCases/user/userUseCase"
-import { ZodError } from "zod"
-import { badRequest, serverError, created } from "@/helpers/httpResponse"
-import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
 import { NextResponse } from "next/server"
+import { ZodError } from "zod"
+
+import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
+import { badRequest, created, serverError } from "@/helpers/httpResponse"
 import { CreateUserInput } from "@/types/user"
+import { PostUserUseCase } from "@/useCases/user/userUseCase"
 export class PostUserController {
   private useCase: PostUserUseCase
   private tokensGenerator: TokensGenerator

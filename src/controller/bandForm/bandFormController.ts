@@ -1,14 +1,15 @@
-import { z, ZodError } from "zod"
-import { CreateBandFormUseCase } from "@/useCases"
-import { createBandFormSchema } from "@/schemas"
-import { badRequest, serverError } from "@/helpers"
 import { NextResponse } from "next/server"
+import { z, ZodError } from "zod"
+
 import {
   BadRequestError,
   ConflictError,
   UnauthorizedError,
   UserNotFoundError,
 } from "@/errors"
+import { badRequest, serverError } from "@/helpers"
+import { createBandFormSchema } from "@/schemas"
+import { CreateBandFormUseCase } from "@/useCases"
 
 export type CreateBandFormDTO = z.infer<typeof createBandFormSchema>
 
@@ -17,7 +18,7 @@ export class CreateBandFormController {
 
   async execute(
     body: CreateBandFormDTO,
-    idBanda: string
+    idBanda: string,
   ): Promise<Response | object> {
     try {
       const validatedData = createBandFormSchema.parse(body)

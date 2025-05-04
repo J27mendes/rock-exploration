@@ -1,17 +1,17 @@
-import { CreateBandFormRepository } from "@/repositories"
 import { BadRequestError } from "@/errors"
-import {
-  formatStyle,
-  formattedBandName,
-  calculateTotalMusicTime,
-  validateBandForm,
-  membersName,
-  convertToMinutes,
-} from "@/utils"
 import {
   CreateBandFormDTO,
   CreateBandFormWithPresentationTimeDTO,
 } from "@/interfaces"
+import { CreateBandFormRepository } from "@/repositories"
+import {
+  calculateTotalMusicTime,
+  convertToMinutes,
+  formatStyle,
+  formattedBandName,
+  membersName,
+  validateBandForm,
+} from "@/utils"
 export class CreateBandFormUseCase {
   private repository = new CreateBandFormRepository()
 
@@ -27,7 +27,7 @@ export class CreateBandFormUseCase {
 
       if (totalTempoMusicas < 2400 || totalTempoMusicas > 3600) {
         throw new BadRequestError(
-          `O total do tempo das músicas (${totalTempoMusicas} segundos) deve estar entre 2400 segundos (40 minutos) e 3600 segundos (1 hora).`
+          `O total do tempo das músicas (${totalTempoMusicas} segundos) deve estar entre 2400 segundos (40 minutos) e 3600 segundos (1 hora).`,
         )
       }
 
@@ -40,7 +40,7 @@ export class CreateBandFormUseCase {
 
       if (existingFormByBandName) {
         throw new BadRequestError(
-          "Já existe uma banda com esse nome cadastrada."
+          "Já existe uma banda com esse nome cadastrada.",
         )
       }
 
@@ -48,7 +48,7 @@ export class CreateBandFormUseCase {
         data.quantidadeIntegrantes,
         data.integrantes.length,
         data.quantidadeMusicas,
-        data.setList.length
+        data.setList.length,
       )
 
       const payload: CreateBandFormWithPresentationTimeDTO = {
