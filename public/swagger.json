@@ -1,0 +1,812 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Rock Exploration API",
+    "version": "1.0.0",
+    "description": "Documentação das rotas da API para cadastro de bandas"
+  },
+  "paths": {
+    "/api/users/signup": {
+      "post": {
+        "summary": "Cadastrar novo usuário (banda)",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserWithToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação ou usuário já existente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidParamsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "summary": "Login do usuário",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserWithToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidParamsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Credenciais inválidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/me": {
+      "put": {
+        "summary": "Atualizar dados do usuário",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserWithToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidParamsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir usuário",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "confirmMessage",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "CONFIRMO A EXCLUSÃO DA CONTA"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário deletado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "deleted": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "email": { "type": "string" },
+                        "banda": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Confirmação inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/bandform": {
+      "post": {
+        "summary": "Criar formulário de banda",
+        "tags": ["Band"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBandFormInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Formulário da banda criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandFormResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação nos dados do formulário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidParamsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/bandform/{id}": {
+      "get": {
+        "summary": "Buscar formulário da banda",
+        "tags": ["Band"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da banda",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Formulário da banda encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandFormResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Banda não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar formulário da banda",
+        "tags": ["Band"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da banda",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBandFormInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Formulário da banda atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandFormResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação nos dados do formulário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidParamsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Banda não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar formulário da banda",
+        "tags": ["Band"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da banda",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Formulário da banda deletado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "deleted": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "banda": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Banda não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateUserInput": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "banda": { "type": "string" }
+        },
+        "required": ["email", "password", "banda"]
+      },
+      "LoginUserInput": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["email", "password"]
+      },
+      "UpdateUserInput": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "banda": { "type": "string" }
+        },
+        "required": ["email", "password"]
+      },
+      "UserWithToken": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "banda": { "type": "string" },
+          "token": { "type": "string" }
+        }
+      },
+      "CreateBandFormInput": {
+        "type": "object",
+        "properties": {
+          "banda": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Nome da banda é obrigatório"
+          },
+          "quantidadeIntegrantes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantidade de integrantes é obrigatória"
+          },
+          "integrantes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Nome do integrante é obrigatório"
+                },
+                "instrumento": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Instrumento do integrante é obrigatório"
+                }
+              },
+              "required": ["nome", "instrumento"]
+            },
+            "minItems": 1
+          },
+          "estilo": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Estilo musical é obrigatório"
+          },
+          "release": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Release é obrigatório"
+          },
+          "imagem": {
+            "type": "object",
+            "properties": {
+              "urlImagemBanda": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL da imagem da banda inválida"
+              },
+              "urlImagemLogo": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL do logo inválida"
+              },
+              "urlMapaPalco": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL do mapa de palco inválida"
+              }
+            },
+            "required": ["urlImagemBanda", "urlImagemLogo", "urlMapaPalco"]
+          },
+          "quantidadeMusicas": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantidade de músicas é obrigatória"
+          },
+          "setList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nomeMusica": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Nome da música é obrigatório"
+                },
+                "tempoMusica": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Tempo da música é obrigatório"
+                },
+                "letraMusica": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Letra da música é obrigatória"
+                }
+              },
+              "required": ["nomeMusica", "tempoMusica", "letraMusica"]
+            },
+            "minItems": 1
+          },
+          "contato": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "description": "Email inválido"
+              },
+              "nomePrimeiroNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Nome do primeiro número é obrigatório"
+              },
+              "primeiroNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Primeiro número é obrigatório"
+              },
+              "nomeSegundoNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Nome do segundo número é obrigatório"
+              },
+              "segundoNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Segundo número é obrigatório"
+              }
+            },
+            "required": [
+              "email",
+              "nomePrimeiroNumero",
+              "primeiroNumero",
+              "nomeSegundoNumero",
+              "segundoNumero"
+            ]
+          }
+        },
+        "required": [
+          "banda",
+          "quantidadeIntegrantes",
+          "integrantes",
+          "estilo",
+          "release",
+          "imagem",
+          "quantidadeMusicas",
+          "setList",
+          "contato"
+        ]
+      },
+      "UpdateBandFormInput": {
+        "type": "object",
+        "properties": {
+          "banda": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Nome da banda é obrigatório",
+            "nullable": true
+          },
+          "estilo": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Estilo musical é obrigatório",
+            "nullable": true
+          },
+          "release": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Release é obrigatório",
+            "nullable": true
+          },
+          "imagem": {
+            "type": "object",
+            "properties": {
+              "urlImagemBanda": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL da imagem da banda inválida",
+                "nullable": true
+              },
+              "urlImagemLogo": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL do logo inválida",
+                "nullable": true
+              },
+              "urlMapaPalco": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL do mapa de palco inválida",
+                "nullable": true
+              }
+            },
+            "nullable": true
+          },
+          "quantidadeIntegrantes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantidade de integrantes é obrigatória",
+            "nullable": true
+          },
+          "integrantes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Nome do integrante é obrigatório"
+                },
+                "instrumento": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Instrumento do integrante é obrigatório"
+                }
+              }
+            },
+            "nullable": true
+          },
+          "quantidadeMusicas": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantidade de músicas é obrigatória",
+            "nullable": true
+          },
+          "setList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nomeMusica": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Nome da música é obrigatório"
+                },
+                "tempoMusica": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Tempo da música é obrigatório"
+                },
+                "letraMusica": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Letra da música é obrigatória"
+                }
+              },
+              "required": ["nomeMusica", "tempoMusica", "letraMusica"]
+            },
+            "nullable": true
+          },
+          "contato": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "description": "Email inválido",
+                "nullable": true
+              },
+              "nomePrimeiroNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Nome do primeiro número é obrigatório",
+                "nullable": true
+              },
+              "primeiroNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Primeiro número é obrigatório",
+                "nullable": true
+              },
+              "nomeSegundoNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Nome do segundo número é obrigatório",
+                "nullable": true
+              },
+              "segundoNumero": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Segundo número é obrigatório",
+                "nullable": true
+              }
+            },
+            "nullable": true
+          }
+        }
+      },
+      "BandFormResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "genre": { "type": "string" },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "InvalidParamsResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      },
+      "UnauthorizedResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      },
+      "NotFoundResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      },
+      "InternalServerError": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
