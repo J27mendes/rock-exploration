@@ -42,6 +42,20 @@
   --chart-5: 340 75% 55%;
 }
 
+.scroll-star-wars {
+  animation: scrollStarWars 90s linear infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes scrollStarWars {
+  0% {
+    transform: rotateX(25deg) translateY(100%);
+  }
+  100% {
+    transform: rotateX(25deg) translateY(-300%);
+  }
+}
+
 @layer utilities {
   .bg-hero-image {
     background-image: var(--image);
