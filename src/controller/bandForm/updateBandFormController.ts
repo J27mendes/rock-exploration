@@ -39,7 +39,6 @@ export class UpdateBandFormController {
         error instanceof UserNotFoundError ||
         error instanceof UnauthorizedError
       ) {
-        console.log("Erro capturado no controller:", error.message)
         return new NextResponse(JSON.stringify({ message: error.message }), {
           status: error.statusCode,
         })
