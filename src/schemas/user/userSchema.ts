@@ -1,7 +1,5 @@
 import { z } from "zod"
 
-import { prisma } from "@/lib/prisma"
-
 export const createUserSchema = z
   .object({
     banda: z
@@ -10,19 +8,7 @@ export const createUserSchema = z
       .min(1, "O nome da banda é obrigatório")
       .refine((value) => !value.startsWith(" "), {
         message: "O nome da banda não pode começar com espaço",
-      })
-      .refine(
-        async (value) => {
-          const exists = await prisma.user.findUnique({
-            where: { banda: value },
-          })
-          return !exists
-        },
-        {
-          message: "Nome da banda já cadastrado",
-        },
-      ),
-
+      }),
     email: z
       .string()
       .trim()
@@ -35,15 +21,7 @@ export const createUserSchema = z
         {
           message: "O e-mail deve ter pelo menos 5 caracteres antes do @",
         },
-      )
-      .refine(
-        async (email) => {
-          const exists = await prisma.user.findUnique({ where: { email } })
-          return !exists
-        },
-        { message: "E-mail já cadastrado" },
       ),
-
     senha: z
       .string()
       .trim()
