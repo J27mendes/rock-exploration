@@ -7,6 +7,7 @@ import { CreateUserInput } from "@/types"
 export const useSignupForm = () => {
   const signupMethods = useForm<CreateUserInput>({
     resolver: zodResolver(createUserSchema),
+    mode: "onSubmit",
     defaultValues: {
       banda: "",
       email: "",
