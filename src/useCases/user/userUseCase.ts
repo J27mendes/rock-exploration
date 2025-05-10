@@ -1,6 +1,7 @@
 import { PasswordHasherAdapter } from "@/adapters"
 import { conflict } from "@/helpers"
 import {
+  FindUserByBandRepository,
   FindUserByEmailRepository,
   PostgresCreateUserRepository,
 } from "@/repositories"
@@ -19,6 +20,13 @@ export class PostUserUseCase {
 
     if (userExists) {
       return conflict("E-mail já cadastrado")
+    }
+
+    const bandRepository = new FindUserByBandRepository()
+    const bandExists = await bandRepository.execute(banda)
+
+    if (bandExists) {
+      return conflict("Nome da banda já cadastrado")
     }
 
     const hasher = new PasswordHasherAdapter()
