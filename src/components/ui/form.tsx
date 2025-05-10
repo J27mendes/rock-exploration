@@ -7,12 +7,20 @@ import {
   FieldValues,
   FormProvider,
   useFormContext,
+  UseFormReturn,
 } from "react-hook-form"
 
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
+import { CreateUserInput } from "@/types"
 
-const Form = FormProvider
+type FormProps = {
+  children: React.ReactNode
+} & UseFormReturn<CreateUserInput>
+
+const Form = ({ children, ...methods }: FormProps) => {
+  return <FormProvider {...methods}>{children}</FormProvider>
+}
 
 const FormFieldContext = React.createContext<{ name: string } | undefined>(
   undefined,
