@@ -5,9 +5,11 @@ import {
   STORAGE_TOKEN_REFRESH,
 } from "@/constants/localStorage"
 
-export const publicApi = axios.create({ baseURL: "http://localhost:80/api" })
+export const publicApi = axios.create({ baseURL: "http://localhost:3000/api" })
 
-export const protectedApi = axios.create({ baseURL: "http://localhost:80/api" })
+export const protectedApi = axios.create({
+  baseURL: "http://localhost:3000/api",
+})
 
 protectedApi.interceptors.request.use((request) => {
   const accessToken = localStorage.getItem(STORAGE_TOKEN_ACCESS)
