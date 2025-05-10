@@ -1,10 +1,32 @@
+import { NextResponse } from "next/server"
 import { ZodError } from "zod"
 
-import { DeleteUserController } from "@/controller"
-import { UpdateUserController } from "@/controller"
-import { handleZodError, ok, responses, serverError } from "@/helpers"
+import {
+  DeleteUserController,
+  GetUserController,
+  UpdateUserController,
+} from "@/controller"
+import { handleZodError, responses, serverError } from "@/helpers"
 import { authorization } from "@/middleware"
 import { updateUserSchema } from "@/schemas"
+
+export async function GET(req: Request) {
+  try {
+    const userId = authorization(req)
+    if (userId instanceof Response) return userId
+
+    const controller = new GetUserController()
+    const response = await controller.execute(userId)
+
+    if (response instanceof Response) {
+      return responses(response)
+    }
+
+    return NextResponse.json(response, { status: 200 })
+  } catch (error) {
+    return serverError(error)
+  }
+}
 
 export async function PATCH(req: Request) {
   try {
@@ -22,7 +44,7 @@ export async function PATCH(req: Request) {
       return responses(response)
     }
 
-    return ok(response)
+    return NextResponse.json(response, { status: 200 })
   } catch (error) {
     if (error instanceof ZodError) {
       return handleZodError(error)
@@ -46,7 +68,7 @@ export async function DELETE(req: Request) {
       return response
     }
 
-    return ok(response)
+    return NextResponse.json(response, { status: 200 })
   } catch (error) {
     return serverError(error)
   }
