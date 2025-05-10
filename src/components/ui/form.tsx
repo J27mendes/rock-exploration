@@ -4,6 +4,7 @@ import * as React from "react"
 import {
   Controller,
   type ControllerProps,
+  FieldValues,
   FormProvider,
   useFormContext,
 } from "react-hook-form"
@@ -17,7 +18,9 @@ const FormFieldContext = React.createContext<{ name: string } | undefined>(
   undefined,
 )
 
-const FormField = ({ ...props }: ControllerProps) => {
+const FormField = <TFieldValues extends FieldValues>(
+  props: ControllerProps<TFieldValues>,
+) => {
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
       <Controller {...props} />
