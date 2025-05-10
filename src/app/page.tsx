@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import Button from "@/components/Button"
 import ScrollText from "@/components/ScrollText"
-import CreateSignup from "@/pages/SignupDialog"
+import CreateSignup from "@/components/SignupDialog"
 
 const Home = () => {
   const [showSignup, setShowSignup] = useState(false)
