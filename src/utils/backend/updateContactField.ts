@@ -4,7 +4,7 @@ import { UpdateBandFormDTO } from "@/types"
 export async function updateContactField(
   validatedData: UpdateBandFormDTO,
   existingForm: UpdateBandFormDTO,
-  updates: Partial<UpdateBandFormDTO>
+  updates: Partial<UpdateBandFormDTO>,
 ) {
   const contatoAtual = existingForm.contato ?? {}
   const contatoNovo = validatedData.contato ?? {}
@@ -29,13 +29,11 @@ export async function updateContactField(
   })
 
   if (missingFields.length > 0) {
-    console.log("Campos ausentes:", missingFields)
     throw new BadRequestError(
-      `Campos obrigatórios ausentes ou vazios em 'contato': ${missingFields.join(", ")}`
+      `Campos obrigatórios ausentes ou vazios em 'contato': ${missingFields.join(", ")}`,
     )
   }
 
-  // Verifica se algum campo realmente mudou
   const algumCampoMudou = requiredFields.some((key) => {
     const novo = contatoNovo[key as keyof typeof contatoNovo]?.toString().trim()
     const atual = contatoAtual[key as keyof typeof contatoAtual]
