@@ -4,10 +4,11 @@ import { CreateUserInput } from "@/types"
 
 export const UserService = {
   signup: async (input: CreateUserInput) => {
-    const response = await publicApi.post("/users", {
+    const response = await publicApi.post("/users/signup", {
       banda: input.banda,
       email: input.email,
       senha: input.senha,
+      confirmeSenha: input.confirmeSenha,
     })
     return response.data
   },
