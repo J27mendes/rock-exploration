@@ -3,8 +3,10 @@ import "./index.css"
 import type { Metadata } from "next"
 import { Nunito } from "next/font/google"
 
+import { Providers } from "./providers"
+
 const nunito = Nunito({
-  subsets: ["latin"], 
+  subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
@@ -20,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.className} antialiased`}>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
