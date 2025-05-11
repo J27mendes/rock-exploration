@@ -2,7 +2,7 @@
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
-import { UserService } from "@/app/api/services/user"
+import { useSignup } from "@/app/api/hooks/user"
 import Button from "@/components/Button"
 import { Form } from "@/components/ui/form"
 import {
@@ -16,22 +16,14 @@ import { Input } from "@/components/ui/input"
 import { useSignupForm } from "@/forms/hooks/signup"
 import { CreateUserInput } from "@/types"
 
-const CreateSignup = () => {
+const CreateSignup = ({ onClose }: { onClose: () => void }) => {
   const { signupMethods } = useSignupForm()
-  const [loading, setLoading] = useState(false)
+  const { mutate: signup, isPending } = useSignup(onClose)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleSubmit = async (data: CreateUserInput) => {
-    try {
-      setLoading(true)
-      const result = await UserService.signup(data)
-      return result
-    } catch (error) {
-      console.error("Erro ao criar usuário:", error)
-    } finally {
-      setLoading(false)
-    }
+    signup(data)
   }
 
   return (
@@ -154,8 +146,8 @@ const CreateSignup = () => {
           )}
         />
 
-        <Button type="submit" bgColor="#1695c0" disabled={loading}>
-          {loading ? "Enviando..." : "Criar conta"}
+        <Button type="submit" bgColor="#1695c0" disabled={isPending}>
+          {isPending ? "Enviando..." : "Criar conta"}
         </Button>
       </form>
     </Form>
