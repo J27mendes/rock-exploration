@@ -1,5 +1,5 @@
 "use client"
-
+import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
 import { UserService } from "@/app/api/services/user"
@@ -19,6 +19,8 @@ import { CreateUserInput } from "@/types"
 const CreateSignup = () => {
   const { signupMethods } = useSignupForm()
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleSubmit = async (data: CreateUserInput) => {
     try {
@@ -60,7 +62,6 @@ const CreateSignup = () => {
             </FormItem>
           )}
         />
-
         <FormField<CreateUserInput>
           control={signupMethods.control}
           name="email"
@@ -83,7 +84,6 @@ const CreateSignup = () => {
             </FormItem>
           )}
         />
-
         <FormField<CreateUserInput>
           control={signupMethods.control}
           name="senha"
@@ -93,20 +93,28 @@ const CreateSignup = () => {
                 Senha
               </FormLabel>
               <FormControl>
-                <Input
-                  id="senha"
-                  type="password"
-                  placeholder="********"
-                  {...field}
-                  autoComplete="senha"
-                  className="bg-transparent text-xl text-white placeholder:text-white"
-                />
+                <div className="relative">
+                  <Input
+                    id="senha"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="********"
+                    {...field}
+                    autoComplete="senha"
+                    className="bg-transparent pr-10 text-xl text-white placeholder:text-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2 top-2.5 border-none bg-transparent text-blue-200 shadow-none outline-none focus:outline-none"
+                  >
+                    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField<CreateUserInput>
           control={signupMethods.control}
           name="confirmeSenha"
@@ -119,14 +127,27 @@ const CreateSignup = () => {
                 Confirme a Senha
               </FormLabel>
               <FormControl>
-                <Input
-                  id="confirmeSenha"
-                  type="password"
-                  placeholder="********"
-                  {...field}
-                  autoComplete="confirme a senha"
-                  className="bg-transparent text-xl text-white placeholder:text-white"
-                />
+                <div className="relative">
+                  <Input
+                    id="confirmeSenha"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="********"
+                    {...field}
+                    autoComplete="confirme a senha"
+                    className="bg-transparent text-xl text-white placeholder:text-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-2 top-2.5 border-none bg-transparent text-blue-200 shadow-none outline-none focus:outline-none"
+                  >
+                    {showConfirmPassword ? (
+                      <Eye size={20} />
+                    ) : (
+                      <EyeOff size={20} />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

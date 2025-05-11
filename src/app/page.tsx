@@ -20,7 +20,7 @@ const Home = () => {
           onClick={() => setShowSignup(true)}
           type="button"
         >
-          Criar conta
+          {showSignup ? "Aguardando" : "Criar conta"}
         </Button>
       </div>
 
