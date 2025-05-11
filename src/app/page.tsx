@@ -25,14 +25,19 @@ const Home = () => {
       </div>
 
       {showSignup && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
-          <div className="w-full max-w-md rounded-lg bg-white p-6">
+        <div className="absolute inset-0 z-50 flex items-center justify-center">
+          <div className="w-full max-w-md rounded-lg bg-black bg-opacity-50 p-6">
+            <p className="flex justify-center font-semibold text-white">
+              Rock Exploration
+            </p>
             <CreateSignup />
-            <div className="mt-4 text-center">
+
+            <div className="mt-4 flex justify-end">
               <Button
                 onClick={() => setShowSignup(false)}
                 bgColor="#999"
                 type="button"
+                className="h-12"
               >
                 Fechar
               </Button>

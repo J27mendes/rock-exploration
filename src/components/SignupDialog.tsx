@@ -45,12 +45,15 @@ const CreateSignup = () => {
           name="banda"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="banda">Nome da Banda</FormLabel>
+              <FormLabel htmlFor="banda" className="font-semibold text-white">
+                Nome da Banda
+              </FormLabel>
               <FormControl>
                 <Input
                   id="banda"
                   placeholder="Ex: Rock & Exploration"
                   {...field}
+                  className="bg-transparent text-xl text-white placeholder:text-white"
                 />
               </FormControl>
               <FormMessage />
@@ -63,7 +66,9 @@ const CreateSignup = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="email" className="font-semibold text-white">
+                Email
+              </FormLabel>
               <FormControl>
                 <Input
                   id="email"
@@ -71,6 +76,7 @@ const CreateSignup = () => {
                   placeholder="seuemail@exemplo.com"
                   autoComplete="email"
                   {...field}
+                  className="bg-transparent text-xl text-white placeholder:text-white"
                 />
               </FormControl>
               <FormMessage />
@@ -83,14 +89,17 @@ const CreateSignup = () => {
           name="senha"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="senha">Senha</FormLabel>
+              <FormLabel htmlFor="senha" className="font-semibold text-white">
+                Senha
+              </FormLabel>
               <FormControl>
                 <Input
                   id="senha"
                   type="password"
-                  placeholder="*************"
+                  placeholder="********"
                   {...field}
                   autoComplete="senha"
+                  className="bg-transparent text-xl text-white placeholder:text-white"
                 />
               </FormControl>
               <FormMessage />
@@ -103,14 +112,20 @@ const CreateSignup = () => {
           name="confirmeSenha"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="confirmeSenha">Confirme a Senha</FormLabel>
+              <FormLabel
+                htmlFor="confirmeSenha"
+                className="font-semibold text-white"
+              >
+                Confirme a Senha
+              </FormLabel>
               <FormControl>
                 <Input
                   id="confirmeSenha"
                   type="password"
-                  placeholder="*************"
+                  placeholder="********"
                   {...field}
                   autoComplete="confirme a senha"
+                  className="bg-transparent text-xl text-white placeholder:text-white"
                 />
               </FormControl>
               <FormMessage />

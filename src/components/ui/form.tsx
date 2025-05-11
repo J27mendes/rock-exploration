@@ -16,6 +16,7 @@ import { CreateUserInput } from "@/types"
 
 type FormProps = {
   children: React.ReactNode
+  className?: string
 } & UseFormReturn<CreateUserInput>
 
 const Form = ({ children, ...methods }: FormProps) => {
