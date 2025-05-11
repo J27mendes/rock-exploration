@@ -10,6 +10,11 @@ module.exports = {
     backgroundImage: {
       "hero-image": "var(--image)",
     },
+    extends: {
+      colors: {
+        destructive: "hsl(var(--destructive))",
+      },
+    },
     keyframes: {
       flash: {
         "0%, 100%": { opacity: "1" },

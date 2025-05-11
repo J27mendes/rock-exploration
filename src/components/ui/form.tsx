@@ -98,10 +98,7 @@ const FormMessage = ({
   if (!error) return null
 
   return (
-    <p
-      className={cn("text-destructive text-sm font-medium", className)}
-      {...props}
-    >
+    <p className={cn("text-sm font-medium text-red-300", className)} {...props}>
       {String(error?.message)}
     </p>
   )
