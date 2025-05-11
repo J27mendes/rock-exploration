@@ -32,7 +32,7 @@ export const createUserSchema = z
         /[^a-zA-Z0-9]/,
         "A senha precisa conter pelo menos um caractere especial",
       ),
-    confirmeSenha: z.string().trim(),
+    confirmeSenha: z.string().trim().min(1, "Por favor, confirme sua senha"),
   })
   .strict()
   .refine((data) => data.senha === data.confirmeSenha, {
