@@ -14,7 +14,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
         {children}
-        <Toaster />
+        <Toaster position="bottom-right" richColors closeButton />
         <ReactQueryDevtools initialIsOpen={false} />
       </AuthContextProvider>
     </QueryClientProvider>
