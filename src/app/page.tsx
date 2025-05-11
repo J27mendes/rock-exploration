@@ -8,6 +8,10 @@ import CreateSignup from "@/components/SignupDialog"
 
 const Home = () => {
   const [showSignup, setShowSignup] = useState(false)
+
+  const handleClose = () => {
+    setShowSignup(false)
+  }
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-end overflow-hidden bg-[#1a1a1a] bg-hero-image">
       <div className="relative z-0 mt-8 h-[300px] w-[90%] max-w-[600px] overflow-hidden rounded-lg p-4 text-center shadow-lg backdrop-blur">
@@ -30,7 +34,7 @@ const Home = () => {
             <p className="flex justify-center font-semibold text-white">
               Rock Exploration
             </p>
-            <CreateSignup />
+            <CreateSignup onClose={handleClose} />
 
             <div className="mt-4 flex justify-end">
               <Button
