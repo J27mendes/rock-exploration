@@ -15,7 +15,11 @@ const Home = () => {
       </div>
       <div className="flex w-full justify-around pb-4">
         <Button>Login</Button>
-        <Button bgColor="#1695c0" onClick={() => setShowSignup(true)}>
+        <Button
+          bgColor="#1695c0"
+          onClick={() => setShowSignup(true)}
+          type="button"
+        >
           Criar conta
         </Button>
       </div>
@@ -25,7 +29,11 @@ const Home = () => {
           <div className="w-full max-w-md rounded-lg bg-white p-6">
             <CreateSignup />
             <div className="mt-4 text-center">
-              <Button onClick={() => setShowSignup(false)} bgColor="#999">
+              <Button
+                onClick={() => setShowSignup(false)}
+                bgColor="#999"
+                type="button"
+              >
                 Fechar
               </Button>
             </div>
