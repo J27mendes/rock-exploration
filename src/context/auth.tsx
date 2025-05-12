@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { useSignup } from "@/app/api/hooks/user"
-import { UserService } from "@/app/api/services/user"
 import {
   STORAGE_TOKEN_ACCESS,
   STORAGE_TOKEN_REFRESH,
@@ -55,9 +54,9 @@ export const AuthContextProvider = ({
         const accessToken = localStorage.getItem(STORAGE_TOKEN_ACCESS)
         const refreshToken = localStorage.getItem(STORAGE_TOKEN_REFRESH)
 
-        if (!accessToken && !refreshToken) return
-        const response = await UserService.me()
-        setUser(response)
+        if (!accessToken && !refreshToken) {
+          return setInitializing(false)
+        }
       } catch (error) {
         setUser(null)
         console.error(error)
