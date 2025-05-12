@@ -1,3 +1,5 @@
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 * {
@@ -11,7 +13,6 @@
 }
 
 :root {
-  --image: url(/images/rock-exploration.png);
   --primary-blue: 217 97% 61%;
   --primary-green: 102 59% 44%;
   --primary-red: 0 81% 55%;
@@ -58,7 +59,7 @@
 
 @layer utilities {
   .bg-hero-image {
-    background-image: var(--image);
+    background-image: url("/images/rock-exploration.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

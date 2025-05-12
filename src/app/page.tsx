@@ -14,7 +14,7 @@ const Home = () => {
   }
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-end overflow-hidden bg-[#1a1a1a] bg-hero-image">
-      <div className="relative z-0 mt-8 h-[300px] w-[90%] max-w-[600px] overflow-hidden rounded-lg p-4 text-center shadow-lg backdrop-blur">
+      <div className="relative z-0 mt-8 h-[300px] w-[90%] max-w-[600px] overflow-hidden rounded-lg bg-black/0 p-4 text-center shadow-lg backdrop-blur-none">
         <ScrollText />
       </div>
       <div className="flex w-full justify-around pb-4">
