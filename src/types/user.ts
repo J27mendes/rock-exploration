@@ -1,3 +1,4 @@
+import { User } from "@prisma/client"
 import { z } from "zod"
 
 import { createUserSchema, loginUserSchema, updateUserSchema } from "@/schemas"
@@ -46,4 +47,16 @@ export type JsonResponse<T> = {
 
 export type ErrorResponse = {
   error: string
+}
+
+export type UserWithTokens = User & {
+  user: {
+    id: string
+    email: string
+    banda: string
+  }
+  tokens: {
+    accessToken: string
+    refreshToken: string
+  }
 }

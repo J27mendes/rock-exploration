@@ -10,7 +10,8 @@ export const UserService = {
       senha: input.senha,
       confirmeSenha: input.confirmeSenha,
     })
-    return response.data
+    const { data } = response.data.data
+    return data
   },
 
   me: async () => {

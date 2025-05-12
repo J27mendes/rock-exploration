@@ -1,4 +1,3 @@
-import { User } from "@prisma/client"
 import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -8,10 +7,10 @@ import {
   STORAGE_TOKEN_ACCESS,
   STORAGE_TOKEN_REFRESH,
 } from "@/constants/localStorage"
-import { CreateUserInput } from "@/types"
+import { CreateUserInput, UserWithTokens } from "@/types"
 
 type AuthContextType = {
-  user: User | null
+  user: UserWithTokens | null
   initializing: boolean
   signup: (data: CreateUserInput) => Promise<void>
   signOut: () => void
@@ -41,9 +40,13 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<UserWithTokens | null>(null)
   const [initializing, setInitializing] = useState(true)
-  const signupMutation = useSignup()
+  const signupMutation = useSignup((createdUser) => {
+    setUser(createdUser)
+    setTokens(createdUser.tokens)
+    toast.success("Conta criada com sucesso!")
+  })
 
   useEffect(() => {
     const init = async () => {
@@ -66,17 +69,7 @@ export const AuthContextProvider = ({
   }, [])
 
   const signup = async (data: CreateUserInput) => {
-    try {
-      const createdUser = await signupMutation.mutateAsync(data)
-      setUser(createdUser)
-      setTokens(createdUser.tokens)
-      toast.success("Conta criada com sucesso!")
-    } catch (error) {
-      console.error(error)
-      toast.error(
-        "Erro ao criar a conta, por favor tente novamente mais tarte!",
-      )
-    }
+    signupMutation.mutate(data)
   }
 
   const signOut = () => {

@@ -1,22 +1,25 @@
 import { useMutation } from "@tanstack/react-query"
 
 import { showError, showSuccess } from "@/lib/toast"
+import type { UserWithTokens } from "@/types"
 import { CreateUserInput } from "@/types"
 
 import { UserService } from "../services/user"
 
 export const mutationSignupKey = ["signup"]
 
-export const useSignup = (onSuccessCallback?: () => void) => {
-  return useMutation<unknown, Error, CreateUserInput>({
+export const useSignup = (
+  onSuccessCallback?: (createdUser: UserWithTokens) => void,
+) => {
+  return useMutation<UserWithTokens, Error, CreateUserInput>({
     mutationKey: mutationSignupKey,
     mutationFn: async (variables: CreateUserInput) => {
       const response = await UserService.signup(variables)
       return response
     },
-    onSuccess: () => {
+    onSuccess: (createdUser) => {
       showSuccess("Usuário criado com sucesso!")
-      if (onSuccessCallback) onSuccessCallback()
+      if (onSuccessCallback) onSuccessCallback(createdUser)
     },
     onError: (error: any) => {
       console.error("Erro ao criar usuário:", error)
