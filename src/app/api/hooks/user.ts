@@ -24,7 +24,13 @@ export const useSignup = (
     onError: (error: any) => {
       console.error("Erro ao criar usuário:", error)
       if (error.response?.status === 409) {
-        showError("Este e-mail já está em uso.")
+        const errorCode = error.response?.data?.error
+        if (errorCode === "E-mail já cadastrado") {
+          return showError("Este e-mail já está em uso.")
+        }
+        if (errorCode === "Nome da banda já cadastrado") {
+          return showError("Nome da banda já cadastrado")
+        }
       } else {
         showError("Falha ao criar usuário.")
       }
