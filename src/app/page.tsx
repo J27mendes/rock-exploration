@@ -21,7 +21,9 @@ const Home = () => {
         <Button>Login</Button>
         <Button
           bgColor="#1695c0"
-          onClick={() => setShowSignup(true)}
+          onClick={() => {
+            setShowSignup(true)
+          }}
           type="button"
         >
           {showSignup ? "Aguardando" : "Criar conta"}
