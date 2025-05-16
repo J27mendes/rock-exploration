@@ -12,12 +12,11 @@ import {
 
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
-import { CreateUserInput } from "@/types"
 
-type FormProps = {
+type FormProps<T extends FieldValues = any> = {
   children: React.ReactNode
   className?: string
-} & UseFormReturn<CreateUserInput>
+} & UseFormReturn<T>
 
 const Form = ({ children, ...methods }: FormProps) => {
   return <FormProvider {...methods}>{children}</FormProvider>
