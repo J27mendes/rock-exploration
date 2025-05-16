@@ -1,6 +1,6 @@
 import { UpdateUserInput } from "@/interfaces"
 import { protectedApi, publicApi } from "@/lib/axios"
-import { CreateUserInput } from "@/types"
+import { CreateUserInput, LoginUserDTO } from "@/types"
 
 export const UserService = {
   signup: async (input: CreateUserInput) => {
@@ -9,6 +9,15 @@ export const UserService = {
       email: input.email,
       senha: input.senha,
       confirmeSenha: input.confirmeSenha,
+    })
+    const { data } = response.data.data
+    return data
+  },
+
+  login: async (input: LoginUserDTO) => {
+    const response = await publicApi.post("/users/login", {
+      email: input.email,
+      senha: input.senha,
     })
     const { data } = response.data.data
     return data
