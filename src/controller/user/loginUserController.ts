@@ -3,7 +3,7 @@ import { ZodError } from "zod"
 
 import { TokensGenerator } from "@/adapters"
 import { UnauthorizedError, UserNotFoundError } from "@/errors"
-import { badRequest, notFound, serverError, unauthorized } from "@/helpers"
+import { handleZodError, notFound, serverError, unauthorized } from "@/helpers"
 import { loginUserSchema } from "@/schemas"
 import { LoginUserDTO, SuccessLogin } from "@/types/user"
 import { LoginUserUseCase } from "@/useCases"
@@ -30,7 +30,7 @@ export class LoginUserController {
       }
     } catch (error) {
       if (error instanceof ZodError) {
-        return badRequest(error.errors)
+        return handleZodError(error)
       }
 
       if (error instanceof UnauthorizedError) {
