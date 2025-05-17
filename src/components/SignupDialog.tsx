@@ -2,7 +2,6 @@
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
-import { useSignup } from "@/app/api/hooks/user"
 import Button from "@/components/Button"
 import { Form } from "@/components/ui/form"
 import {
@@ -13,17 +12,29 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAuthContext } from "@/context/auth"
 import { useSignupForm } from "@/forms/hooks/signup"
 import { CreateUserInput } from "@/types"
 
 const CreateSignup = ({ onClose }: { onClose: () => void }) => {
   const { signupMethods } = useSignupForm()
-  const { mutate: signup, isPending } = useSignup(onClose)
+  const { signup } = useAuthContext()
+  const [isPending, setIsPending] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleSubmit = async (data: CreateUserInput) => {
+    setIsPending(true)
+    try {
+      await signup(data)
+      onClose()
+    } catch (error) {
+      console.error("Erro no login:", error)
+    } finally {
+      setIsPending(false)
+    }
     signup(data)
+    onClose()
   }
 
   return (

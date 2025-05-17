@@ -3,7 +3,6 @@
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
-import { useLogin } from "@/app/api/hooks/user"
 import Button from "@/components/Button"
 import { Form } from "@/components/ui/form"
 import {
@@ -14,16 +13,26 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAuthContext } from "@/context/auth"
 import { useLoginForm } from "@/forms/hooks/login"
 import { LoginUserDTO } from "@/types"
 
 const UserLogin = ({ onClose }: { onClose: () => void }) => {
   const { loginMethods } = useLoginForm()
-  const { mutate: login, isPending } = useLogin(onClose)
+  const { login } = useAuthContext()
+  const [isPending, setIsPending] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (data: LoginUserDTO) => {
-    login(data)
+    setIsPending(true)
+    try {
+      await login(data)
+      onClose()
+    } catch (error) {
+      console.error("Erro no login:", error)
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
