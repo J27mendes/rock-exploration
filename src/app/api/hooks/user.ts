@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
 
 import { showError, showSuccess } from "@/lib/toast"
 import type { LoginUserDTO, UserWithTokens } from "@/types"
@@ -8,18 +9,17 @@ import { UserService } from "../services/user"
 
 export const mutationSignupKey = ["signup"]
 
-export const useSignup = (
-  onSuccessCallback?: (createdUser: UserWithTokens) => void,
-) => {
+export const useSignup = (onSuccess?: (userSignup: UserWithTokens) => void) => {
+  const router = useRouter()
   return useMutation<UserWithTokens, Error, CreateUserInput>({
     mutationKey: mutationSignupKey,
     mutationFn: async (variables: CreateUserInput) => {
-      const response = await UserService.signup(variables)
-      return response
+      return await UserService.signup(variables)
     },
-    onSuccess: (createdUser) => {
-      showSuccess("Usuário criado com sucesso!")
-      if (onSuccessCallback) onSuccessCallback(createdUser)
+    onSuccess: (userSignup) => {
+      onSuccess?.(userSignup)
+      showSuccess("Conta criada com sucesso!")
+      router.push("/band")
     },
     onError: (error: any) => {
       console.error("Erro ao criar usuário:", error)
@@ -40,18 +40,17 @@ export const useSignup = (
 
 export const mutationLoginKey = ["login"]
 
-export const useLogin = (
-  onSuccessCallback?: (loginUser: UserWithTokens) => void,
-) => {
+export const useLogin = (onSuccess?: (loginUser: UserWithTokens) => void) => {
+  const router = useRouter()
   return useMutation<UserWithTokens, Error, LoginUserDTO>({
-    mutationKey: mutationSignupKey,
+    mutationKey: mutationLoginKey,
     mutationFn: async (variables: LoginUserDTO) => {
-      const response = await UserService.login(variables)
-      return response
+      return await UserService.login(variables)
     },
     onSuccess: (loginUser) => {
-      showSuccess("Usuário logado com sucesso!")
-      if (onSuccessCallback) onSuccessCallback(loginUser)
+      onSuccess?.(loginUser)
+      showSuccess("Login realizao com sucesso!")
+      router.push("/band")
     },
     onError: (error: any) => {
       console.error("Erro ao logar usuário:", error)
