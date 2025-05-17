@@ -11,12 +11,14 @@ const queryClient = new QueryClient()
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Toaster position="bottom-right" richColors closeButton />
-      </AuthContextProvider>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Toaster position="bottom-right" richColors closeButton />
+        </AuthContextProvider>
+      </QueryClientProvider>
+    </>
   )
 }
