@@ -10,7 +10,7 @@ export const UserService = {
       senha: input.senha,
       confirmeSenha: input.confirmeSenha,
     })
-    const { data } = response.data.data
+    const { data } = response.data
     return data
   },
 
@@ -19,13 +19,14 @@ export const UserService = {
       email: input.email,
       senha: input.senha,
     })
-    const { data } = response.data.data
+    const { data } = response.data
     return data
   },
 
   me: async () => {
     const response = await protectedApi.get("/users/me")
-    return response.data
+    const { data } = response.data
+    return data
   },
 
   updateMe: async (input: UpdateUserInput) => {
