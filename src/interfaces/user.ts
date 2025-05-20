@@ -8,3 +8,11 @@ export interface UpdateUserInput {
     senha?: string
   }
 }
+export interface RefreshTokenUseCaseRequest {
+  refreshToken: string
+}
+
+export interface RefreshTokenUseCaseResponse {
+  accessToken: string
+  refreshToken: string
+}
