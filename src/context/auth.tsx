@@ -31,7 +31,7 @@ const setTokens = (tokens: { accessToken: string; refreshToken: string }) => {
   localStorage.setItem(STORAGE_TOKEN_REFRESH, tokens.refreshToken)
 }
 
-export const removeTokens = () => {
+const removeTokens = () => {
   localStorage.removeItem(STORAGE_TOKEN_ACCESS)
   localStorage.removeItem(STORAGE_TOKEN_REFRESH)
 }
@@ -94,9 +94,9 @@ export const AuthContextProvider = ({
   }
 
   const signOut = () => {
+    toast.success("Sessão encerrada.")
     removeTokens()
     setUser(null)
-    toast.success("Sessão encerrada.")
     router.push("/")
   }
 
