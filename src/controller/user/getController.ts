@@ -23,7 +23,7 @@ export class GetUserController {
 
       return {
         message: "banda encontrada com sucesso",
-        banda: user.banda,
+        user,
       }
     } catch (error) {
       return serverError(error)
