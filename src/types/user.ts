@@ -50,13 +50,20 @@ export type ErrorResponse = {
 }
 
 export type UserWithTokens = User & {
-  user: {
-    id: string
-    email: string
-    banda: string
-  }
+  id: string
+  email: string
+  banda: string
+
   tokens: {
     accessToken: string
     refreshToken: string
   }
+}
+
+export type AuthContextType = {
+  user: UserWithTokens | null
+  initializing: boolean
+  signup: (data: CreateUserInput) => Promise<void>
+  login: (data: LoginUserDTO) => Promise<void>
+  signOut: () => void
 }

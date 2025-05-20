@@ -4,21 +4,17 @@ import { useRouter } from "next/navigation"
 import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
 
-import { useLogin, useSignup } from "@/app/api/hooks/user"
-import { UserService } from "@/app/api/services/user"
+import { useLogin, useMe, useSignup } from "@/app/api/hooks/user"
 import {
   STORAGE_TOKEN_ACCESS,
   STORAGE_TOKEN_REFRESH,
 } from "@/constants/localStorage"
-import { CreateUserInput, LoginUserDTO, UserWithTokens } from "@/types"
-
-type AuthContextType = {
-  user: UserWithTokens | null
-  initializing: boolean
-  signup: (data: CreateUserInput) => Promise<void>
-  login: (data: LoginUserDTO) => Promise<void>
-  signOut: () => void
-}
+import {
+  AuthContextType,
+  CreateUserInput,
+  LoginUserDTO,
+  UserWithTokens,
+} from "@/types"
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
@@ -35,7 +31,7 @@ const setTokens = (tokens: { accessToken: string; refreshToken: string }) => {
   localStorage.setItem(STORAGE_TOKEN_REFRESH, tokens.refreshToken)
 }
 
-const removeTokens = () => {
+export const removeTokens = () => {
   localStorage.removeItem(STORAGE_TOKEN_ACCESS)
   localStorage.removeItem(STORAGE_TOKEN_REFRESH)
 }
@@ -58,35 +54,36 @@ export const AuthContextProvider = ({
     setTokens(loginUser.tokens)
     setUser(loginUser)
   })
+  const { data: me, isLoading, isError } = useMe()
+
   useEffect(() => {
-    const init = async () => {
-      setInitializing(true)
+    const accessToken = localStorage.getItem(STORAGE_TOKEN_ACCESS)
+    const refreshToken = localStorage.getItem(STORAGE_TOKEN_REFRESH)
 
-      const accessToken = localStorage.getItem(STORAGE_TOKEN_ACCESS)
-      const refreshToken = localStorage.getItem(STORAGE_TOKEN_REFRESH)
+    if (!accessToken || !refreshToken || isError) {
+      setInitializing(false)
+      return
+    }
 
-      if (!accessToken && !refreshToken) {
-        setInitializing(false)
-        return
-      }
-
-      try {
-        const user = await UserService.me()
-        setUser(user)
+    if (!isLoading) {
+      if (me) {
+        setUser({
+          ...me,
+          tokens: {
+            accessToken,
+            refreshToken,
+          },
+        })
         if (window.location.pathname !== "/band") {
           router.push("/band")
         }
-      } catch (error) {
-        console.error("Erro ao buscar usuário:", error)
-        setUser(null)
+      } else if (isError) {
         removeTokens()
-      } finally {
-        setInitializing(false)
+        setUser(null)
       }
+      setInitializing(false)
     }
-
-    init()
-  }, [])
+  }, [me, isLoading, isError])
 
   const signup = async (data: CreateUserInput) => {
     await signupMutation.mutateAsync(data)
