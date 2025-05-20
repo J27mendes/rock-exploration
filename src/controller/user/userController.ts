@@ -2,7 +2,13 @@ import { NextResponse } from "next/server"
 import { ZodError } from "zod"
 
 import { TokensGenerator } from "@/adapters/tokensGeneratorAdapter"
-import { badRequest, created, serverError } from "@/helpers/httpResponse"
+import { ConflictError } from "@/errors"
+import {
+  badRequest,
+  conflict,
+  created,
+  serverError,
+} from "@/helpers/httpResponse"
 import { CreateUserInput } from "@/types/user"
 import { PostUserUseCase } from "@/useCases/user/userUseCase"
 export class PostUserController {
@@ -41,6 +47,14 @@ export class PostUserController {
     } catch (error) {
       if (error instanceof ZodError) {
         return badRequest(error.errors)
+      }
+
+      if (error instanceof ConflictError) {
+        return conflict(error.message)
+      }
+
+      if (error instanceof ConflictError) {
+        return conflict(error.message)
       }
 
       return serverError(error)

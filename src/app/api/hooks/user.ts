@@ -25,13 +25,13 @@ export const useSignup = (onSuccess?: (userSignup: UserWithTokens) => void) => {
       router.push("/band")
     },
     onError: (error: any) => {
-      console.error("Erro ao criar usuário:", error)
-      if (error.response?.status === 409) {
-        const errorCode = error.response?.data?.error
-        if (errorCode === "E-mail já cadastrado") {
+      const status = error?.response?.status
+      const errorMessage = error?.response?.data?.error
+      if (status === 409) {
+        if (errorMessage === "Este email já foi cadastrado") {
           return showError("Este e-mail já está em uso.")
         }
-        if (errorCode === "Nome da banda já cadastrado") {
+        if (errorMessage === "Está banda já foi cadastrada") {
           return showError("Nome da banda já cadastrado")
         }
       } else {

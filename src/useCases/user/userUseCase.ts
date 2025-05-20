@@ -1,5 +1,5 @@
 import { PasswordHasherAdapter } from "@/adapters"
-import { conflict } from "@/helpers"
+import { ConflictError } from "@/errors"
 import {
   FindUserByBandRepository,
   FindUserByEmailRepository,
@@ -19,14 +19,14 @@ export class PostUserUseCase {
     const userExists = await emailRepository.execute(email)
 
     if (userExists) {
-      return conflict("E-mail já cadastrado")
+      throw new ConflictError("Este email já foi cadastrado")
     }
 
     const bandRepository = new FindUserByBandRepository()
     const bandExists = await bandRepository.execute(banda)
 
     if (bandExists) {
-      return conflict("Nome da banda já cadastrado")
+      throw new ConflictError("Está banda já foi cadastrada")
     }
 
     const hasher = new PasswordHasherAdapter()
