@@ -1,6 +1,9 @@
-import { useMutation } from "@tanstack/react-query"
+"use client"
+
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 
+import { STORAGE_TOKEN_ACCESS } from "@/constants/localStorage"
 import { showError, showSuccess } from "@/lib/toast"
 import type { LoginUserDTO, UserWithTokens } from "@/types"
 import { CreateUserInput } from "@/types"
@@ -49,7 +52,7 @@ export const useLogin = (onSuccess?: (loginUser: UserWithTokens) => void) => {
     },
     onSuccess: (loginUser) => {
       onSuccess?.(loginUser)
-      showSuccess("Login realizao com sucesso!")
+      showSuccess("Login realizado com sucesso!")
       router.push("/band")
     },
     onError: (error: any) => {
@@ -65,5 +68,21 @@ export const useLogin = (onSuccess?: (loginUser: UserWithTokens) => void) => {
 
       return showError("Erro inesperado ao logar.")
     },
+  })
+}
+
+export const queryMeKey = ["me"]
+
+export const useMe = () => {
+  const accessToken =
+    typeof window !== "undefined"
+      ? localStorage.getItem(STORAGE_TOKEN_ACCESS)
+      : null
+
+  return useQuery<UserWithTokens>({
+    queryKey: queryMeKey,
+    queryFn: UserService.me,
+    enabled: !!accessToken,
+    retry: false,
   })
 }
