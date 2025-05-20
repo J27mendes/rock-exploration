@@ -4,7 +4,7 @@ API para cadastro e gerenciamento de bandas locais do estado de Pernambuco. O ob
 
 ## 🚀 Tecnologias Utilizadas no Backend
 
-- **Next.js 15**
+- **Next.js 14.2.28**
 - **TypeScript**
 - **Prisma ORM 6**
 - **PostgreSQL (via Docker)**
