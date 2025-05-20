@@ -58,7 +58,7 @@ const UserLogin = ({ onClose }: { onClose: () => void }) => {
                   placeholder="seuemail@exemplo.com"
                   autoComplete="email"
                   {...field}
-                  className="bg-transparent text-xl text-white placeholder:text-white"
+                  className="bg-transparent text-xl text-white placeholder:bg-transparent placeholder:text-white"
                 />
               </FormControl>
               <FormMessage />
@@ -70,7 +70,10 @@ const UserLogin = ({ onClose }: { onClose: () => void }) => {
           name="senha"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="senha" className="font-semibold text-white">
+              <FormLabel
+                htmlFor="senha"
+                className="placeholder:bg-transparen font-semibold text-white placeholder:text-white"
+              >
                 Senha
               </FormLabel>
               <FormControl>
@@ -81,7 +84,7 @@ const UserLogin = ({ onClose }: { onClose: () => void }) => {
                     placeholder="********"
                     {...field}
                     autoComplete="senha"
-                    className="bg-transparent pr-10 text-xl text-white placeholder:text-white"
+                    className="bg-transparent pr-10 text-xl text-white placeholder:bg-transparent placeholder:text-white"
                   />
                   <button
                     type="button"
