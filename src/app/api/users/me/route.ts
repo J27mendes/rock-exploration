@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 
 import {
@@ -10,7 +10,7 @@ import { handleZodError, responses, serverError } from "@/helpers"
 import { authorization } from "@/middleware"
 import { updateUserSchema } from "@/schemas"
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     const userId = authorization(req)
     if (userId instanceof Response) return userId
