@@ -1,6 +1,10 @@
-import { UpdateUserInput } from "@/interfaces"
+"use client"
+
+import { AxiosError } from "axios"
+
+import { STORAGE_TOKEN_ACCESS } from "@/constants/localStorage"
 import { protectedApi, publicApi } from "@/lib/axios"
-import { CreateUserInput, LoginUserDTO } from "@/types"
+import { CreateUserInput, LoginUserDTO, UserWithTokens } from "@/types"
 
 export const UserService = {
   signup: async (input: CreateUserInput) => {
@@ -23,21 +27,33 @@ export const UserService = {
     return data
   },
 
-  me: async () => {
-    const response = await protectedApi.get("/users/me")
-    const { data } = response.data
-    return data
-  },
+  me: async (): Promise<UserWithTokens> => {
+    const token = localStorage.getItem(STORAGE_TOKEN_ACCESS)
 
-  updateMe: async (input: UpdateUserInput) => {
-    const response = await protectedApi.patch("/users/me", input)
-    return response.data
-  },
+    if (!token) {
+      throw new Error("Token ausente. Usuário não autenticado.")
+    }
 
-  deleteMe: async (confirmMessage: string) => {
-    const response = await protectedApi.delete("/users/me", {
-      data: { confirmMessage },
-    })
-    return response.data
+    try {
+      const response = await protectedApi.get("/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      return {
+        ...response.data.user,
+        tokens: {
+          accessToken: token,
+          refreshToken: localStorage.getItem("refreshToken") ?? "",
+        },
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error("Erro na requisição /users/me:", error.response?.data)
+      } else {
+        console.error("Erro inesperado em /users/me:", error)
+      }
+      throw new Error("Erro ao buscar dados do usuário.")
+    }
   },
 }
