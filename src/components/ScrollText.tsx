@@ -1,4 +1,5 @@
 "use client"
+
 const ScrollText = () => {
   return (
     <div className="animate-scrollStarWars space-y-6 text-2xl font-semibold text-white/80">
