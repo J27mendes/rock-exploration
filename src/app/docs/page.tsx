@@ -1,6 +1,8 @@
-"use client"
+import dynamic from "next/dynamic"
 
-import SwaggerDocs from "@/components/SwaggerDocs"
+const SwaggerDocs = dynamic(() => import("@/components/SwaggerDocs"), {
+  ssr: false,
+})
 
 export default function DocsPage() {
   return <SwaggerDocs />
