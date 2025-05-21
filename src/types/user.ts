@@ -67,3 +67,7 @@ export type AuthContextType = {
   login: (data: LoginUserDTO) => Promise<void>
   signOut: () => void
 }
+
+export type Props = {
+  children: React.ReactNode
+}

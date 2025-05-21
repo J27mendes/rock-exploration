@@ -1,6 +1,3 @@
-export interface RootLayoutProps {
-  children: React.ReactNode
-}
 export interface UpdateUserInput {
   userId: string
   data: {
@@ -15,4 +12,12 @@ export interface RefreshTokenUseCaseRequest {
 export interface RefreshTokenUseCaseResponse {
   accessToken: string
   refreshToken: string
+}
+
+export interface RootLayoutProps {
+  children: React.ReactNode
+}
+
+export interface ProvidersProps {
+  children: React.ReactNode
 }
