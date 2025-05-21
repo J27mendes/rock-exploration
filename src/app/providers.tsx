@@ -2,14 +2,14 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import { ReactNode } from "react"
 import { Toaster } from "sonner"
 
 import { AuthContextProvider } from "@/context/auth"
+import { ProvidersProps } from "@/interfaces"
 
 const queryClient = new QueryClient()
 
-export function Providers({ children }: { children: ReactNode }) {
+export function Providers({ children }: ProvidersProps) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
