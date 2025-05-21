@@ -1,5 +1,6 @@
 "use client"
 import { Menu } from "lucide-react"
+import Link from "next/link"
 
 import ImageComponent from "@/components/ImageComponent"
 import { Button } from "@/components/ui/button"
@@ -44,8 +45,18 @@ const BandPage = () => {
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-orange-400" />
             <DropdownMenuItem asChild className="cursor-pointer">
+              <Link href="/rockexploration" className="w-full">
+                Bandas da Rock Exploration
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <a href="#" className="w-full">
+                Página da Banda {` ${user?.banda}`}
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className="cursor-pointer">
               <a href="/band" className="w-full">
-                Página da Banda
+                Formulário
               </a>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="cursor-pointer">
