@@ -1,8 +1,6 @@
 "use client"
 
-type Props = {
-  children: React.ReactNode
-}
+import { Props } from "@/types"
 
 const ImageComponent = ({ children }: Props) => {
   return (
