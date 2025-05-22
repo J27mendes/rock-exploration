@@ -1,3 +1,5 @@
+import { Props } from "@/types"
+
 export interface UpdateUserInput {
   userId: string
   data: {
@@ -20,4 +22,7 @@ export interface RootLayoutProps {
 
 export interface ProvidersProps {
   children: React.ReactNode
+}
+export interface ImageComponentProps extends Props {
+  notFound?: boolean
 }
