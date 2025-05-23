@@ -6,7 +6,7 @@ import {
   PostgresCreateUserRepository,
 } from "@/repositories"
 import { BandRequest } from "@/types"
-import { generateId } from "@/utils"
+import { formatStyle, generateId } from "@/utils"
 export class PostUserUseCase {
   private createUserRepository: PostgresCreateUserRepository
 
@@ -15,6 +15,7 @@ export class PostUserUseCase {
   }
 
   async execute({ banda, email, senha }: BandRequest) {
+    const bandNameFormated = formatStyle(banda)
     const emailRepository = new FindUserByEmailRepository()
     const userExists = await emailRepository.execute(email)
 
@@ -23,7 +24,8 @@ export class PostUserUseCase {
     }
 
     const bandRepository = new FindUserByBandRepository()
-    const bandExists = await bandRepository.execute(banda)
+
+    const bandExists = await bandRepository.execute(bandNameFormated)
 
     if (bandExists) {
       throw new ConflictError("Esta banda já foi cadastrada")
@@ -36,7 +38,7 @@ export class PostUserUseCase {
 
     const user = await this.createUserRepository.execute({
       id,
-      banda,
+      banda: bandNameFormated,
       email,
       senha: hashedPassword,
     })

@@ -1,6 +1,5 @@
 import { UpdateBandFormDTO } from "@/types"
 
-import { formattedBandName } from "./formatBandName"
 import { formatStyle } from "./formatStyle"
 
 export function handleSimpleFieldUpdates<T extends keyof UpdateBandFormDTO>(
@@ -21,7 +20,7 @@ export function updateBandForm(
   const updates: Partial<UpdateBandFormDTO> = {}
 
   if (validatedData.banda) {
-    const bandName = formattedBandName(validatedData.banda)
+    const bandName = formatStyle(validatedData.banda)
     if (bandName !== existingForm.banda) {
       updates.banda = bandName
     }

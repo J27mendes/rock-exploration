@@ -8,7 +8,6 @@ import {
   calculateTotalMusicTime,
   convertToMinutes,
   formatStyle,
-  formattedBandName,
   membersName,
   validateBandForm,
 } from "@/utils"
@@ -17,7 +16,7 @@ export class CreateBandFormUseCase {
 
   async execute(data: CreateBandFormDTO, idBanda: string) {
     try {
-      const bandName = formattedBandName(data.banda)
+      const bandName = formatStyle(data.banda)
 
       const existingForm = await this.repository.findByUserId(idBanda)
 
