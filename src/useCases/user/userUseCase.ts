@@ -26,7 +26,7 @@ export class PostUserUseCase {
     const bandExists = await bandRepository.execute(banda)
 
     if (bandExists) {
-      throw new ConflictError("Está banda já foi cadastrada")
+      throw new ConflictError("Esta banda já foi cadastrada")
     }
 
     const hasher = new PasswordHasherAdapter()
