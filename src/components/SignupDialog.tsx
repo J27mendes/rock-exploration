@@ -34,8 +34,6 @@ const CreateSignup = ({ onClose }: { onClose: () => void }) => {
     } finally {
       setIsPending(false)
     }
-    signup(data)
-    onClose()
   }
 
   return (

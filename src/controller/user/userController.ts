@@ -53,10 +53,6 @@ export class PostUserController {
         return conflict(error.message)
       }
 
-      if (error instanceof ConflictError) {
-        return conflict(error.message)
-      }
-
       return serverError(error)
     }
   }
