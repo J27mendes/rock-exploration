@@ -12,7 +12,7 @@ const RockExploration = () => {
   const { user, initializing } = useAuthContext()
 
   const handleEnter = () => {
-    if (initializing) return // ainda carregando
+    if (initializing) return
 
     if (user) {
       router.push("/band")
@@ -23,7 +23,7 @@ const RockExploration = () => {
 
   return (
     <ImageComponent>
-      <div className="flex w-full flex-1 items-center justify-center p-4">
+      <div className="flex w-full flex-1 items-center justify-center p-2">
         <div className="flex min-h-[250px] w-full max-w-6xl gap-4 md:min-h-[400px]">
           <Card className="flex-[1.5] rounded-lg border border-orange-400 bg-transparent text-white shadow-lg">
             <CardHeader>
