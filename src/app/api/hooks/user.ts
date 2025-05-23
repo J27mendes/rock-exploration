@@ -31,7 +31,7 @@ export const useSignup = (onSuccess?: (userSignup: UserWithTokens) => void) => {
         if (errorMessage === "Este email já foi cadastrado") {
           return showError("Este e-mail já está em uso.")
         }
-        if (errorMessage === "Está banda já foi cadastrada") {
+        if (errorMessage === "Esta banda já foi cadastrada") {
           return showError("Nome da banda já cadastrado")
         }
       } else {
