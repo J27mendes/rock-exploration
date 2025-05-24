@@ -1,25 +1,38 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import axios from "axios"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 import Button from "@/components/Button"
 import ImageComponent from "@/components/ImageComponent"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAuthContext } from "@/context/auth"
+import { IdBand } from "@/interfaces"
 
 const RockExploration = () => {
-  const router = useRouter()
   const { user, initializing } = useAuthContext()
 
-  const handleEnter = () => {
-    if (initializing) return
+  const destination = initializing ? "#" : user ? "/band" : "/"
+  const [bands, setBands] = useState<IdBand[]>([])
+  const [loading, setLoading] = useState(true)
 
-    if (user) {
-      router.push("/band")
-    } else {
-      router.push("/")
+  useEffect(() => {
+    const fetchBands = async () => {
+      try {
+        const res = await axios.get<IdBand[]>(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users/bands`,
+        )
+        setBands(res.data)
+      } catch (error) {
+        console.error("Erro ao buscar bandas:", error)
+      } finally {
+        setLoading(false)
+      }
     }
-  }
+
+    fetchBands()
+  }, [])
 
   return (
     <ImageComponent>
@@ -62,21 +75,32 @@ const RockExploration = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="pl-5 text-justify text-xl font-semibold">
-                <li>Banda 1</li>
-                <li>Banda 2</li>
-                <li>Banda 3</li>
-              </ul>
+              {loading ? (
+                <p className="bg-zinc-600 text-white">Carregando bandas...</p>
+              ) : (
+                <ul className="space-y-2 pl-5 text-justify text-xl font-semibold">
+                  {bands
+                    .slice()
+                    .sort((a, b) => a.banda.localeCompare(b.banda))
+                    .map((band) => (
+                      <li className="p-[2px]" key={band.id}>
+                        <Link
+                          href={`/rockexploration/${band.id}`}
+                          className="rounded-md border border-orange-300 bg-transparent px-3 py-1 font-semibold text-orange-300 shadow-sm transition-all duration-200 hover:translate-y-[-1px] hover:border-blue-400 hover:bg-blue-300/20 hover:text-cyan-400 hover:underline hover:decoration-blue-400 hover:shadow-md"
+                        >
+                          {band.banda}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </div>
       </div>
-      <Button
-        bgColor="#1695c0"
-        type="button"
-        onClick={handleEnter}
-        children={"Entrar"}
-      />
+      <Link href={destination}>
+        <Button bgColor="#1695c0" type="button" children={"Entrar"} />
+      </Link>
     </ImageComponent>
   )
 }
