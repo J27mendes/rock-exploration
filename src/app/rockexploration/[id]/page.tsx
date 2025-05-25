@@ -1,9 +1,12 @@
 "use client"
 
 import axios from "axios"
+import { ArrowLeft } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Band, BandProps } from "@/interfaces"
 
 export default function BandPageDetails({ params }: BandProps) {
@@ -12,6 +15,11 @@ export default function BandPageDetails({ params }: BandProps) {
 
   const [band, setBand] = useState<Band | null>(null)
   const [loading, setLoading] = useState(true)
+  const [musicaAberta, setMusicaAberta] = useState<number | null>(null)
+
+  const toggleLetra = (index: number) => {
+    setMusicaAberta(musicaAberta === index ? null : index)
+  }
 
   useEffect(() => {
     const fetchBand = async () => {
@@ -41,47 +49,131 @@ export default function BandPageDetails({ params }: BandProps) {
   if (!band) return <p>Banda não encontrada.</p>
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold">{band.banda}</h1>
-      <p className="mt-2 text-lg">{band.release}</p>
+    <div className="mx-auto max-w-6xl space-y-6 p-6">
+      <div className="flex justify-end">
+        <Button
+          variant="ghost"
+          onClick={() => router.back()}
+          className="text-white hover:opacity-90"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Voltar
+        </Button>
+      </div>
+      <div className="text-center">
+        <h1 className="text-4xl font-extrabold text-amber-400">{band.banda}</h1>
 
-      <h2 className="mt-4 text-2xl">Integrantes:</h2>
-      <ul>
-        {band.integrantes.map((i, idx) => (
-          <li key={idx}>
-            {i.nome} - {i.instrumento}
-          </li>
-        ))}
-      </ul>
+        <Card className="mx-auto mt-2 flex max-w-xl rounded-lg border-cyan-600">
+          <CardContent className="opacity-90">{band.release}</CardContent>
+        </Card>
+      </div>
 
-      <h2 className="mt-4 text-2xl">Setlist:</h2>
-      <ul>
-        {band.setList.map((m, idx) => (
-          <li key={idx}>
-            {m.nomeMusica} ({m.tempoMusica} min)
-            <br />
-            <small>{m.letraMusica}</small>
-          </li>
-        ))}
-      </ul>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Card className="rounded-lg border-cyan-600">
+          <CardHeader>
+            <CardTitle>Estilo Musical:</CardTitle>
+          </CardHeader>
+          <CardContent className="font-semibold text-amber-400">
+            {band.estilo}
+          </CardContent>
 
-      <h2 className="mt-4 text-2xl">Contato:</h2>
-      <p>Email: {band.contato.email}</p>
-      <p>
-        {band.contato.nomePrimeiroNumero}: {band.contato.primeiroNumero}
-      </p>
-      <p>
-        {band.contato.nomeSegundoNumero}: {band.contato.segundoNumero}
-      </p>
+          <CardHeader>
+            <CardTitle>Integrantes:</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-1">
+              {band.integrantes.map((i, idx) => (
+                <li key={idx}>
+                  <span className="font-semibold text-amber-400">{i.nome}</span>
+                  {" - "}
+                  <span className="font-medium text-cyan-600">
+                    {i.instrumento}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
 
-      <h2 className="mt-4 text-2xl">Imagens:</h2>
-      <img src={band.imagem.urlImagemBanda} alt="Banda" className="w-64" />
-      <img src={band.imagem.urlImagemLogo} alt="Logo" className="w-32" />
-      <img
-        src={band.imagem.urlMapaPalco}
-        alt="Mapa de Palco"
-        className="w-64"
-      />
+        <Card className="rounded-lg border-cyan-600">
+          <CardHeader>
+            <CardTitle>Imagens:</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-6">
+            <p className="font-semibold text-amber-400">{`Logo ${band.banda}`}</p>
+            {/* <img
+              src={band.imagem.urlImagemLogo}
+              alt="Logo"
+              className="w-full rounded-lg border-4 border-amber-400"
+            /> */}
+            <p className="font-semibold text-cyan-600">{`Integrantes ${band.banda}`}</p>
+            {/* <img
+              src={band.imagem.urlImagemBanda}
+              alt="Banda"
+              className="w-full rounded-lg border-4 border-cyan-400"
+            /> */}
+          </CardContent>
+        </Card>
+
+        <Card className="flex flex-col items-center rounded-lg border-cyan-600">
+          <CardHeader>
+            <CardTitle>Músicas:</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2">
+              {band.setList.map((m, idx) => {
+                const minutos = Math.floor(m.tempoMusica / 60)
+                const segundos = m.tempoMusica % 60
+                const tempoFormatado = `${minutos}:${segundos.toString().padStart(2, "0")}`
+
+                return (
+                  <li key={idx}>
+                    <button
+                      onClick={() => toggleLetra(idx)}
+                      className="w-full text-left font-semibold text-amber-400 hover:underline"
+                    >
+                      {m.nomeMusica}
+                      <span className="font-medium text-violet-400">{` - ${tempoFormatado} min`}</span>
+                    </button>
+                    {musicaAberta === idx && (
+                      <div className="mt-1">
+                        <small className="text-muted-foreground">
+                          {m.letraMusica}
+                        </small>
+                      </div>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+      <Card className="mx-auto mt-10 flex max-w-xl items-center justify-center rounded-lg border-cyan-600">
+        <CardHeader>
+          <CardTitle className="flex justify-center">Contato:</CardTitle>
+        </CardHeader>
+        <CardContent className="mt-4">
+          <p className="font-semibold text-amber-400">
+            Email:{" "}
+            <span className="font-medium text-cyan-600">
+              {band.contato.email}
+            </span>
+          </p>
+          <p className="font-semibold text-amber-400">
+            {band.contato.nomePrimeiroNumero}:{" "}
+            <span className="font-medium text-cyan-600">
+              {band.contato.primeiroNumero}
+            </span>
+          </p>
+          <p className="font-semibold text-amber-400">
+            {band.contato.nomeSegundoNumero}:{" "}
+            <span className="font-medium text-cyan-600">
+              {band.contato.segundoNumero}
+            </span>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   )
 }
