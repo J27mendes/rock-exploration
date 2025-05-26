@@ -1,6 +1,5 @@
 "use client"
 
-import axios from "axios"
 import { ArrowLeft } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -8,6 +7,7 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Band, BandProps } from "@/interfaces"
+import { fetchBandByFormId } from "@/utils/frontend/fetchBandByFormId"
 
 export default function BandPageDetails({ params }: BandProps) {
   const { id } = params
@@ -24,10 +24,7 @@ export default function BandPageDetails({ params }: BandProps) {
   useEffect(() => {
     const fetchBand = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/users/bands/${id}`,
-        )
-        const data = res.data
+        const data = await fetchBandByFormId(id)
         setBand(data)
       } catch (error: any) {
         console.error("Erro ao buscar banda:", error)
