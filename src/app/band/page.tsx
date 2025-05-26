@@ -4,7 +4,10 @@ import { Menu } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
+import FormButton from "@/components/Button"
+import FormBandSignup from "@/components/FormBandDialog"
 import ImageComponent from "@/components/ImageComponent"
+import RockExplorationModalWrapper from "@/components/RockExplorationModalWrapper"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -20,6 +23,7 @@ import { IdBand } from "@/interfaces"
 const BandPage = () => {
   const { user, initializing, signOut } = useAuthContext()
   const [formId, setFormId] = useState<string | null>(null)
+  const [showFormModal, setShowFormModal] = useState(false)
 
   useEffect(() => {
     const getBandFormId = async () => {
@@ -83,10 +87,11 @@ const BandPage = () => {
                 Página da Banda {` ${user?.banda}`}
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <a href="/band" className="w-full">
-                Formulário
-              </a>
+            <DropdownMenuItem
+              onClick={() => setShowFormModal(true)}
+              className="cursor-pointer"
+            >
+              <span className="w-full">Formulário</span>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="cursor-pointer">
               <a onClick={() => signOut()} className="w-full">
@@ -96,6 +101,21 @@ const BandPage = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      {showFormModal && (
+        <RockExplorationModalWrapper>
+          <FormBandSignup />
+          <div className="mt-4 flex justify-end">
+            <FormButton
+              onClick={() => setShowFormModal(false)}
+              bgColor="#999"
+              type="button"
+              className="h-12"
+            >
+              Fechar
+            </FormButton>
+          </div>
+        </RockExplorationModalWrapper>
+      )}
     </ImageComponent>
   )
 }
