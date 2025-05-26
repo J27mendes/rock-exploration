@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import Button from "@/components/Button"
+import FormButton from "@/components/Button"
 import ImageComponent from "@/components/ImageComponent"
 import UserLogin from "@/components/LoginDialog"
 import RockExplorationModalWrapper from "@/components/RockExplorationModalWrapper"
@@ -22,14 +22,14 @@ const Home = () => {
         <ScrollText />
       </div>
       <div className="flex w-full justify-around pb-4">
-        <Button
+        <FormButton
           onClick={() => {
             setShowLogin(true)
           }}
         >
           {showLogin ? "Aguardando" : "Login"}
-        </Button>
-        <Button
+        </FormButton>
+        <FormButton
           bgColor="#1695c0"
           onClick={() => {
             setShowSignup(true)
@@ -37,20 +37,20 @@ const Home = () => {
           type="button"
         >
           {showSignup ? "Aguardando" : "Criar conta"}
-        </Button>
+        </FormButton>
       </div>
       {showLogin && (
         <RockExplorationModalWrapper>
           <UserLogin onClose={handleClose} />
           <div className="mt-4 flex justify-end">
-            <Button
+            <FormButton
               onClick={() => setShowLogin(false)}
               bgColor="#999"
               type="button"
               className="h-12"
             >
               Fechar
-            </Button>
+            </FormButton>
           </div>
         </RockExplorationModalWrapper>
       )}
@@ -59,14 +59,14 @@ const Home = () => {
         <RockExplorationModalWrapper>
           <CreateSignup onClose={handleClose} />
           <div className="mt-4 flex justify-end">
-            <Button
+            <FormButton
               onClick={() => setShowSignup(false)}
               bgColor="#999"
               type="button"
               className="h-12"
             >
               Fechar
-            </Button>
+            </FormButton>
           </div>
         </RockExplorationModalWrapper>
       )}

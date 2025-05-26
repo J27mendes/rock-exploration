@@ -11,7 +11,7 @@ type CustomButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   disabled?: boolean
 }
 
-const Button = ({
+const FormButton = ({
   children,
   bgColor = "#d2783b",
   onClick,
@@ -34,4 +34,4 @@ const Button = ({
   )
 }
 
-export default Button
+export default FormButton
