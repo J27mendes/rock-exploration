@@ -1,6 +1,8 @@
 "use client"
+import axios from "axios"
 import { Menu } from "lucide-react"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 import ImageComponent from "@/components/ImageComponent"
 import { Button } from "@/components/ui/button"
@@ -13,9 +15,33 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuthContext } from "@/context/auth"
+import { IdBand } from "@/interfaces"
 
 const BandPage = () => {
   const { user, initializing, signOut } = useAuthContext()
+  const [formId, setFormId] = useState<string | null>(null)
+
+  useEffect(() => {
+    const getBandFormId = async () => {
+      try {
+        const res = await axios.get<IdBand[]>(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users/bands`,
+        )
+
+        const bandForm = res.data.find((band) => band.banda === user?.banda)
+
+        if (bandForm) {
+          setFormId(bandForm.id)
+        }
+      } catch (error) {
+        console.error("Erro ao buscar formulário da banda", error)
+      }
+    }
+
+    if (user?.banda) {
+      getBandFormId()
+    }
+  }, [user])
 
   return (
     <ImageComponent>
@@ -50,9 +76,12 @@ const BandPage = () => {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="cursor-pointer">
-              <a href="#" className="w-full">
+              <Link
+                href={formId ? `/rockexploration/${formId}` : "#"}
+                className="w-full"
+              >
                 Página da Banda {` ${user?.banda}`}
-              </a>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="cursor-pointer">
               <a href="/band" className="w-full">
