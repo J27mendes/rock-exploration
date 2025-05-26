@@ -48,7 +48,7 @@ const BandPage = () => {
       <div className="absolute left-0 right-0 top-0 z-10 flex items-center justify-between bg-black/0 p-4">
         <div className="flex flex-col items-center">
           <p className="text-white">bem vindo ao rock exploration,</p>
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="text-2xl font-bold text-cyan-400">
             {initializing || !user ? "Minha Banda" : user?.banda}
           </h1>
           <p className="text-white">
