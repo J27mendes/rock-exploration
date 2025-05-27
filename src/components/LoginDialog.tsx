@@ -3,7 +3,6 @@
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
-import Button from "@/components/Button"
 import { Form } from "@/components/ui/form"
 import {
   FormControl,
@@ -16,6 +15,8 @@ import { Input } from "@/components/ui/input"
 import { useAuthContext } from "@/context/auth"
 import { useLoginForm } from "@/forms/hooks/login"
 import { LoginUserDTO } from "@/types"
+
+import FormButton from "./Button"
 
 const UserLogin = ({ onClose }: { onClose: () => void }) => {
   const { loginMethods } = useLoginForm()
@@ -99,9 +100,9 @@ const UserLogin = ({ onClose }: { onClose: () => void }) => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isPending}>
+        <FormButton type="submit" disabled={isPending}>
           {isPending ? "Buscando..." : "Login"}
-        </Button>
+        </FormButton>
       </form>
     </Form>
   )

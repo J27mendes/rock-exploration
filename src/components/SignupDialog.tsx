@@ -3,7 +3,6 @@
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
-import Button from "@/components/Button"
 import { Form } from "@/components/ui/form"
 import {
   FormControl,
@@ -16,6 +15,8 @@ import { Input } from "@/components/ui/input"
 import { useAuthContext } from "@/context/auth"
 import { useSignupForm } from "@/forms/hooks/signup"
 import { CreateUserInput } from "@/types"
+
+import FormButton from "./Button"
 
 const CreateSignup = ({ onClose }: { onClose: () => void }) => {
   const { signupMethods } = useSignupForm()
@@ -156,9 +157,9 @@ const CreateSignup = ({ onClose }: { onClose: () => void }) => {
           )}
         />
 
-        <Button type="submit" bgColor="#1695c0" disabled={isPending}>
+        <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
           {isPending ? "Enviando..." : "Criar conta"}
-        </Button>
+        </FormButton>
       </form>
     </Form>
   )
