@@ -7,6 +7,7 @@ import { CreateBandFormInput } from "@/types"
 export const useBandForm = () => {
   const bandForm = useForm<CreateBandFormInput>({
     resolver: zodResolver(createBandFormSchema),
+    mode: "onSubmit",
     defaultValues: {
       banda: "",
       quantidadeIntegrantes: 1,
