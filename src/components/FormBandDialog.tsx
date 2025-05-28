@@ -7,6 +7,9 @@ import { Form } from "@/components/ui/form"
 import { useBandForm } from "@/forms/hooks/bandForm"
 import { CreateBandFormInput } from "@/types"
 
+import BandaInput from "./BandaInput"
+import QuantidadeIntegrantesInput from "./QuantidadeIntegrantes"
+
 const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
   const { bandForm } = useBandForm()
   const [isPending, setIsPending] = useState(false)
@@ -30,10 +33,13 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
           handleSubmit(data)
         })}
         className="space-y-4"
-      ></form>
-      <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
-        {isPending ? "Enviando..." : "Criar conta"}
-      </FormButton>
+      >
+        <BandaInput />
+        <QuantidadeIntegrantesInput />
+        <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
+          {isPending ? "Enviando..." : "Enviar"}
+        </FormButton>
+      </form>
     </Form>
   )
 }
