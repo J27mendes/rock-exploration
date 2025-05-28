@@ -8,7 +8,9 @@ import { useBandForm } from "@/forms/hooks/bandForm"
 import { CreateBandFormInput } from "@/types"
 
 import BandaInput from "./BandaInput"
+import EstiloInput from "./Estilo"
 import QuantidadeIntegrantesInput from "./QuantidadeIntegrantes"
+import ReleaseTextarea from "./Release"
 
 const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
   const { bandForm } = useBandForm()
@@ -36,6 +38,8 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
       >
         <BandaInput />
         <QuantidadeIntegrantesInput />
+        <EstiloInput />
+        <ReleaseTextarea />
         <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
           {isPending ? "Enviando..." : "Enviar"}
         </FormButton>
