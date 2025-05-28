@@ -1,3 +1,7 @@
+import { ControllerFieldState, ControllerRenderProps } from "react-hook-form"
+
+import { CreateBandFormInput } from "@/types"
+
 export interface CreateBandFormDTO {
   banda: string
   quantidadeIntegrantes: number
@@ -66,4 +70,8 @@ export interface BandProps {
 export interface IdBand {
   id: string
   banda: string
+}
+export interface BandaInputProps {
+  field: ControllerRenderProps<CreateBandFormInput, "banda">
+  fieldState: ControllerFieldState
 }
