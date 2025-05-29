@@ -9,6 +9,7 @@ import { CreateBandFormInput } from "@/types"
 
 import BandaInput from "./BandaInput"
 import EstiloInput from "./Estilo"
+import IntegrantesFieldArray from "./IntegrantesFieldArray"
 import QuantidadeIntegrantesInput from "./QuantidadeIntegrantes"
 import ReleaseTextarea from "./Release"
 
@@ -29,22 +30,25 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
   }
 
   return (
-    <Form {...bandForm}>
-      <form
-        onSubmit={bandForm.handleSubmit((data) => {
-          handleSubmit(data)
-        })}
-        className="space-y-4"
-      >
-        <BandaInput />
-        <QuantidadeIntegrantesInput />
-        <EstiloInput />
-        <ReleaseTextarea />
-        <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
-          {isPending ? "Enviando..." : "Enviar"}
-        </FormButton>
-      </form>
-    </Form>
+    <div className="scroll-invisivel mx-auto max-h-[80vh] w-full max-w-3xl overflow-y-auto p-4">
+      <Form {...bandForm}>
+        <form
+          onSubmit={bandForm.handleSubmit((data) => {
+            handleSubmit(data)
+          })}
+          className="space-y-4"
+        >
+          <BandaInput />
+          <QuantidadeIntegrantesInput />
+          <EstiloInput />
+          <ReleaseTextarea />
+          <IntegrantesFieldArray />
+          <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
+            {isPending ? "Enviando..." : "Enviar"}
+          </FormButton>
+        </form>
+      </Form>
+    </div>
   )
 }
 
