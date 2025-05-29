@@ -11,6 +11,7 @@ import BandaInput from "./BandaInput"
 import EstiloInput from "./Estilo"
 import IntegrantesFieldArray from "./IntegrantesFieldArray"
 import QuantidadeIntegrantesInput from "./QuantidadeIntegrantes"
+import QuantidadeMusicasInput from "./QuantidadeMusicas"
 import ReleaseTextarea from "./Release"
 
 const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
@@ -43,6 +44,7 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
           <EstiloInput />
           <ReleaseTextarea />
           <IntegrantesFieldArray />
+          <QuantidadeMusicasInput />
           <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
             {isPending ? "Enviando..." : "Enviar"}
           </FormButton>
