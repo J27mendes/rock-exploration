@@ -13,6 +13,7 @@ import IntegrantesFieldArray from "./IntegrantesFieldArray"
 import QuantidadeIntegrantesInput from "./QuantidadeIntegrantes"
 import QuantidadeMusicasInput from "./QuantidadeMusicas"
 import ReleaseTextarea from "./Release"
+import SetListFieldArray from "./SetlistFieldArray"
 
 const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
   const { bandForm } = useBandForm()
@@ -45,6 +46,7 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
           <ReleaseTextarea />
           <IntegrantesFieldArray />
           <QuantidadeMusicasInput />
+          <SetListFieldArray />
           <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
             {isPending ? "Enviando..." : "Enviar"}
           </FormButton>
