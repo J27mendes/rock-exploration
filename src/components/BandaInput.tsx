@@ -20,7 +20,10 @@ const BandaInput = () => {
       name="banda"
       render={({ field }) => (
         <FormItem>
-          <FormLabel htmlFor="banda" className="font-semibold text-cyan-400">
+          <FormLabel
+            htmlFor="banda"
+            className="text-lg font-semibold text-cyan-400"
+          >
             Nome da Banda
           </FormLabel>
           <FormControl>

@@ -21,7 +21,7 @@ const IntegrantesFieldArray = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="font-semibold text-cyan-400">Integrantes</h3>
+      <div className="text-lg font-semibold text-cyan-400">Integrantes</div>
 
       {fields.map((field, index) => (
         <div key={field.id} className="flex flex-col gap-2">

@@ -20,7 +20,10 @@ const ReleaseTextarea = () => {
       name="release"
       render={({ field }) => (
         <FormItem>
-          <FormLabel htmlFor="release" className="font-semibold text-cyan-400">
+          <FormLabel
+            htmlFor="release"
+            className="text-lg font-semibold text-cyan-400"
+          >
             Release
           </FormLabel>
           <FormControl>

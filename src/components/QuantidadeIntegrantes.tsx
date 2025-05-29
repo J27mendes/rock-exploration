@@ -22,7 +22,7 @@ const QuantidadeIntegrantesInput = () => {
         <FormItem>
           <FormLabel
             htmlFor="quantidadeIntegrantes"
-            className="font-semibold text-cyan-400"
+            className="text-lg font-semibold text-cyan-400"
           >
             Quantidade de Integrantes
           </FormLabel>
