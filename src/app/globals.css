@@ -108,3 +108,13 @@ input:-webkit-autofill:active {
   animation: scrollStarWars 90s linear infinite;
   transform-origin: bottom center;
 }
+
+.scroll-invisivel::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.scroll-invisivel {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
