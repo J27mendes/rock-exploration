@@ -20,7 +20,7 @@ const EstiloInput = () => {
       name="estilo"
       render={({ field }) => (
         <FormItem>
-          <FormLabel htmlFor="estilo" className="font-semibold text-white">
+          <FormLabel htmlFor="estilo" className="font-semibold text-cyan-400">
             Estilo da Banda
           </FormLabel>
           <FormControl>

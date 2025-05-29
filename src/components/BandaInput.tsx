@@ -1,3 +1,5 @@
+"use client"
+
 import { useFormContext } from "react-hook-form"
 
 import {
@@ -18,7 +20,7 @@ const BandaInput = () => {
       name="banda"
       render={({ field }) => (
         <FormItem>
-          <FormLabel htmlFor="banda" className="font-semibold text-white">
+          <FormLabel htmlFor="banda" className="font-semibold text-cyan-400">
             Nome da Banda
           </FormLabel>
           <FormControl>
