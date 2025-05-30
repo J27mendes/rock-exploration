@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { z, ZodError } from "zod"
+import { ZodError } from "zod"
 
 import {
   BadRequestError,
@@ -9,15 +9,13 @@ import {
 } from "@/errors"
 import { badRequest, serverError } from "@/helpers"
 import { createBandFormSchema } from "@/schemas"
+import { CreateTypeBandFormDTO } from "@/types"
 import { CreateBandFormUseCase } from "@/useCases"
-
-export type CreateBandFormDTO = z.infer<typeof createBandFormSchema>
-
 export class CreateBandFormController {
   private useCase = new CreateBandFormUseCase()
 
   async execute(
-    body: CreateBandFormDTO,
+    body: CreateTypeBandFormDTO,
     idBanda: string,
   ): Promise<Response | object> {
     try {
