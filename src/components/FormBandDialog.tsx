@@ -8,6 +8,7 @@ import { useBandForm } from "@/forms/hooks/bandForm"
 import { CreateBandFormInputFrontend } from "@/types"
 
 import BandaInput from "./BandaInput"
+import ContatoInput from "./ContatoInput"
 import EstiloInput from "./Estilo"
 import ImagemUploadFields from "./ImagemUploadFields"
 import IntegrantesFieldArray from "./IntegrantesFieldArray"
@@ -43,12 +44,13 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
         >
           <BandaInput />
           <QuantidadeIntegrantesInput />
+          <IntegrantesFieldArray />
           <EstiloInput />
           <ReleaseTextarea />
           <ImagemUploadFields />
-          <IntegrantesFieldArray />
           <QuantidadeMusicasInput />
           <SetListFieldArray />
+          <ContatoInput />
           <FormButton type="submit" bgColor="#1695c0" disabled={isPending}>
             {isPending ? "Enviando..." : "Enviar"}
           </FormButton>
