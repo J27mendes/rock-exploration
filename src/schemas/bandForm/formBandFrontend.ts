@@ -1,0 +1,65 @@
+import { z } from "zod"
+
+export const createBandFormSchemaFrontend = z
+  .object({
+    banda: z.string().trim().min(1, "Nome da banda é obrigatório"),
+    quantidadeIntegrantes: z
+      .number()
+      .int()
+      .positive()
+      .min(1, "Quantidade de integrantes é obrigatória"),
+
+    integrantes: z.array(
+      z.object({
+        nome: z.string().trim().min(1, "Nome do integrante é obrigatório"),
+        instrumento: z
+          .string()
+          .trim()
+          .min(1, "Instrumento do integrante é obrigatório"),
+      }),
+    ),
+
+    estilo: z.string().trim().min(1, "Estilo musical é obrigatório"),
+    release: z.string().trim().min(1, "Release é obrigatório"),
+
+    imagem: z.object({
+      urlImagemBanda: z.instanceof(File, {
+        message: "Imagem da banda é obrigatória",
+      }),
+      urlImagemLogo: z.instanceof(File, {
+        message: "Imagem do logo é obrigatória",
+      }),
+      urlMapaPalco: z.instanceof(File, {
+        message: "Imagem do mapa de palco é obrigatória",
+      }),
+    }),
+
+    quantidadeMusicas: z
+      .number()
+      .int()
+      .positive()
+      .min(1, "Quantidade de músicas é obrigatória"),
+
+    setList: z.array(
+      z.object({
+        nomeMusica: z.string().trim().min(1, "Nome da música é obrigatório"),
+        tempoMusica: z.number().int().min(1, "Tempo da música é obrigatório"),
+        letraMusica: z.string().trim().min(1, "Letra da música é obrigatória"),
+      }),
+    ),
+
+    contato: z.object({
+      email: z.string().email("Email inválido"),
+      nomePrimeiroNumero: z
+        .string()
+        .trim()
+        .min(1, "Nome do primeiro número é obrigatório"),
+      primeiroNumero: z.string().min(1, "Primeiro número é obrigatório"),
+      nomeSegundoNumero: z
+        .string()
+        .trim()
+        .min(1, "Nome do segundo número é obrigatório"),
+      segundoNumero: z.string().min(1, "Segundo número é obrigatório"),
+    }),
+  })
+  .strict()

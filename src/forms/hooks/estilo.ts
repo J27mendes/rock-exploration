@@ -1,9 +1,9 @@
 import { useController, useFormContext } from "react-hook-form"
 
-import { CreateBandFormInput } from "@/types"
+import { CreateBandFormInputFrontend } from "@/types"
 
 export const useEstiloField = () => {
-  const { control } = useFormContext<CreateBandFormInput>()
+  const { control } = useFormContext<CreateBandFormInputFrontend>()
 
   const { field, fieldState } = useController({
     control,

@@ -1,9 +1,9 @@
 import { Control, useFieldArray } from "react-hook-form"
 
-import { CreateBandFormInput } from "@/types"
+import { CreateBandFormInputFrontend } from "@/types"
 
 export const useIntegrantesFieldArray = (
-  control: Control<CreateBandFormInput>,
+  control: Control<CreateBandFormInputFrontend>,
 ) => {
   return useFieldArray({
     control,
