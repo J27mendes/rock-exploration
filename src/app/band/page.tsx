@@ -103,7 +103,7 @@ const BandPage = () => {
       </div>
       {showFormModal && (
         <RockExplorationModalWrapper>
-          <FormBandSignup />
+          <FormBandSignup onClose={() => setShowFormModal(false)} />
           <div className="mt-4 flex justify-end">
             <FormButton
               onClick={() => setShowFormModal(false)}
