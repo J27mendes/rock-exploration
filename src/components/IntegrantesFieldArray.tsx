@@ -3,7 +3,7 @@
 import { useFormContext } from "react-hook-form"
 
 import { useIntegrantesFieldArray } from "@/forms/hooks/useIntegrantesFieldArray"
-import { CreateBandFormInput } from "@/types"
+import { CreateBandFormInputFrontend } from "@/types"
 
 import { Button } from "./ui/button"
 import {
@@ -16,7 +16,7 @@ import {
 import { Input } from "./ui/input"
 
 const IntegrantesFieldArray = () => {
-  const { control } = useFormContext<CreateBandFormInput>()
+  const { control } = useFormContext<CreateBandFormInputFrontend>()
   const { fields, append, remove } = useIntegrantesFieldArray(control)
 
   return (
@@ -25,7 +25,7 @@ const IntegrantesFieldArray = () => {
 
       {fields.map((field, index) => (
         <div key={field.id} className="flex flex-col gap-2">
-          <FormField<CreateBandFormInput>
+          <FormField<CreateBandFormInputFrontend>
             control={control}
             name={`integrantes.${index}.nome`}
             render={({ field }) => (
@@ -50,7 +50,7 @@ const IntegrantesFieldArray = () => {
             )}
           />
 
-          <FormField<CreateBandFormInput>
+          <FormField<CreateBandFormInputFrontend>
             control={control}
             name={`integrantes.${index}.instrumento`}
             render={({ field }) => (
