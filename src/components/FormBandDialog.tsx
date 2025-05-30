@@ -5,10 +5,11 @@ import { useState } from "react"
 import FormButton from "@/components/Button"
 import { Form } from "@/components/ui/form"
 import { useBandForm } from "@/forms/hooks/bandForm"
-import { CreateBandFormInput } from "@/types"
+import { CreateBandFormInputFrontend } from "@/types"
 
 import BandaInput from "./BandaInput"
 import EstiloInput from "./Estilo"
+import ImagemUploadFields from "./ImagemUploadFields"
 import IntegrantesFieldArray from "./IntegrantesFieldArray"
 import QuantidadeIntegrantesInput from "./QuantidadeIntegrantes"
 import QuantidadeMusicasInput from "./QuantidadeMusicas"
@@ -19,7 +20,7 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
   const { bandForm } = useBandForm()
   const [isPending, setIsPending] = useState(false)
 
-  const handleSubmit = async (data: CreateBandFormInput) => {
+  const handleSubmit = async (data: CreateBandFormInputFrontend) => {
     setIsPending(true)
     try {
       console.log("Dados enviados:", data)
@@ -44,6 +45,7 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
           <QuantidadeIntegrantesInput />
           <EstiloInput />
           <ReleaseTextarea />
+          <ImagemUploadFields />
           <IntegrantesFieldArray />
           <QuantidadeMusicasInput />
           <SetListFieldArray />
