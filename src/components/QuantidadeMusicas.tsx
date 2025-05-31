@@ -29,6 +29,7 @@ const QuantidadeMusicasInput = () => {
           <FormControl>
             <Input
               id="quantidadeMusicas"
+              min={1}
               type="number"
               {...field}
               value={field.value ?? ""}

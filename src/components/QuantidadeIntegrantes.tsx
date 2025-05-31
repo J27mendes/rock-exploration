@@ -30,6 +30,7 @@ const QuantidadeIntegrantesInput = () => {
             <Input
               id="quantidadeIntegrantes"
               type="number"
+              min={1}
               {...field}
               value={field.value ?? ""}
               onChange={(e) => {
