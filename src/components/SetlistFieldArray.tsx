@@ -3,7 +3,7 @@
 import { useFormContext } from "react-hook-form"
 
 import { useSetListFieldArray } from "@/forms/hooks/useSetListFieldArray"
-import { CreateBandFormInput } from "@/types"
+import { CreateBandFormInputFrontend } from "@/types"
 
 import { Button } from "./ui/button"
 import {
@@ -16,7 +16,7 @@ import {
 import { Input } from "./ui/input"
 
 const SetListFieldArray = () => {
-  const { control } = useFormContext<CreateBandFormInput>()
+  const { control } = useFormContext<CreateBandFormInputFrontend>()
   const { fields, append, remove } = useSetListFieldArray(control)
 
   return (
@@ -25,7 +25,7 @@ const SetListFieldArray = () => {
 
       {fields.map((field, index) => (
         <div key={field.id} className="flex flex-col gap-2">
-          <FormField<CreateBandFormInput>
+          <FormField<CreateBandFormInputFrontend>
             control={control}
             name={`setList.${index}.nomeMusica`}
             render={({ field }) => (
@@ -50,7 +50,7 @@ const SetListFieldArray = () => {
             )}
           />
 
-          <FormField<CreateBandFormInput>
+          <FormField<CreateBandFormInputFrontend>
             control={control}
             name={`setList.${index}.tempoMusica`}
             render={({ field }) => (
@@ -65,6 +65,7 @@ const SetListFieldArray = () => {
                   <Input
                     {...field}
                     id={`setList.${index}.tempoMusica`}
+                    min={1}
                     type="number"
                     value={field.value as number}
                     placeholder="Tempo da música"
@@ -76,7 +77,7 @@ const SetListFieldArray = () => {
             )}
           />
 
-          <FormField<CreateBandFormInput>
+          <FormField<CreateBandFormInputFrontend>
             control={control}
             name={`setList.${index}.letraMusica`}
             render={({ field }) => (
