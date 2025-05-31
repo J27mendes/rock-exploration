@@ -5,6 +5,7 @@ import { useFormContext } from "react-hook-form"
 import { useContatoFields } from "@/forms/hooks/contato"
 import { CreateBandFormInputFrontend } from "@/types"
 
+import { MaskedInput } from "./MaskedInput"
 import {
   FormControl,
   FormField,
@@ -32,7 +33,9 @@ const ContatoInput = () => {
         name="contato.email"
         render={() => (
           <FormItem>
-            <FormLabel className="font-bold text-amber-300">Email</FormLabel>
+            <FormLabel className="font-bold text-amber-300">
+              Email para contato
+            </FormLabel>
             <FormControl>
               <Input
                 {...email.field}
@@ -74,9 +77,10 @@ const ContatoInput = () => {
               Primeiro número
             </FormLabel>
             <FormControl>
-              <Input
+              <MaskedInput
                 {...primeiroNumero.field}
-                placeholder="Ex: (81) 91234-5678"
+                placeholder="(81) 91234-5678"
+                mask="(99) 99999-9999"
                 className="bg-transparent text-xl text-white placeholder:text-white"
               />
             </FormControl>
@@ -114,9 +118,10 @@ const ContatoInput = () => {
               Segundo número
             </FormLabel>
             <FormControl>
-              <Input
+              <MaskedInput
                 {...segundoNumero.field}
-                placeholder="Ex: (81) 99876-5432"
+                placeholder="(81) 99876-5432"
+                mask="(99) 99999-9999"
                 className="bg-transparent text-xl text-white placeholder:text-white"
               />
             </FormControl>
