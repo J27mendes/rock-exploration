@@ -67,3 +67,8 @@ export interface IdBand {
   id: string
   banda: string
 }
+
+export interface MaskedInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  mask: string
+}
