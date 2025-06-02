@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 
+import { useCreateBand } from "@/app/api/hooks/bandform"
 import FormButton from "@/components/Button"
 import { Form } from "@/components/ui/form"
 import { useBandForm } from "@/forms/hooks/bandForm"
@@ -19,12 +20,15 @@ import SetListFieldArray from "./SetlistFieldArray"
 
 const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
   const { bandForm } = useBandForm()
+  const createBand = useCreateBand(() => {
+    onClose()
+  })
   const [isPending, setIsPending] = useState(false)
 
   const handleSubmit = async (data: CreateBandFormInputFrontend) => {
     setIsPending(true)
     try {
-      console.log("Dados enviados:", data)
+      createBand.mutate(data)
       onClose()
     } catch (error) {
       console.error("Erro no envio do formulário:", error)
@@ -37,9 +41,7 @@ const FormBandSignup = ({ onClose }: { onClose: () => void }) => {
     <div className="scroll-invisivel mx-auto max-h-[80vh] w-full max-w-3xl overflow-y-auto p-4">
       <Form {...bandForm}>
         <form
-          onSubmit={bandForm.handleSubmit((data) => {
-            handleSubmit(data)
-          })}
+          onSubmit={bandForm.handleSubmit(handleSubmit)}
           className="space-y-4"
         >
           <BandaInput />
