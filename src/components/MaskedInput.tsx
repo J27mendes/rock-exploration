@@ -1,15 +1,12 @@
 "use client"
 
-import InputMask from "react-input-mask"
+import { forwardRef } from "react"
+import { IMaskInput } from "react-imask"
 
-import { MaskedInputProps } from "@/interfaces"
-
-import { Input } from "./ui/input"
-
-export const MaskedInput = ({ mask, ...props }: MaskedInputProps) => {
+export const MaskInput = forwardRef<HTMLInputElement, any>((props, ref) => {
   return (
-    <InputMask mask={mask} {...props}>
-      {(inputProps: any) => <Input {...inputProps} />}
-    </InputMask>
+    <IMaskInput {...props} mask="(00) 00000-0000" inputRef={ref} overwrite />
   )
-}
+})
+
+MaskInput.displayName = "MaskInput"
