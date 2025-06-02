@@ -68,6 +68,10 @@ const SetListFieldArray = () => {
                     min={1}
                     type="number"
                     value={field.value as number}
+                    onChange={(e) => {
+                      const val = e.target.value
+                      field.onChange(val === "" ? undefined : Number(val))
+                    }}
                     placeholder="Tempo da música"
                     className="bg-transparent text-xl text-white placeholder:text-xl placeholder:text-white"
                   />
