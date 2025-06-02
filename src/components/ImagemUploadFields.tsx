@@ -34,7 +34,10 @@ const ImagemUploadFields = () => {
         name="imagem.urlImagemBanda"
         render={() => (
           <FormItem>
-            <FormLabel className="font-bold text-amber-300">
+            <FormLabel
+              htmlFor="urlImagemBanda"
+              className="font-bold text-amber-300"
+            >
               Imagem da Banda
             </FormLabel>
             <FormControl>
@@ -77,7 +80,10 @@ const ImagemUploadFields = () => {
         name="imagem.urlImagemLogo"
         render={() => (
           <FormItem>
-            <FormLabel className="font-bold text-amber-300">
+            <FormLabel
+              htmlFor="urlImagemLogo"
+              className="font-bold text-amber-300"
+            >
               Logo da Banda
             </FormLabel>
             <FormControl>
@@ -119,7 +125,10 @@ const ImagemUploadFields = () => {
         name="imagem.urlMapaPalco"
         render={() => (
           <FormItem>
-            <FormLabel className="font-bold text-amber-300">
+            <FormLabel
+              htmlFor="urlMapaPalco"
+              className="font-bold text-amber-300"
+            >
               Mapa de Palco
             </FormLabel>
             <FormControl>
