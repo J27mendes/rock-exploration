@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form"
 import { useContatoFields } from "@/forms/hooks/contato"
 import { CreateBandFormInputFrontend } from "@/types"
 
-import { MaskedInput } from "./MaskedInput"
+import { MaskInput } from "./MaskedInput"
 import {
   FormControl,
   FormField,
@@ -17,13 +17,8 @@ import { Input } from "./ui/input"
 
 const ContatoInput = () => {
   const { control } = useFormContext<CreateBandFormInputFrontend>()
-  const {
-    email,
-    nomePrimeiroNumero,
-    primeiroNumero,
-    nomeSegundoNumero,
-    segundoNumero,
-  } = useContatoFields(control)
+  const { email, nomePrimeiroNumero, nomeSegundoNumero } =
+    useContatoFields(control)
 
   return (
     <div className="space-y-4">
@@ -33,12 +28,16 @@ const ContatoInput = () => {
         name="contato.email"
         render={() => (
           <FormItem>
-            <FormLabel className="font-bold text-amber-300">
+            <FormLabel
+              htmlFor="contato.email"
+              className="font-bold text-amber-300"
+            >
               Email para contato
             </FormLabel>
             <FormControl>
               <Input
                 {...email.field}
+                id="contato.email"
                 placeholder="exemplo@banda.com"
                 className="bg-transparent text-xl text-white placeholder:text-white"
               />
@@ -53,12 +52,16 @@ const ContatoInput = () => {
         name="contato.nomePrimeiroNumero"
         render={() => (
           <FormItem>
-            <FormLabel className="font-bold text-amber-300">
+            <FormLabel
+              htmlFor="contato.nomePrimeiroNumero"
+              className="font-bold text-amber-300"
+            >
               Contato primeiro número
             </FormLabel>
             <FormControl>
               <Input
                 {...nomePrimeiroNumero.field}
+                id="contato.nomePrimeiroNumero"
                 placeholder="Ex: João"
                 className="bg-transparent text-xl text-white placeholder:text-white"
               />
@@ -71,22 +74,28 @@ const ContatoInput = () => {
       <FormField<CreateBandFormInputFrontend>
         control={control}
         name="contato.primeiroNumero"
-        render={() => (
-          <FormItem>
-            <FormLabel className="font-bold text-amber-300">
-              Primeiro número
-            </FormLabel>
-            <FormControl>
-              <MaskedInput
-                {...primeiroNumero.field}
-                placeholder="(81) 91234-5678"
-                mask="(99) 99999-9999"
-                className="bg-transparent text-xl text-white placeholder:text-white"
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+        render={({ field }) => {
+          const id = "contato-primeiroNumero"
+          return (
+            <FormItem>
+              <FormLabel htmlFor={id} className="font-bold text-amber-300">
+                Primeiro número
+              </FormLabel>
+              <FormControl>
+                <MaskInput
+                  {...field}
+                  id={id}
+                  inputRef={field.ref}
+                  placeholder="(81) 99999-9999"
+                  mask="(99) 99999-9999"
+                  value={String(field.value ?? "")}
+                  className="bg-transparent text-xl text-white placeholder:text-white"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )
+        }}
       />
 
       <FormField<CreateBandFormInputFrontend>
@@ -94,12 +103,16 @@ const ContatoInput = () => {
         name="contato.nomeSegundoNumero"
         render={() => (
           <FormItem>
-            <FormLabel className="font-bold text-amber-300">
+            <FormLabel
+              htmlFor="contato.nomeSegundoNumero"
+              className="font-bold text-amber-300"
+            >
               Contato segundo número
             </FormLabel>
             <FormControl>
               <Input
                 {...nomeSegundoNumero.field}
+                id="contato.nomeSegundoNumero"
                 placeholder="Ex: Maria"
                 className="bg-transparent text-xl text-white placeholder:text-white"
               />
@@ -112,22 +125,27 @@ const ContatoInput = () => {
       <FormField<CreateBandFormInputFrontend>
         control={control}
         name="contato.segundoNumero"
-        render={() => (
-          <FormItem>
-            <FormLabel className="font-bold text-amber-300">
-              Segundo número
-            </FormLabel>
-            <FormControl>
-              <MaskedInput
-                {...segundoNumero.field}
-                placeholder="(81) 99876-5432"
-                mask="(99) 99999-9999"
-                className="bg-transparent text-xl text-white placeholder:text-white"
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+        render={({ field }) => {
+          const id = "contato.segundoNumero"
+          return (
+            <FormItem>
+              <FormLabel htmlFor={id} className="font-bold text-amber-300">
+                Segundo número
+              </FormLabel>
+              <FormControl>
+                <MaskInput
+                  {...field}
+                  id={id}
+                  placeholder="(99) 99999-9999"
+                  mask="(99) 99999-9999"
+                  value={String(field.value ?? "")}
+                  className="bg-transparent text-xl text-white placeholder:text-white"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )
+        }}
       />
     </div>
   )
